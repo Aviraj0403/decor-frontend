@@ -1,0 +1,106 @@
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { getProductsByCategorySlug } from "../../services/productApi"; // Import the new API function
+import ProductCard from "../../components/Product/ProductCard"; // Import ProductCard component
+// on catgory slug fetch products and show them with pagination by aviraj
+export default function CategoryDetails() {
+  const { categorySlug } = useParams();
+  const navigate = useNavigate();
+
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [pagination, setPagination] = useState({});
+  const [error, setError] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [categoryName, setCategoryName] = useState("");
+
+  // Fetch products by category and set the category name
+  const fetchProducts = async (page = 1) => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const data = await getProductsByCategorySlug(categorySlug, page, 100);
+      if (data.success) {
+        setProducts(data.products);
+        setPagination(data.pagination);
+        setCurrentPage(page);
+        // console.log("Fetched Products:", data.products);
+        setCategoryName(data.categoryName || categorySlug); // Assuming API returns categoryName
+      } else {
+        setError("Failed to load products");
+      }
+    } catch (error) {
+      setError("Error fetching products");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchProducts(currentPage);
+  }, [categorySlug, currentPage]);
+
+  if (loading) {
+    return <div>Loading products...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+  // Navigate to product detail page
+  const handleProductClick = (productId) => {
+    navigate(`/product/${productId}`);
+  };
+
+  return (
+    <section className="py-12 bg-brand-bg min-h-screen">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Heading */}
+        <div className="flex justify-center mb-10">
+          <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary-600 to-primary-400 bg-clip-text text-transparent pb-2 border-b-2 border-primary-200 inline-block text-center">
+            {categoryName || categorySlug}
+          </h2>
+        </div>
+
+        {/* Product Grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          {products.length === 0 ? (
+            <div>No products found in this category.</div>
+          ) : (
+            products.map((product) => (
+              <ProductCard
+                key={product._id}
+                product={product}
+                onProductClick={handleProductClick}
+              />
+            ))
+          )}
+        </div>
+
+        {/* Pagination */}
+        {pagination.totalPages > 1 && (
+          <div className="mt-12 flex justify-center items-center gap-4">
+            <button
+              onClick={() => fetchProducts(currentPage - 1)}
+              disabled={currentPage <= 1}
+              className="px-6 py-2.5 bg-brand-bg border border-primary-200 text-primary-600 rounded-xl font-medium shadow-sm hover:bg-primary-50 hover:border-primary-300 disabled:opacity-50 disabled:hover:bg-brand-bg transition-all active:scale-95"
+            >
+              Previous
+            </button>
+            <span className="px-4 py-2 bg-primary-100 text-primary-800 rounded-lg font-semibold shadow-inner">
+              {currentPage} / {pagination.totalPages}
+            </span>
+            <button
+              onClick={() => fetchProducts(currentPage + 1)}
+              disabled={currentPage >= pagination.totalPages}
+              className="px-6 py-2.5 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-xl font-medium shadow-md shadow-primary-500/20 hover:from-primary-600 hover:to-primary-700 disabled:opacity-50 transition-all active:scale-95"
+            >
+              Next
+            </button>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}

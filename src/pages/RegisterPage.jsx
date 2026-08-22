@@ -1,0 +1,1 @@
+﻿import React from 'react'; export default function RegisterPage() { return <div className='min-h-screen flex items-center justify-center bg-cream'><p className='font-serif text-3xl text-charcoal'>RegisterPage</p></div>; }
