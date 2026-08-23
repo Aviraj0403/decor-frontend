@@ -74,16 +74,16 @@ export default function HomeNewArrivals() {
         <div className="mb-4 flex items-start justify-between gap-2 sm:gap-4">
           <div className="min-w-0">
             <h2 className="text-[26px] font-bold leading-tight text-brand-text sm:text-[36px]">
-              Divine <span className="text-[#E67E22]">Arrivals</span>
+              Divine <span className="text-[#C99665]">Arrivals</span>
             </h2>
-            <p className="mt-1 text-[13px] font-medium text-[#D35400] sm:text-sm">
+            <p className="mt-1 text-[13px] font-medium text-[#2D545E] sm:text-sm">
               Fresh Arrivals for Your Spiritual Journey
             </p>
           </div>
 
           <Link
             to="/new-products"
-            className="inline-flex h-9 shrink-0 items-center gap-2 rounded-md bg-[#D35400] px-3 text-[10px] font-semibold text-white transition hover:bg-black sm:px-4 sm:text-[11px]"
+            className="inline-flex h-9 shrink-0 items-center gap-2 rounded-md bg-[#2D545E] px-3 text-[10px] font-semibold text-white transition hover:bg-black sm:px-4 sm:text-[11px]"
           >
             <span className="sm:hidden">View All</span>
             <span className="hidden sm:inline">View All New Arrivals</span>
@@ -96,7 +96,7 @@ export default function HomeNewArrivals() {
             type="button"
             onClick={() => scroll("left")}
             aria-label="Previous new arrivals"
-            className="absolute left-0 top-[34%] z-20 hidden h-9 w-9 -translate-x-1/2 items-center justify-center rounded-full border border-[#D35400]/20 bg-brand-bg text-[#D35400] shadow-md transition hover:bg-[#D35400] hover:text-white sm:flex"
+            className="absolute left-0 top-[34%] z-20 hidden h-9 w-9 -translate-x-1/2 items-center justify-center rounded-full border border-[#2D545E]/20 bg-brand-bg text-[#2D545E] shadow-md transition hover:bg-[#2D545E] hover:text-white sm:flex"
           >
             <ChevronLeft size={18} />
           </button>
@@ -130,7 +130,7 @@ export default function HomeNewArrivals() {
               ))}
 
             {isError && (
-              <p className="w-full py-12 text-center text-sm text-[#D35400]">
+              <p className="w-full py-12 text-center text-sm text-[#2D545E]">
                 {error?.message || "Unable to load new arrivals."}
               </p>
             )}
@@ -153,8 +153,8 @@ export default function HomeNewArrivals() {
                     key={product._id}
                     className="group flex min-w-0 basis-[calc((100%_-_12px)/2)] shrink-0 snap-start flex-col sm:basis-[42%] md:basis-[30%] lg:basis-[calc((100%_-_80px)/5)]"
                   >
-                    <div className="relative overflow-hidden rounded-xl bg-[#faf5ed]">
-                      <span className="absolute left-2 top-2 z-10 rounded-md bg-[#24720f] px-2.5 py-1 text-[9px] font-bold text-white shadow-sm sm:text-[10px]">
+                    <div className="relative overflow-hidden rounded-xl bg-[#E2B385]">
+                      <span className="absolute left-2 top-2 z-10 rounded-md bg-[#103438] px-2.5 py-1 text-[9px] font-bold text-white shadow-sm sm:text-[10px]">
                         New
                       </span>
 
@@ -177,7 +177,7 @@ export default function HomeNewArrivals() {
                       onClick={() => navigate(`/product/${product.slug}`)}
                       className="mt-2.5 block w-full text-left"
                     >
-                      <h3 className="line-clamp-1 text-[12px] font-semibold text-brand-text transition group-hover:text-[#D35400] sm:text-[13px]">
+                      <h3 className="line-clamp-1 text-[12px] font-semibold text-brand-text transition group-hover:text-[#2D545E] sm:text-[13px]">
                         {product.name}
                       </h3>
                     </button>
@@ -198,7 +198,7 @@ export default function HomeNewArrivals() {
                         type="button"
                         onClick={() => addProductToCart(product)}
                         disabled={busyProduct === product._id}
-                        className="inline-flex h-9 items-center justify-center gap-1 rounded-md border border-[#E67E22] bg-brand-bg px-1 text-[9px] font-semibold text-[#D35400] transition hover:bg-[#E67E22] hover:text-white disabled:cursor-wait disabled:opacity-60 sm:gap-1.5 sm:px-2 sm:text-[11px]"
+                        className="inline-flex h-9 items-center justify-center gap-1 rounded-md border border-[#C99665] bg-brand-bg px-1 text-[9px] font-semibold text-[#2D545E] transition hover:bg-[#C99665] hover:text-white disabled:cursor-wait disabled:opacity-60 sm:gap-1.5 sm:px-2 sm:text-[11px]"
                       >
                         <ShoppingCart size={13} />
                         {busyProduct === product._id
@@ -212,7 +212,7 @@ export default function HomeNewArrivals() {
                         type="button"
                         onClick={() => addProductToCart(product, true)}
                         disabled={busyProduct === product._id}
-                        className="inline-flex h-9 items-center justify-center gap-1 rounded-md bg-[#D35400] px-1 text-[9px] font-semibold text-white transition hover:bg-black disabled:cursor-wait disabled:opacity-60 sm:gap-1.5 sm:px-2 sm:text-[11px]"
+                        className="inline-flex h-9 items-center justify-center gap-1 rounded-md bg-[#2D545E] px-1 text-[9px] font-semibold text-white transition hover:bg-black disabled:cursor-wait disabled:opacity-60 sm:gap-1.5 sm:px-2 sm:text-[11px]"
                       >
                         <Zap size={13} />
                         Buy Now
@@ -227,7 +227,7 @@ export default function HomeNewArrivals() {
             type="button"
             onClick={() => scroll("right")}
             aria-label="Next new arrivals"
-            className="absolute right-0 top-[34%] z-20 hidden h-10 w-10 translate-x-1/2 items-center justify-center rounded-full border border-[#D35400]/20 bg-brand-bg text-[#D35400] shadow-md transition hover:bg-[#D35400] hover:text-white sm:flex"
+            className="absolute right-0 top-[34%] z-20 hidden h-10 w-10 translate-x-1/2 items-center justify-center rounded-full border border-[#2D545E]/20 bg-brand-bg text-[#2D545E] shadow-md transition hover:bg-[#2D545E] hover:text-white sm:flex"
           >
             <ChevronRight size={19} />
           </button>

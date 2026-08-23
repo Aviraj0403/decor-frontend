@@ -48,8 +48,8 @@ export default function CategoryDetails() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-brand-bg">
         <div className="animate-pulse flex flex-col items-center gap-4">
-          <div className="w-12 h-12 border-4 border-[#2D5016] border-t-transparent rounded-full animate-spin"></div>
-          <p className="text-sm font-medium text-[#2D5016]">Loading collection...</p>
+          <div className="w-12 h-12 border-4 border-[#2D545E] border-t-transparent rounded-full animate-spin"></div>
+          <p className="text-sm font-medium text-[#2D545E]">Loading collection...</p>
         </div>
       </div>
     );
@@ -92,12 +92,12 @@ export default function CategoryDetails() {
         </div>
       ) : (
         /* 🏷 Backup Header: Clean Tan-Beige box */
-        <div className="bg-[#FBF8F3] border-b border-[#EDE4D8] py-14 px-6 text-center mb-12">
-          <h1 className="font-serif text-3xl md:text-4xl text-[#2A2A2A] tracking-wider uppercase font-semibold mb-4">
+        <div className="bg-[#D7D7D7] border-b border-[#D7D7D7] py-14 px-6 text-center mb-12">
+          <h1 className="font-serif text-3xl md:text-4xl text-[#103438] tracking-wider uppercase font-semibold mb-4">
             {categoryName || categorySlug}
           </h1>
           {categoryDescription && (
-            <p className="max-w-3xl mx-auto text-[#2A2A2A]/75 text-sm md:text-base leading-relaxed font-light font-sans">
+            <p className="max-w-3xl mx-auto text-[#103438]/75 text-sm md:text-base leading-relaxed font-light font-sans">
               {categoryDescription}
             </p>
           )}
@@ -128,17 +128,17 @@ export default function CategoryDetails() {
             <button
               onClick={() => fetchProducts(currentPage - 1)}
               disabled={currentPage <= 1}
-              className="px-6 py-2.5 bg-white border border-[#EDE4D8] text-[#2A2A2A] rounded font-medium shadow-sm hover:bg-[#F2EAE1] disabled:opacity-50 transition-all"
+              className="px-6 py-2.5 bg-white border border-[#D7D7D7] text-[#103438] rounded font-medium shadow-sm hover:bg-[#E2B385] disabled:opacity-50 transition-all"
             >
               Previous
             </button>
-            <span className="px-4 py-2 bg-[#F2EAE1] text-[#2A2A2A] rounded font-medium text-sm">
+            <span className="px-4 py-2 bg-[#E2B385] text-[#103438] rounded font-medium text-sm">
               {currentPage} / {pagination.totalPages}
             </span>
             <button
               onClick={() => fetchProducts(currentPage + 1)}
               disabled={currentPage >= pagination.totalPages}
-              className="px-6 py-2.5 bg-[#2D5016] text-white rounded font-medium shadow-sm hover:bg-[#3D6B20] disabled:opacity-50 transition-all"
+              className="px-6 py-2.5 bg-[#2D545E] text-white rounded font-medium shadow-sm hover:bg-[#103438] disabled:opacity-50 transition-all"
             >
               Next
             </button>

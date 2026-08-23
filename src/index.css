@@ -3,63 +3,63 @@
 @import "tailwindcss";
 
 :root {
-  --cream: #F5F0E8;
-  --cream-dark: #EDE8DE;
-  --green: #2D5016;
-  --green-light: #3D6B20;
-  --gold: #C9A84C;
-  --gold-light: #D4B96B;
-  --charcoal: #2A2A2A;
-  --muted: #6B6B6B;
+  --cream: #D7D7D7;
+  --cream-dark: #D7D7D7;
+  --green: #2D545E;
+  --green-light: #103438;
+  --gold: #C99665;
+  --gold-light: #E2B385;
+  --charcoal: #103438;
+  --muted: #2D545E;
   
   --brand-bg: #FFFFFF;
-  --brand-text: #2A2A2A;
-  --accent: #2D5016;
-  --secondary: #C9A84C;
+  --brand-text: #103438;
+  --accent: #2D545E;
+  --secondary: #C99665;
 }
 
 @theme {
-  /* Core brand color overrides to apply Lifencolors theme to DivyaMantra components */
+  /* Core brand color overrides from the attached palette */
   --color-brand-bg: #FFFFFF;      /* White background */
-  --color-brand-text: #2A2A2A;    /* Charcoal text */
-  --color-accent: #2D5016;        /* Green accent */
-  --color-secondary: #C9A84C;     /* Gold secondary */
+  --color-brand-text: #103438;    /* Deep teal text */
+  --color-accent: #2D545E;        /* Teal accent */
+  --color-secondary: #C99665;     /* Warm brown secondary */
   
-  /* Primary color palette (Green) */
-  --color-primary-50: #F4F7F2;
-  --color-primary-100: #E6EFE0;
-  --color-primary-200: #CEDFC0;
-  --color-primary-300: #ABC695;
-  --color-primary-400: #7FA565;
-  --color-primary-500: #2D5016;   /* Green */
-  --color-primary-600: #244111;
-  --color-primary-700: #1C330D;
-  --color-primary-800: #15260A;
-  --color-primary-900: #0E1A06;
+  /* Primary color palette (teal) */
+  --color-primary-50: #EEF3F4;
+  --color-primary-100: #D7D7D7;
+  --color-primary-200: #B9C6C9;
+  --color-primary-300: #8DA6AB;
+  --color-primary-400: #5D7E86;
+  --color-primary-500: #2D545E;
+  --color-primary-600: #24464E;
+  --color-primary-700: #1A3A40;
+  --color-primary-800: #103438;
+  --color-primary-900: #0B2529;
 
-  /* Secondary color palette (Gold) */
-  --color-secondary-50: #FCF9F2;
-  --color-secondary-100: #FAF1DD;
-  --color-secondary-200: #F3E0B5;
-  --color-secondary-300: #E8CA83;
-  --color-secondary-400: #DCB457;
-  --color-secondary-500: #C9A84C; /* Gold */
-  --color-secondary-600: #A88B3A;
-  --color-secondary-700: #856C2B;
-  --color-secondary-800: #624F1F;
-  --color-secondary-900: #3E3213;
+  /* Secondary color palette (tan/brown) */
+  --color-secondary-50: #FBF6F0;
+  --color-secondary-100: #F3E2CC;
+  --color-secondary-200: #E2B385;
+  --color-secondary-300: #D6A06F;
+  --color-secondary-400: #C99665;
+  --color-secondary-500: #B77F4E;
+  --color-secondary-600: #9D6639;
+  --color-secondary-700: #774C2B;
+  --color-secondary-800: #56351D;
+  --color-secondary-900: #352112;
 
-  /* Accent color palette (Green/Gold) */
-  --color-accent-50: #F4F7F2;
-  --color-accent-100: #E6EFE0;
-  --color-accent-200: #CEDFC0;
-  --color-accent-300: #ABC695;
-  --color-accent-400: #7FA565;
-  --color-accent-500: #2D5016;     /* Green */
-  --color-accent-600: #244111;
-  --color-accent-700: #1C330D;
-  --color-accent-800: #15260A;
-  --color-accent-900: #0E1A06;
+  /* Accent color palette (teal) */
+  --color-accent-50: #EEF3F4;
+  --color-accent-100: #D7D7D7;
+  --color-accent-200: #B9C6C9;
+  --color-accent-300: #8DA6AB;
+  --color-accent-400: #5D7E86;
+  --color-accent-500: #2D545E;
+  --color-accent-600: #24464E;
+  --color-accent-700: #1A3A40;
+  --color-accent-800: #103438;
+  --color-accent-900: #0B2529;
 
   /* Font mappings */
   --font-serif: 'Cormorant Garamond', Georgia, serif;
@@ -67,14 +67,14 @@
   --font-sans: 'Outfit', 'Inter', system-ui, sans-serif;
   
   /* Previous variables */
-  --color-cream: #F5F0E8;
-  --color-cream-dark: #EDE8DE;
-  --color-green: #2D5016;
-  --color-green-light: #3D6B20;
-  --color-gold: #C9A84C;
-  --color-gold-light: #D4B96B;
-  --color-charcoal: #2A2A2A;
-  --color-muted: #6B6B6B;
+  --color-cream: #D7D7D7;
+  --color-cream-dark: #D7D7D7;
+  --color-green: #2D545E;
+  --color-green-light: #103438;
+  --color-gold: #C99665;
+  --color-gold-light: #E2B385;
+  --color-charcoal: #103438;
+  --color-muted: #2D545E;
 }
 
 @layer base {
@@ -83,7 +83,7 @@
     color: var(--color-brand-text);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
-    background-image: radial-gradient(circle at 50% 0%, #ffffff 0%, #FAF8F5 72%, #F5F0E8 100%);
+    background-image: radial-gradient(circle at 50% 0%, #ffffff 0%, #F3E2CC 72%, #D7D7D7 100%);
     background-attachment: fixed;
   }
 
@@ -96,26 +96,26 @@
 @layer utilities {
   /* Premium Lifencolors gradients */
   .divine-gradient {
-    background: linear-gradient(135deg, #1C330D 0%, #2D5016 34%, #C9A84C 72%, #F5F0E8 100%);
+    background: linear-gradient(135deg, #103438 0%, #2D545E 34%, #C99665 72%, #E2B385 100%);
   }
   
   .saffron-gradient {
-    background: linear-gradient(135deg, #2D5016 0%, #C9A84C 100%);
+    background: linear-gradient(135deg, #2D545E 0%, #C99665 100%);
   }
 
   .primary-gradient {
-    background: linear-gradient(135deg, #F5F0E8 0%, #C9A84C 36%, #2D5016 100%);
+    background: linear-gradient(135deg, #D7D7D7 0%, #E2B385 36%, #103438 100%);
   }
   
   .glass-card-spiritual {
     background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(12px);
-    border: 1px solid rgba(201, 168, 76, 0.2);
-    box-shadow: 0 10px 40px rgba(45, 80, 22, 0.06);
+    border: 1px solid rgba(201, 150, 101, 0.2);
+    box-shadow: 0 10px 40px rgba(16, 52, 56, 0.06);
   }
   
   .text-glow-primary {
-    text-shadow: 0 0 15px rgba(45, 80, 22, 0.3), 0 0 28px rgba(201, 168, 76, 0.2);
+    text-shadow: 0 0 15px rgba(45, 84, 94, 0.3), 0 0 28px rgba(201, 150, 101, 0.2);
   }
 
   .scrollbar-hide::-webkit-scrollbar {
@@ -164,7 +164,7 @@
   min-height: 320px;
   place-items: center;
   overflow: hidden;
-  background: radial-gradient(circle at 50% 38%, #ffffff 0 18%, #FAF8F5 34%, #F5F0E8 100%);
+  background: radial-gradient(circle at 50% 38%, #ffffff 0 18%, #F3E2CC 34%, #D7D7D7 100%);
   color: var(--color-brand-text);
 }
 
@@ -176,9 +176,9 @@
   position: absolute;
   width: min(72vw, 360px);
   aspect-ratio: 1;
-  border: 1px solid rgba(201, 168, 76, 0.25);
+  border: 1px solid rgba(201, 150, 101, 0.25);
   border-radius: 999px;
-  box-shadow: inset 0 0 42px rgba(45, 80, 22, 0.08), 0 0 80px rgba(201, 168, 76, 0.1);
+  box-shadow: inset 0 0 42px rgba(16, 52, 56, 0.08), 0 0 80px rgba(201, 150, 101, 0.1);
 }
 
 .spiritual-loader__orbit {
@@ -194,13 +194,13 @@
   content: "";
   position: absolute;
   inset: 10%;
-  border: 1px dashed rgba(45, 80, 22, 0.15);
+  border: 1px dashed rgba(45, 84, 94, 0.15);
   border-radius: inherit;
 }
 
 .spiritual-loader__orbit::after {
   inset: 28%;
-  border-color: rgba(201, 168, 76, 0.2);
+  border-color: rgba(201, 150, 101, 0.2);
   animation: spiritual-loader-spin 3.8s linear infinite reverse;
 }
 
@@ -212,11 +212,11 @@
   width: 46px;
   height: 46px;
   place-items: center;
-  border: 1px solid rgba(201, 168, 76, 0.3);
+  border: 1px solid rgba(201, 150, 101, 0.3);
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.9);
   color: var(--color-accent);
-  box-shadow: 0 10px 28px rgba(45, 80, 22, 0.08);
+  box-shadow: 0 10px 28px rgba(16, 52, 56, 0.08);
   transform: rotate(var(--loader-angle)) translateX(min(31vw, 140px)) rotate(calc(var(--loader-angle) * -1));
 }
 
@@ -232,10 +232,10 @@
   width: clamp(96px, 22vw, 132px);
   aspect-ratio: 1;
   place-items: center;
-  border: 1px solid rgba(201, 168, 76, 0.35);
+  border: 1px solid rgba(201, 150, 101, 0.35);
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.95);
-  box-shadow: 0 18px 50px rgba(45, 80, 22, 0.08);
+  box-shadow: 0 18px 50px rgba(16, 52, 56, 0.08);
   transform: translate(-50%, -50%);
 }
 
@@ -243,7 +243,7 @@
   width: 72%;
   height: 72%;
   object-fit: contain;
-  filter: drop-shadow(0 8px 14px rgba(45, 80, 22, 0.12));
+  filter: drop-shadow(0 8px 14px rgba(16, 52, 56, 0.12));
 }
 
 .spiritual-loader__text {

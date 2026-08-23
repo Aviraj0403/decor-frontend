@@ -56,7 +56,7 @@ export default function ApplyCouponPanel({ isOpen, onClose, onApply, appliedCoup
       }`}
     >
       {/* Header */}
-      <div className="flex items-center justify-between bg-[#D35400] p-5 text-white">
+      <div className="flex items-center justify-between bg-[#2D545E] p-5 text-white">
         <div>
           <h2 className="text-lg font-bold">Coupons & Offers</h2>
           <p className="mt-0.5 text-[11px] text-white/65">Save more on your order</p>
@@ -79,7 +79,7 @@ export default function ApplyCouponPanel({ isOpen, onClose, onApply, appliedCoup
             </p>
             <button
               onClick={onClose}
-              className="mt-2 rounded-xl bg-[#D35400] px-5 py-2.5 text-white transition hover:bg-[#C45509]"
+              className="mt-2 rounded-xl bg-[#2D545E] px-5 py-2.5 text-white transition hover:bg-[#103438]"
             >
               Close
             </button>
@@ -104,11 +104,11 @@ export default function ApplyCouponPanel({ isOpen, onClose, onApply, appliedCoup
                 value={coupon}
                 onChange={(e) => setCoupon(e.target.value)}
                 placeholder="Enter coupon code"
-                className="min-w-0 flex-1 rounded-xl border border-[#dcd3c7] bg-brand-bg p-3 text-sm outline-none transition focus:border-[#E67E22] focus:ring-2 focus:ring-[#E67E22]/15"
+                className="min-w-0 flex-1 rounded-xl border border-[#dcd3c7] bg-brand-bg p-3 text-sm outline-none transition focus:border-[#C99665] focus:ring-2 focus:ring-[#C99665]/15"
               />
               <button
                 onClick={() => handleApply(coupon)}
-                className="rounded-xl bg-[#D35400] px-4 font-semibold text-white transition hover:bg-[#C45509]"
+                className="rounded-xl bg-[#2D545E] px-4 font-semibold text-white transition hover:bg-[#103438]"
               >
                 Apply
               </button>
@@ -129,7 +129,7 @@ export default function ApplyCouponPanel({ isOpen, onClose, onApply, appliedCoup
                     onClick={() => handleApply(offer.code, offer.name)}
                   >
                     <div className="flex flex-col">
-                      <span className="text-sm font-bold tracking-wide text-[#D35400] sm:text-base">
+                      <span className="text-sm font-bold tracking-wide text-[#2D545E] sm:text-base">
                         {offer.code}
                       </span>
                       <span className="text-gray-600 text-xs sm:text-sm">

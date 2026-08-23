@@ -84,7 +84,7 @@ export default function ComboSection({ categorySlug }) {
 
           <Link
             to="/new-products"
-            className="mt-1 inline-flex shrink-0 items-center gap-2 text-[10px] font-bold text-[#D35400] transition hover:text-brand-text sm:text-[11px]"
+            className="mt-1 inline-flex shrink-0 items-center gap-2 text-[10px] font-bold text-[#2D545E] transition hover:text-brand-text sm:text-[11px]"
           >
             <span className="sm:hidden">View All</span>
             <span className="hidden sm:inline">View All Combos</span>
@@ -97,7 +97,7 @@ export default function ComboSection({ categorySlug }) {
             type="button"
             onClick={() => scroll("left")}
             aria-label="Previous combo products"
-            className="absolute left-0 top-[35%] z-20 hidden h-9 w-9 -translate-x-1/2 items-center justify-center rounded-full border border-[#D35400]/20 bg-brand-bg text-[#D35400] shadow-md transition hover:bg-[#D35400] hover:text-white sm:flex"
+            className="absolute left-0 top-[35%] z-20 hidden h-9 w-9 -translate-x-1/2 items-center justify-center rounded-full border border-[#2D545E]/20 bg-brand-bg text-[#2D545E] shadow-md transition hover:bg-[#2D545E] hover:text-white sm:flex"
           >
             <ChevronLeft size={18} />
           </button>
@@ -131,7 +131,7 @@ export default function ComboSection({ categorySlug }) {
               ))}
 
             {isError && (
-              <p className="w-full py-12 text-center text-sm text-[#D35400]">
+              <p className="w-full py-12 text-center text-sm text-[#2D545E]">
                 {error?.message || "Unable to load combo products."}
               </p>
             )}
@@ -161,12 +161,12 @@ export default function ComboSection({ categorySlug }) {
                   >
                     <div className="relative overflow-hidden rounded-xl bg-[#f7f7f7]">
                       {discount > 0 && (
-                        <span className="absolute left-2 top-2 z-10 rounded-md bg-[#D35400] px-2.5 py-1 text-[9px] font-bold text-white shadow-sm sm:text-[10px]">
+                        <span className="absolute left-2 top-2 z-10 rounded-md bg-[#2D545E] px-2.5 py-1 text-[9px] font-bold text-white shadow-sm sm:text-[10px]">
                           {discount}% OFF
                         </span>
                       )}
 
-                      <span className="absolute right-2 top-2 z-10 grid h-7 w-7 place-items-center rounded-full bg-brand-bg/70 text-[#D35400]">
+                      <span className="absolute right-2 top-2 z-10 grid h-7 w-7 place-items-center rounded-full bg-brand-bg/70 text-[#2D545E]">
                         <Heart size={14} />
                       </span>
 
@@ -189,7 +189,7 @@ export default function ComboSection({ categorySlug }) {
                       onClick={() => navigate(`/product/${product.slug}`)}
                       className="mt-2.5 block w-full text-left"
                     >
-                      <h3 className="line-clamp-1 text-[12px] font-semibold text-brand-text transition group-hover:text-[#D35400] sm:text-[13px]">
+                      <h3 className="line-clamp-1 text-[12px] font-semibold text-brand-text transition group-hover:text-[#2D545E] sm:text-[13px]">
                         {product.name}
                       </h3>
                       <p className="mt-1 line-clamp-1 text-[9px] text-[#888075] sm:text-[10px]">
@@ -213,7 +213,7 @@ export default function ComboSection({ categorySlug }) {
                         type="button"
                         onClick={() => addProductToCart(product)}
                         disabled={busyProduct === product._id}
-                        className="inline-flex h-9 items-center justify-center gap-1 rounded-md bg-[#D35400] px-1 text-[9px] font-semibold text-white transition hover:bg-black disabled:cursor-wait disabled:opacity-60 sm:gap-1.5 sm:px-2 sm:text-[11px]"
+                        className="inline-flex h-9 items-center justify-center gap-1 rounded-md bg-[#2D545E] px-1 text-[9px] font-semibold text-white transition hover:bg-black disabled:cursor-wait disabled:opacity-60 sm:gap-1.5 sm:px-2 sm:text-[11px]"
                       >
                         <ShoppingCart size={13} />
                         {busyProduct === product._id
@@ -227,7 +227,7 @@ export default function ComboSection({ categorySlug }) {
                         type="button"
                         onClick={() => addProductToCart(product, true)}
                         disabled={busyProduct === product._id}
-                        className="inline-flex h-9 items-center justify-center gap-1 rounded-md border border-[#D35400] px-1 text-[9px] font-semibold text-[#D35400] transition hover:bg-[#D35400] hover:text-white disabled:cursor-wait disabled:opacity-60 sm:gap-1.5 sm:px-2 sm:text-[11px]"
+                        className="inline-flex h-9 items-center justify-center gap-1 rounded-md border border-[#2D545E] px-1 text-[9px] font-semibold text-[#2D545E] transition hover:bg-[#2D545E] hover:text-white disabled:cursor-wait disabled:opacity-60 sm:gap-1.5 sm:px-2 sm:text-[11px]"
                       >
                         <Zap size={13} />
                         Buy Now
@@ -242,7 +242,7 @@ export default function ComboSection({ categorySlug }) {
             type="button"
             onClick={() => scroll("right")}
             aria-label="Next combo products"
-            className="absolute right-0 top-[35%] z-20 hidden h-10 w-10 translate-x-1/2 items-center justify-center rounded-full border border-[#D35400]/20 bg-brand-bg text-[#D35400] shadow-md transition hover:bg-[#D35400] hover:text-white sm:flex"
+            className="absolute right-0 top-[35%] z-20 hidden h-10 w-10 translate-x-1/2 items-center justify-center rounded-full border border-[#2D545E]/20 bg-brand-bg text-[#2D545E] shadow-md transition hover:bg-[#2D545E] hover:text-white sm:flex"
           >
             <ChevronRight size={19} />
           </button>

@@ -57,7 +57,7 @@ const paymentIcons = [
 ];
 
 function FooterLink({ link }) {
-  const className = "font-sans text-[16px] leading-none text-black transition hover:text-black/60";
+  const className = "font-sans text-[16px] leading-none text-[#103438] transition hover:text-[#2D545E]/70";
 
   if (link.external) {
     return (
@@ -76,7 +76,7 @@ function FooterLink({ link }) {
 
 export default function Footer() {
   return (
-    <footer className="relative overflow-hidden bg-[#f5f5f5] text-black">
+    <footer className="relative overflow-hidden bg-[#D7D7D7] text-[#103438]">
       <div
         className="relative"
         style={{
@@ -102,7 +102,7 @@ export default function Footer() {
         >
           {footerColumns.map((column) => (
             <div key={column.title} style={{ width: column.title === "Life n Colors" ? 170 : column.title === "Connect" ? 230 : 270, flex: "0 0 auto" }}>
-              <h2 className="font-sans text-[24px] font-bold leading-none text-black lg:text-[26px]">{column.title}</h2>
+              <h2 className="font-sans text-[24px] font-bold leading-none text-[#103438] lg:text-[26px]">{column.title}</h2>
               <ul className="mt-6 space-y-4 lg:space-y-5">
                 {column.links.map((link) => (
                   <li key={link.label}>
@@ -114,8 +114,8 @@ export default function Footer() {
           ))}
 
           <div className="text-center" style={{ width: 330, justifySelf: "end", marginRight: 18 }}>
-            <h2 className="font-sans text-[20px] font-bold leading-none text-black lg:text-[22px]">Our Newsletter</h2>
-            <p className="mx-auto mt-7 max-w-[300px] font-sans text-[13px] leading-6 text-black lg:text-[14px]">
+            <h2 className="font-sans text-[20px] font-bold leading-none text-[#103438] lg:text-[22px]">Our Newsletter</h2>
+            <p className="mx-auto mt-7 max-w-[300px] font-sans text-[13px] leading-6 text-[#103438] lg:text-[14px]">
               Stay informed about the latest
               <br />
               trends in home decor.
@@ -128,11 +128,11 @@ export default function Footer() {
               <input
                 type="email"
                 placeholder="Email"
-                className="h-11 min-w-0 flex-1 rounded border border-[#cfcfcf] bg-white px-3 font-sans text-sm text-black outline-none placeholder:text-[#666]"
+                className="h-11 min-w-0 flex-1 rounded border border-[#D7D7D7] bg-white px-3 font-sans text-sm text-[#103438] outline-none placeholder:text-[#2D545E]/70 focus:border-[#C99665]"
               />
               <button
                 type="submit"
-                className="h-11 rounded bg-[#292929] px-5 font-sans text-sm font-bold uppercase text-white transition hover:bg-black"
+                className="h-11 rounded bg-[#2D545E] px-5 font-sans text-sm font-bold uppercase text-white transition hover:bg-[#103438]"
               >
                 Subscribe
               </button>
@@ -142,9 +142,9 @@ export default function Footer() {
 
       </div>
 
-      <div className="relative border-t border-[#e4d7c4] bg-[#e8dcc6] px-4 py-7 sm:px-6 lg:px-4">
+      <div className="relative border-t border-[#C99665]/35 bg-[#E2B385] px-4 py-7 sm:px-6 lg:px-4">
         <div className="mx-auto flex max-w-[1880px] flex-col items-center justify-between gap-5 sm:flex-row">
-          <p className="font-sans text-[15px] text-black">@2026, Life n Colors</p>
+          <p className="font-sans text-[15px] text-[#103438]">@2026, Life n Colors</p>
           <div className="flex items-center gap-3">
             {paymentIcons.map((icon) => (
               <img key={icon.alt} src={icon.src} alt={icon.alt} className="h-8 w-auto bg-white object-contain" />
@@ -157,17 +157,17 @@ export default function Footer() {
         href="https://wa.me/918700986208"
         target="_blank"
         rel="noreferrer"
-        className="fixed bottom-[112px] right-7 z-[70] grid h-[70px] w-[70px] place-items-center rounded-full bg-[#20d466] text-white shadow-lg transition hover:scale-105"
+        className="fixed bottom-[92px] right-6 z-[70] grid h-[54px] w-[54px] place-items-center rounded-full bg-[#2D545E] text-white shadow-lg transition hover:scale-105"
         aria-label="WhatsApp"
       >
-        <FaWhatsapp size={36} />
+        <FaWhatsapp size={28} />
       </a>
       <a
         href="tel:+919310845706"
-        className="fixed bottom-8 right-7 z-[70] grid h-[74px] w-[74px] place-items-center rounded-full bg-[#9d2a1c] text-white shadow-lg transition hover:scale-105"
+        className="fixed bottom-6 right-6 z-[70] grid h-[56px] w-[56px] place-items-center rounded-full bg-[#103438] text-white shadow-lg transition hover:scale-105"
         aria-label="Call"
       >
-        <Phone size={31} fill="currentColor" />
+        <Phone size={25} fill="currentColor" />
       </a>
     </footer>
   );

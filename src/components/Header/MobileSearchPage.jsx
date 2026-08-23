@@ -165,7 +165,7 @@ export default function MobileSearchPage() {
                   setQuery("");
                   inputRef.current?.focus();
                 }}
-                className="absolute right-3 top-1/2 grid h-8 w-8 -translate-y-1/2 place-items-center rounded-full text-[#766b5d] transition hover:bg-[#ece8e2] hover:text-[#D35400]"
+                className="absolute right-3 top-1/2 grid h-8 w-8 -translate-y-1/2 place-items-center rounded-full text-[#766b5d] transition hover:bg-[#ece8e2] hover:text-[#2D545E]"
                 aria-label="Clear search"
               >
                 <X size={16} />
@@ -175,7 +175,7 @@ export default function MobileSearchPage() {
           <button
             type="submit"
             disabled={!hasQuery}
-            className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-[#D35400] text-white shadow-sm transition hover:bg-[#C45509] active:scale-95 disabled:cursor-not-allowed disabled:opacity-40 sm:h-14 sm:w-auto sm:px-6"
+            className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-[#2D545E] text-white shadow-sm transition hover:bg-[#103438] active:scale-95 disabled:cursor-not-allowed disabled:opacity-40 sm:h-14 sm:w-auto sm:px-6"
             aria-label="Search"
           >
             <Search size={20} className="sm:hidden" />
@@ -222,7 +222,7 @@ export default function MobileSearchPage() {
 
             {canSearch && isError && (
               <div className="rounded-3xl border border-[#ead6d8] bg-brand-bg px-6 py-14 text-center shadow-sm">
-                <span className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-[#fff0f1] text-[#D35400]">
+                <span className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-[#fff0f1] text-[#2D545E]">
                   <X size={25} />
                 </span>
                 <h2 className="mt-4 font-serif text-xl font-semibold text-[#4b0910]">
@@ -272,19 +272,19 @@ export default function MobileSearchPage() {
                             }}
                           />
                           {item.discount > 0 && (
-                            <span className="absolute left-2 top-2 rounded-full bg-[#D35400] px-2 py-1 text-[9px] font-bold text-white shadow-sm sm:text-[10px]">
+                            <span className="absolute left-2 top-2 rounded-full bg-[#2D545E] px-2 py-1 text-[9px] font-bold text-white shadow-sm sm:text-[10px]">
                               {item.discount}% OFF
                             </span>
                           )}
                         </div>
 
                         <div className="px-1 pb-1 pt-3">
-                          <p className="line-clamp-2 min-h-9 text-xs font-semibold leading-[18px] text-[#3d352b] transition group-hover:text-[#D35400] sm:text-sm">
+                          <p className="line-clamp-2 min-h-9 text-xs font-semibold leading-[18px] text-[#3d352b] transition group-hover:text-[#2D545E] sm:text-sm">
                             {item.name}
                           </p>
                           <div className="mt-3 flex flex-wrap items-baseline gap-x-1.5 gap-y-1">
                             {price != null ? (
-                              <span className="text-sm font-bold text-[#D35400] sm:text-base">
+                              <span className="text-sm font-bold text-[#2D545E] sm:text-base">
                                 ₹{price}
                               </span>
                             ) : (
@@ -325,7 +325,7 @@ export default function MobileSearchPage() {
                 <button
                   type="button"
                   onClick={() => setQuery("")}
-                  className="mt-5 rounded-full bg-[#D35400] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#C45509]"
+                  className="mt-5 rounded-full bg-[#2D545E] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#103438]"
                 >
                   Explore categories
                 </button>
@@ -346,7 +346,7 @@ export default function MobileSearchPage() {
                   <button
                     type="button"
                     onClick={clearRecentSearches}
-                    className="text-xs font-semibold text-[#D35400] hover:underline"
+                    className="text-xs font-semibold text-[#2D545E] hover:underline"
                   >
                     Clear all
                   </button>
@@ -360,14 +360,14 @@ export default function MobileSearchPage() {
                       <button
                         type="button"
                         onClick={() => handleSuggestedSearch(searchTerm)}
-                        className="py-2 pl-3.5 pr-2 text-xs font-medium text-[#594f43] transition hover:text-[#D35400] sm:text-sm"
+                        className="py-2 pl-3.5 pr-2 text-xs font-medium text-[#594f43] transition hover:text-[#2D545E] sm:text-sm"
                       >
                         {searchTerm}
                       </button>
                       <button
                         type="button"
                         onClick={() => removeRecentSearch(searchTerm)}
-                        className="mr-1 grid h-7 w-7 place-items-center rounded-full text-[#a19586] transition hover:bg-[#f6ecdc] hover:text-[#D35400]"
+                        className="mr-1 grid h-7 w-7 place-items-center rounded-full text-[#a19586] transition hover:bg-[#f6ecdc] hover:text-[#2D545E]"
                         aria-label={`Remove ${searchTerm} from recent searches`}
                       >
                         <X size={13} />
@@ -396,7 +396,7 @@ export default function MobileSearchPage() {
                     <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[#f7edda] font-serif text-xs font-bold text-[#8d692c]">
                       {String(index + 1).padStart(2, "0")}
                     </span>
-                    <span className="flex-1 text-sm font-semibold text-[#443b31] group-hover:text-[#D35400]">
+                    <span className="flex-1 text-sm font-semibold text-[#443b31] group-hover:text-[#2D545E]">
                       {item}
                     </span>
                     <ChevronRight
@@ -428,7 +428,7 @@ export default function MobileSearchPage() {
               )}
 
               {isCategoriesError && (
-                <p className="rounded-2xl border border-[#eadfc9] bg-brand-bg px-4 py-8 text-center text-sm text-[#D35400]">
+                <p className="rounded-2xl border border-[#eadfc9] bg-brand-bg px-4 py-8 text-center text-sm text-[#2D545E]">
                   Categories are unavailable right now. Please try again later.
                 </p>
               )}
@@ -450,7 +450,7 @@ export default function MobileSearchPage() {
                           loading="lazy"
                         />
                       </div>
-                      <span className="mt-3 block line-clamp-1 text-xs font-semibold text-[#463d32] transition group-hover:text-[#D35400] sm:text-sm">
+                      <span className="mt-3 block line-clamp-1 text-xs font-semibold text-[#463d32] transition group-hover:text-[#2D545E] sm:text-sm">
                         {category.name}
                       </span>
                       <span className="mb-1 mt-1 inline-flex items-center gap-1 text-[10px] font-semibold text-[#9b7b3e]">

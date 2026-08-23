@@ -8,7 +8,7 @@ import ProductCard from '../components/ProductCard';
 // ── Hero Slides ─────────────────────────────────────────────────────────────
 const HERO_SLIDES = [
   {
-    bg: 'from-[#1A2E0A] to-[#2D5016]',
+    bg: 'from-[#103438] to-[#2D545E]',
     tag: 'New Collection 2026',
     heading: 'Where Art Meets\nYour Living Space',
     sub: 'Handcrafted textiles & wallpapers that transform every wall and corner into a masterpiece.',
@@ -38,12 +38,12 @@ const HERO_SLIDES = [
 
 // ── Category Cards ───────────────────────────────────────────────────────────
 const CATEGORIES = [
-  { label: 'Cushion Covers', href: '/collections/cushion-covers', emoji: '🛋️', color: '#C9A84C' },
-  { label: 'Wallpapers', href: '/collections/wallpapers', emoji: '🖼️', color: '#2D5016' },
+  { label: 'Cushion Covers', href: '/collections/cushion-covers', emoji: '🛋️', color: '#C99665' },
+  { label: 'Wallpapers', href: '/collections/wallpapers', emoji: '🖼️', color: '#2D545E' },
   { label: 'Curtains', href: '/collections/curtains', emoji: '🪟', color: '#8B4513' },
   { label: 'Table Linen', href: '/collections/table-linen', emoji: '🍽️', color: '#5B7FA6' },
   { label: 'Wall Art', href: '/collections/wall-art', emoji: '🎨', color: '#8B6C3A' },
-  { label: 'All Collections', href: '/collections/all', emoji: '✨', color: '#2A2A2A' },
+  { label: 'All Collections', href: '/collections/all', emoji: '✨', color: '#103438' },
 ];
 
 // ── USPs ─────────────────────────────────────────────────────────────────────
@@ -226,7 +226,7 @@ export default function HomePage() {
       {/* ── Featured Banner ───────────────────────────────────── */}
       <section
         className="relative py-24 overflow-hidden"
-        style={{ background: 'linear-gradient(135deg, #1A2E0A 0%, #2D5016 60%, #3D6B20 100%)' }}
+        style={{ background: 'linear-gradient(135deg, #103438 0%, #2D545E 60%, #103438 100%)' }}
       >
         <div className="absolute inset-0 opacity-10"
           style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/batthern.png")' }}

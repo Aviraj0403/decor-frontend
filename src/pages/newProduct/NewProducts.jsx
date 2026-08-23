@@ -21,8 +21,8 @@ const NewProducts = () => {
   // Loading state
   if (isLoading) {
     return (
-      <div className="flex min-h-[50vh] items-center justify-center bg-[#fbf7f1]">
-        <div className="text-lg font-medium text-[#E67E22]">Awakening the Divine Collection...</div>
+      <div className="flex min-h-[50vh] items-center justify-center bg-[#D7D7D7]">
+        <div className="text-lg font-medium text-[#C99665]">Awakening the Divine Collection...</div>
       </div>
     );
   }
@@ -30,7 +30,7 @@ const NewProducts = () => {
   // Error handling state
   if (isError) {
     return (
-      <div className="flex min-h-[50vh] items-center justify-center bg-[#fbf7f1]">
+      <div className="flex min-h-[50vh] items-center justify-center bg-[#D7D7D7]">
         <div className="text-lg font-medium text-red-800">Unable to load products: {error.message}</div>
       </div>
     );
@@ -40,18 +40,18 @@ const NewProducts = () => {
   const products = productsData?.products || [];
 
   return (
-    <section className="bg-[#fbf7f1] py-10 sm:py-14 min-h-screen">
+    <section className="bg-[#D7D7D7] py-10 sm:py-14 min-h-screen">
       <div className="mx-auto max-w-[1360px] px-4 sm:px-6">
         
         {/* Header Section */}
         <div className="mb-12 text-center">
-          <h2 className="font-serif text-3xl font-bold text-[#E67E22] sm:text-4xl">
+          <h2 className="font-serif text-3xl font-bold text-[#C99665] sm:text-4xl">
             Our Divine Collection
           </h2>
           <div className="mx-auto mt-4 flex items-center justify-center gap-2">
-            <div className="h-px w-12 bg-[#E67E22]/40"></div>
-            <div className="h-2 w-2 rotate-45 bg-[#E67E22]"></div>
-            <div className="h-px w-12 bg-[#E67E22]/40"></div>
+            <div className="h-px w-12 bg-[#C99665]/40"></div>
+            <div className="h-2 w-2 rotate-45 bg-[#C99665]"></div>
+            <div className="h-px w-12 bg-[#C99665]/40"></div>
           </div>
           <p className="mt-4 text-sm font-medium text-[#5c4a3d] max-w-2xl mx-auto">
             Explore our extensive range of authentic spiritual products carefully curated to bring peace, prosperity, and positive energy to your life.

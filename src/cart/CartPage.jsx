@@ -121,7 +121,7 @@ export default function CartPage() {
           <div className="w-full max-w-6xl flex flex-col gap-6">
             <div className="w-full">
               <div className="flex min-h-[320px] flex-col items-center justify-center rounded-2xl border border-[#e7ded1] bg-brand-bg p-6 text-center shadow-sm">
-                <LoaderCircle size={28} className="animate-spin text-[#E67E22]" />
+                <LoaderCircle size={28} className="animate-spin text-[#C99665]" />
                 <h2 className="mt-4 font-semibold text-[#332c24]">Preparing your cart...</h2>
                 <p className="mt-1 text-xs text-[#81776c]">Please wait while we sync your items.</p>
               </div>
@@ -138,7 +138,7 @@ export default function CartPage() {
           <button
             type="button"
             onClick={() => navigate("/new-products")}
-            className="mb-2 inline-flex items-center gap-1.5 text-xs font-semibold text-[#766b5e] hover:text-[#D35400]"
+            className="mb-2 inline-flex items-center gap-1.5 text-xs font-semibold text-[#766b5e] hover:text-[#2D545E]"
           >
             <ArrowLeft size={15} /> Continue shopping
           </button>
@@ -150,13 +150,13 @@ export default function CartPage() {
           {cartItems.length === 0 ? (
             // <p>Your cart is empty.</p>
             <div className="flex min-h-[390px] flex-col items-center justify-center rounded-2xl border border-[#e7ded1] bg-brand-bg px-6 text-center shadow-sm">
-              <span className="grid h-20 w-20 place-items-center rounded-full bg-[#f8efe2] text-[#E67E22]">
+              <span className="grid h-20 w-20 place-items-center rounded-full bg-[#f8efe2] text-[#C99665]">
                 <ShoppingBag size={34} strokeWidth={1.6} />
               </span>
               <h2 className="mt-5 text-xl font-bold text-[#312b24]">Your cart is empty</h2>
               <p className="mt-2 max-w-sm text-sm leading-6 text-[#7c7369]">Explore our spiritual essentials and add something meaningful to your journey.</p>
               <button
-                className="mt-6 rounded-xl bg-[#D35400] px-7 py-3 text-sm font-bold text-white shadow-[0_8px_20px_rgba(105,3,12,0.2)] transition hover:bg-[#C45509] active:scale-[0.98]"
+                className="mt-6 rounded-xl bg-[#2D545E] px-7 py-3 text-sm font-bold text-white shadow-[0_8px_20px_rgba(105,3,12,0.2)] transition hover:bg-[#103438] active:scale-[0.98]"
                 onClick={() => navigate("/new-products")}
               >
                 Explore Products
@@ -191,7 +191,7 @@ export default function CartPage() {
                       {item.size && <span className="rounded-md bg-[#f4f1ec] px-2 py-1 text-[10px] text-[#756b60]">Size: {item.size}</span>}
                       {item.color && <span className="rounded-md bg-[#f4f1ec] px-2 py-1 text-[10px] text-[#756b60]">Color: {item.color}</span>}
                     </div>
-                    <p className="mt-2 font-bold text-[#D35400]">
+                    <p className="mt-2 font-bold text-[#2D545E]">
                       ₹{item.price.toFixed(2)}
                     </p>
                   </div>
@@ -200,7 +200,7 @@ export default function CartPage() {
                 <div className="flex items-center justify-between gap-3 border-t border-[#f0ebe4] pt-3 sm:justify-end sm:border-0 sm:pt-0">
                   <div className="flex h-10 items-center overflow-hidden rounded-lg border border-[#dcd3c7] bg-brand-bg shadow-sm">
                     <button
-                      className="grid h-full w-9 place-items-center text-[#6e6459] transition hover:bg-[#f5eee3] hover:text-[#D35400] disabled:opacity-40"
+                      className="grid h-full w-9 place-items-center text-[#6e6459] transition hover:bg-[#f5eee3] hover:text-[#2D545E] disabled:opacity-40"
                       onClick={() => handleDecrement(item.id, item.size, item.color)}
                       disabled={loading}
                     >
@@ -208,7 +208,7 @@ export default function CartPage() {
                     </button>
                     <span className="grid h-full min-w-9 place-items-center border-x border-[#e7e0d7] px-2 text-sm font-bold">{item.quantity}</span>
                     <button
-                      className="grid h-full w-9 place-items-center text-[#6e6459] transition hover:bg-[#f5eee3] hover:text-[#D35400] disabled:opacity-40"
+                      className="grid h-full w-9 place-items-center text-[#6e6459] transition hover:bg-[#f5eee3] hover:text-[#2D545E] disabled:opacity-40"
                       onClick={() => handleIncrement(item.id, item.size, item.color)}
                       disabled={loading}
                     >
@@ -265,8 +265,8 @@ export default function CartPage() {
                 className="mb-5 flex w-full items-center justify-between rounded-xl border border-dashed border-[#cdb78f] bg-[#fffbf4] p-3 text-sm font-semibold text-[#5b4a30] transition hover:border-[#8d692c] hover:bg-[#fff7e8]"
                 onClick={() => setCouponOpen(true)}
               >
-                <span className="inline-flex items-center gap-2"><Tag size={17} className="text-[#E67E22]" /> Apply Coupon</span>
-                <span className="text-xs text-[#E67E22]">View offers</span>
+                <span className="inline-flex items-center gap-2"><Tag size={17} className="text-[#C99665]" /> Apply Coupon</span>
+                <span className="text-xs text-[#C99665]">View offers</span>
               </button>
             )}
 
@@ -299,7 +299,7 @@ export default function CartPage() {
                   <p className="text-sm font-bold text-[#302a23]">Total Amount</p>
                   <p className="text-[10px] text-[#8a8075]">Inclusive of all taxes</p>
                 </div>
-                <p className="text-xl font-extrabold text-[#D35400]">₹{finalAmount.toFixed(2)}</p>
+                <p className="text-xl font-extrabold text-[#2D545E]">₹{finalAmount.toFixed(2)}</p>
               </div>
             </div>
             <button
@@ -331,7 +331,7 @@ export default function CartPage() {
                 }
               }}
               disabled={cartItems.length === 0 || loading}
-              className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#D35400] py-3.5 text-sm font-bold text-white shadow-[0_8px_20px_rgba(105,3,12,0.22)] transition hover:bg-[#C45509] active:scale-[0.99] disabled:cursor-not-allowed disabled:bg-[#c8bbb5] disabled:shadow-none"
+              className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#2D545E] py-3.5 text-sm font-bold text-white shadow-[0_8px_20px_rgba(105,3,12,0.22)] transition hover:bg-[#103438] active:scale-[0.99] disabled:cursor-not-allowed disabled:bg-[#c8bbb5] disabled:shadow-none"
 >
 <ShieldCheck size={18} /> Proceed to Checkout
 </button>
@@ -348,7 +348,7 @@ export default function CartPage() {
 
             <div className="mt-4 grid grid-cols-2 border-t border-[#eee7de] pt-4">
               <span className="flex items-center gap-1.5 text-[10px] font-semibold text-[#6f665c]"><ShieldCheck size={14} className="text-[#548164]" /> Secure Payment</span>
-              <span className="flex items-center justify-end gap-1.5 text-[10px] font-semibold text-[#6f665c]"><Truck size={15} className="text-[#E67E22]" /> Reliable Delivery</span>
+              <span className="flex items-center justify-end gap-1.5 text-[10px] font-semibold text-[#6f665c]"><Truck size={15} className="text-[#C99665]" /> Reliable Delivery</span>
             </div>
           </div>
         </div>
