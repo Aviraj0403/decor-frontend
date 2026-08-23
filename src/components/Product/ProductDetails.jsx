@@ -79,6 +79,44 @@ const getColorHex = (colorName) => {
   return colorMap[normalized] || null;
 }; 
 
+const findImageForColor = (images, color, selectedVariant = null) => {
+  if (!images || !images.length || !color) return -1;
+  const normalizedColor = color.toLowerCase().trim();
+  
+  // 1. Try smart substring match on filename
+  for (let i = 0; i < images.length; i++) {
+    const url = images[i].toLowerCase();
+    const filename = url.substring(url.lastIndexOf('/') + 1);
+    const cleanedFilename = filename.replace(/[-_]/g, ' ');
+    if (cleanedFilename.includes(normalizedColor) || cleanedFilename.replace(/\s+/g, '').includes(normalizedColor.replace(/\s+/g, ''))) {
+      return i;
+    }
+  }
+
+  // 2. Try matching individual color words
+  const colorWords = normalizedColor.split(/\s+/).filter(w => w.length > 2);
+  for (let i = 0; i < images.length; i++) {
+    const url = images[i].toLowerCase();
+    const filename = url.substring(url.lastIndexOf('/') + 1);
+    const cleanedFilename = filename.replace(/[-_]/g, ' ');
+    for (const word of colorWords) {
+      if (cleanedFilename.includes(word)) {
+        return i;
+      }
+    }
+  }
+
+  // 3. Fallback to index-based mapping
+  if (selectedVariant && Array.isArray(selectedVariant.color)) {
+    const colorIdx = selectedVariant.color.indexOf(color);
+    if (colorIdx !== -1 && colorIdx < images.length) {
+      return colorIdx;
+    }
+  }
+
+  return -1;
+};
+
 export default function ProductDetails() {
   const { slug } = useParams();
   const navigate = useNavigate();
@@ -88,17 +126,17 @@ export default function ProductDetails() {
   const [selectedColor, setSelectedColor] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [showPopup, setShowPopup] = useState(false);
-const [popupMessage, setPopupMessage] = useState("");
+  const [popupMessage, setPopupMessage] = useState("");
 
-useEffect(() => {
-  if (showPopup) {
-    const timer = setTimeout(() => {
-      setShowPopup(false);
-    }, 10000); // 1.5 sec
+  useEffect(() => {
+    if (showPopup) {
+      const timer = setTimeout(() => {
+        setShowPopup(false);
+      }, 10000); // 10 sec
 
-    return () => clearTimeout(timer);
-  }
-}, [showPopup]);
+      return () => clearTimeout(timer);
+    }
+  }, [showPopup]);
 
   const { cartItems, addToCart } = useCartActions();
 
@@ -121,6 +159,15 @@ useEffect(() => {
       setActiveTab("additional");
     }
   }, [product]);
+
+  useEffect(() => {
+    if (selectedColor && product?.pimages) {
+      const imgIdx = findImageForColor(product.pimages, selectedColor, selectedVariant);
+      if (imgIdx !== -1) {
+        setMainImage(product.pimages[imgIdx]);
+      }
+    }
+  }, [selectedColor, selectedVariant, product]);
 
   useEffect(() => {
     if (!product) return;

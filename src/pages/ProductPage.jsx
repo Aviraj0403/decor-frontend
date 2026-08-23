@@ -77,6 +77,44 @@ const getColorHex = (colorName) => {
   return colorMap[normalized] || null;
 };
 
+const findImageForColor = (images, color, selectedVariant = null) => {
+  if (!images || !images.length || !color) return -1;
+  const normalizedColor = color.toLowerCase().trim();
+  
+  // 1. Try smart substring match on filename
+  for (let i = 0; i < images.length; i++) {
+    const url = images[i].toLowerCase();
+    const filename = url.substring(url.lastIndexOf('/') + 1);
+    const cleanedFilename = filename.replace(/[-_]/g, ' ');
+    if (cleanedFilename.includes(normalizedColor) || cleanedFilename.replace(/\s+/g, '').includes(normalizedColor.replace(/\s+/g, ''))) {
+      return i;
+    }
+  }
+
+  // 2. Try matching individual color words
+  const colorWords = normalizedColor.split(/\s+/).filter(w => w.length > 2);
+  for (let i = 0; i < images.length; i++) {
+    const url = images[i].toLowerCase();
+    const filename = url.substring(url.lastIndexOf('/') + 1);
+    const cleanedFilename = filename.replace(/[-_]/g, ' ');
+    for (const word of colorWords) {
+      if (cleanedFilename.includes(word)) {
+        return i;
+      }
+    }
+  }
+
+  // 3. Fallback to index-based mapping
+  if (selectedVariant && Array.isArray(selectedVariant.color)) {
+    const colorIdx = selectedVariant.color.indexOf(color);
+    if (colorIdx !== -1 && colorIdx < images.length) {
+      return colorIdx;
+    }
+  }
+
+  return -1;
+};
+
 function formatPrice(n) {
   return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(n);
 }
@@ -119,6 +157,15 @@ export default function ProductPage() {
       setSelectedColor(firstVariant?.color?.[0] || null);
     }
   }, [data]);
+
+  useEffect(() => {
+    if (selectedColor && data?.product?.pimages) {
+      const imgIdx = findImageForColor(data.product.pimages, selectedColor, selectedVariant);
+      if (imgIdx !== -1) {
+        setSelectedImg(imgIdx);
+      }
+    }
+  }, [selectedColor, selectedVariant, data]);
 
   // Scroll listener for sticky bar
   useEffect(() => {
