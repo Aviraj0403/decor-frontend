@@ -34,6 +34,7 @@ import Invoice1 from "./checkout/Invoice1.jsx";
 import ThankYouPage from "./checkout/ThankYouPage.jsx";
 import NewProducts from "./pages/newProduct/NewProducts.jsx";
 import MobileSearchPage from "./components/Header/MobileSearchPage.jsx";
+import BestSellingWallpapers from "./pages/collections/BestSellingWallpapers.jsx";
 // import Login from "./authentication/Login.jsx";
 // import Signup from "./authentication/Signup.jsx";
 import RequireAuth from "./components/RequireAuth.jsx";
@@ -82,6 +83,7 @@ const router = createBrowserRouter([
        {path : "/order-success/:orderId", element: <ThankYouPage />},
        {path : "/profile/invoice/:orderId", element: <Invoice />},
        {path:"/new-products", element:<NewProducts />},
+       {path:"/collections/best-selling-wallpapers", element:<BestSellingWallpapers />},
        {path :"/search", element:<MobileSearchPage />},
 
       // {path: "/auth", element: < Login/>},

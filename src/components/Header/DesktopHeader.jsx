@@ -122,20 +122,38 @@ export default function DesktopHeader({ isHomePage = false }) {
     else navigate("/signin?redirect=/profile");
   };
 
-  const overlayMode = isHomePage && !isScrolled;
-  const transparentMode = overlayMode && !isHeaderHovered && !activeMenu;
+  const homeOverlayMode = isHomePage && !isScrolled;
+  const nonHomeExpandedMode = !isHomePage && !isScrolled;
+  const expandedMode = homeOverlayMode || nonHomeExpandedMode;
+  const transparentMode = homeOverlayMode && !isHeaderHovered && !activeMenu;
+  const navTopClass = isHomePage ? "top-[42px]" : "top-0";
+  const expandedHeightClass = isHomePage || isScrolled ? "h-[154px]" : "h-[118px]";
+  const spacerHeightClass = isScrolled ? "h-[92px]" : "h-[118px]";
+  const expandedInnerPadding = isHomePage ? "pt-7" : "pt-5";
+  const expandedLogoClass = isHomePage ? "top-3 h-[50px] w-[175px]" : "top-2 h-[40px] w-[150px]";
+  const expandedLogoImageClass = isHomePage ? "w-[160px]" : "w-[140px]";
+  const expandedSocialClass = isHomePage ? "right-12 top-2 gap-4 text-[15px]" : "right-12 top-2 gap-3 text-[13px]";
+  const megaTopClass = isHomePage
+    ? expandedMode
+      ? "top-[196px]"
+      : "top-[134px]"
+    : expandedMode
+      ? "top-[118px]"
+      : "top-[92px]";
   const textClass = transparentMode ? "text-white" : "text-black";
   const hoverClass = transparentMode ? "hover:text-white/75" : "hover:text-black";
 
   return (
     <header className="relative z-[999] w-full">
-      <div className="fixed left-0 top-0 z-[999] flex h-[42px] w-full items-center bg-[#cbb58e] px-8 text-[16px] font-semibold text-white transition-colors duration-300">
-        <div className="mx-auto grid w-full max-w-[1220px] grid-cols-[1fr_auto_1fr] items-center">
-          <ChevronLeft size={18} className="justify-self-end text-white/70" strokeWidth={1.5} />
-          <p className="px-28 text-center">Shipping to 28+ Countries</p>
-          <ChevronRight size={18} className="text-white/70" strokeWidth={1.5} />
+      {isHomePage && (
+        <div className="fixed left-0 top-0 z-[999] flex h-[42px] w-full items-center bg-[#cbb58e] px-8 text-[16px] font-semibold text-white transition-colors duration-300">
+          <div className="mx-auto grid w-full max-w-[1220px] grid-cols-[1fr_auto_1fr] items-center">
+            <ChevronLeft size={18} className="justify-self-end text-white/70" strokeWidth={1.5} />
+            <p className="px-28 text-center">Shipping to 28+ Countries</p>
+            <ChevronRight size={18} className="text-white/70" strokeWidth={1.5} />
+          </div>
         </div>
-      </div>
+      )}
 
       <nav
         ref={navRef}
@@ -144,25 +162,25 @@ export default function DesktopHeader({ isHomePage = false }) {
           setIsHeaderHovered(false);
           setActiveMenu(null);
         }}
-        className={`fixed left-0 top-[42px] z-[998] w-full transition-all duration-300 ${transparentMode
+        className={`fixed left-0 ${navTopClass} z-[998] w-full transition-all duration-300 ${transparentMode
           ? "h-[154px] border-b border-transparent bg-transparent"
-          : `${overlayMode ? "h-[154px]" : "h-[92px]"} border-b border-black/10 bg-[#f7f5f2] shadow-[0_5px_22px_rgba(0,0,0,0.08)]`
+          : `${expandedMode ? expandedHeightClass : "h-[92px]"} border-b border-black/10 bg-[#f7f5f2] shadow-[0_5px_22px_rgba(0,0,0,0.08)]`
           }`}
       >
         <div
-          className={`relative mx-auto flex h-full max-w-[1800px] items-center justify-center px-12 transition-all duration-300 ${overlayMode ? "pt-7" : ""
+          className={`relative mx-auto flex h-full max-w-[1800px] items-center justify-center px-12 transition-all duration-300 ${expandedMode ? expandedInnerPadding : ""
             }`}
         >
           <Link
             to="/"
-            className={`absolute left-1/2 flex -translate-x-1/2 items-center justify-center overflow-hidden transition-all duration-300 ${overlayMode ? "top-3 h-[50px] w-[175px] opacity-100" : "pointer-events-none top-0 h-0 w-0 opacity-0"
+            className={`absolute left-1/2 flex -translate-x-1/2 items-center justify-center overflow-hidden transition-all duration-300 ${expandedMode ? `${expandedLogoClass} opacity-100` : "pointer-events-none top-0 h-0 w-0 opacity-0"
               }`}
             aria-label="Life n Colors home"
           >
             <img
               src={logo}
               alt="Life n Colors"
-              className={overlayMode ? "w-[160px] max-w-none object-contain" : "w-[160px] max-w-none object-contain"}
+              className={`${expandedLogoImageClass} max-w-none object-contain`}
             />
           </Link>
 
@@ -184,7 +202,7 @@ export default function DesktopHeader({ isHomePage = false }) {
                 Wallpapers <ChevronDown size={16} />
               </Link>
               {activeMenu === "shop" && (
-                <div ref={megaMenuRef} className={`fixed left-0 z-[997] w-screen border-y border-black/20 bg-white text-black shadow-[0_12px_26px_rgba(0,0,0,0.08)] ${overlayMode ? "top-[196px]" : "top-[134px]"}`}>
+                <div ref={megaMenuRef} className={`fixed left-0 z-[997] w-screen border-y border-black/20 bg-white text-black shadow-[0_12px_26px_rgba(0,0,0,0.08)] ${megaTopClass}`}>
                   <div className="grid min-h-[330px] grid-cols-4">
                     {shopLinks.map((column, index) => (
                       <div
@@ -218,7 +236,7 @@ export default function DesktopHeader({ isHomePage = false }) {
                 Fabric & Home <ChevronDown size={16} />
               </button>
               {activeMenu === "categories" && (
-                <div ref={megaMenuRef} className={`fixed left-0 z-[997] w-screen border-y border-black/20 bg-white text-black shadow-[0_12px_26px_rgba(0,0,0,0.08)] ${overlayMode ? "top-[196px]" : "top-[134px]"}`}>
+                <div ref={megaMenuRef} className={`fixed left-0 z-[997] w-screen border-y border-black/20 bg-white text-black shadow-[0_12px_26px_rgba(0,0,0,0.08)] ${megaTopClass}`}>
                   <div className="grid min-h-[210px] grid-cols-2">
                     {fabricHomeMenu.map((column, index) => (
                       <div
@@ -260,8 +278,8 @@ export default function DesktopHeader({ isHomePage = false }) {
             </li>
           </ul>
 
-          {overlayMode && (
-            <div className={`absolute right-12 top-2 flex items-center gap-4 text-[15px] font-medium transition-colors ${transparentMode ? "text-white" : "text-black"}`}>
+          {expandedMode && (
+            <div className={`absolute flex items-center font-medium transition-colors ${expandedSocialClass} ${transparentMode ? "text-white" : "text-black"}`}>
               <a href="https://www.instagram.com/lifencolorsdesigns/" target="_blank" rel="noopener noreferrer" aria-label="Life n Colors on Instagram">
                 <FaInstagram size={20} />
               </a>
@@ -302,7 +320,7 @@ export default function DesktopHeader({ isHomePage = false }) {
         </div>
       </nav>
 
-      <div className={isHomePage ? "h-0" : "h-[134px]"} />
+      <div className={isHomePage ? "h-0" : spacerHeightClass} />
     </header>
   );
 }

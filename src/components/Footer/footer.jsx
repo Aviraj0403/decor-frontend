@@ -1,122 +1,174 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Instagram, Facebook, Youtube, MapPin, Phone, Mail } from "lucide-react";
+import { Phone } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa";
 
-const FOOTER_LINKS = {
-  'Siddhi Decor': [
-    { label: 'Our Story', href: '/about-us' },
-    { label: 'Sustainability', href: '/sustainability' },
-    { label: 'Blogs', href: '/blogs' },
-    { label: 'Delhi Studio', href: '/contact-us' },
-    { label: 'How it works?', href: '/faq' },
-  ],
-  'Connect': [
-    { label: 'Call: +91 99999 99999', href: 'tel:+919999999999', isExternal: true },
-    { label: 'WhatsApp: +91 99999 99999', href: 'https://wa.me/919999999999', isExternal: true },
-    { label: 'Email: hello@siddhidecor.in', href: 'mailto:hello@siddhidecor.in', isExternal: true },
-    { label: 'Trade Program', href: '/trade-program' },
-    { label: 'Contact Us', href: '/contact-us' },
-  ],
-  'Help': [
-    { label: 'FAQ', href: '/faq' },
-    { label: 'Privacy Policy', href: '/privacy-policy' },
-    { label: 'Terms & Conditions', href: '/terms-conditions' },
-    { label: 'Return Policy', href: '/return-refund' },
-    { label: 'Installation Guidelines', href: '/installation-guidelines' },
-  ],
-};
+const footerColumns = [
+  {
+    title: "Life n Colors",
+    links: [
+      { label: "Our Story", href: "https://lifencolors.in/pages/our-story", external: true },
+      { label: "Sustainability", href: "https://lifencolors.in/pages/sustainability", external: true },
+      { label: "Blogs", href: "https://lifencolors.in/blogs/blog", external: true },
+      {
+        label: "Gurgaon Studio",
+        href: "https://lifencolors.in/pages/gurgaon-home-decor-wallpaper-store",
+        external: true,
+      },
+      { label: "How it works?", href: "https://lifencolors.in/pages/how-it-works", external: true },
+    ],
+  },
+  {
+    title: "Connect",
+    links: [
+      { label: "Call: 093108 45706", href: "tel:+919310845706", external: true },
+      {
+        label: "WhatsApp: 087009 86208",
+        href: "https://wa.me/918700986208?text=I%27m%20interested%20in%20your%20collection",
+        external: true,
+      },
+      { label: "contact@lifencolors.in", href: "mailto:contact@lifencolors.in", external: true },
+      { label: "Trade Program", href: "https://lifencolors.in/pages/designers-outreach-program", external: true },
+      { label: "Contact Us", href: "https://lifencolors.in/pages/contact", external: true },
+    ],
+  },
+  {
+    title: "Help",
+    links: [
+      { label: "FAQ", href: "https://lifencolors.in/pages/frequently-asked-questions", external: true },
+      { label: "Privacy Policy", href: "https://lifencolors.in/pages/privacy-policy", external: true },
+      { label: "Terms & Conditions", href: "https://lifencolors.in/pages/terms-conditions", external: true },
+      { label: "Return Policy", href: "https://lifencolors.in/pages/return-policy", external: true },
+      {
+        label: "Installation Guidelines",
+        href: "https://lifencolors.in/pages/wallpaper-installation-guidelines",
+        external: true,
+      },
+    ],
+  },
+];
+
+const paymentIcons = [
+  { alt: "American Express", src: "https://lifencolors.in/cdn/shop/files/amex-logi.png?v=1769077634" },
+  { alt: "PayPal", src: "https://lifencolors.in/cdn/shop/files/paypal_logo.webp?v=1769077656" },
+  { alt: "Google Pay", src: "https://lifencolors.in/cdn/shop/files/google_pay_logo.webp?v=1769077703" },
+  { alt: "Mastercard", src: "https://lifencolors.in/cdn/shop/files/Mastercard_logo.webp?v=1749029093" },
+  { alt: "RuPay", src: "https://lifencolors.in/cdn/shop/files/RuPay-Logo.png?v=1749029146" },
+];
+
+function FooterLink({ link }) {
+  const className = "font-sans text-[16px] leading-none text-black transition hover:text-black/60";
+
+  if (link.external) {
+    return (
+      <a href={link.href} target="_blank" rel="noreferrer" className={className}>
+        {link.label}
+      </a>
+    );
+  }
+
+  return (
+    <Link to={link.href} className={className}>
+      {link.label}
+    </Link>
+  );
+}
 
 export default function Footer() {
   return (
-    <footer style={{ background: '#F2EAE1', color: '#2A2A2A', borderTop: '1px solid #EDE4D8' }} className="pt-16 pb-8 relative overflow-hidden font-sans">
-      {/* Decorative Natural Accent line */}
-      <div className="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-[#2D5016] via-[#C9A84C] to-[#2D5016]"></div>
-      
-      <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20 mb-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
-          {/* Brand Intro Column */}
-          <div className="lg:col-span-2 space-y-5">
-            <div>
-              <p className="font-serif text-3xl tracking-widest text-[#2A2A2A] font-semibold">SIDDHI</p>
-              <p className="text-[10px] tracking-[5px] text-[#C9A84C] uppercase font-bold mt-0.5">DECOR</p>
-            </div>
-            <p className="text-sm text-[#2A2A2A]/85 leading-relaxed max-w-sm">
-              Handcrafted luxury home décor inspired by India's rich artistic heritage and designed for contemporary living. Loved by designers and homeowners globally.
-            </p>
-            <div className="flex items-center gap-3 pt-2">
-              <a href="https://instagram.com" target="_blank" rel="noreferrer" className="w-9 h-9 border border-[#EDE4D8] bg-white/50 flex items-center justify-center text-[#2A2A2A]/70 hover:text-[#2D5016] hover:border-[#2D5016] hover:bg-white transition-all rounded-full shadow-sm">
-                <Instagram size={16} />
-              </a>
-              <a href="https://facebook.com" target="_blank" rel="noreferrer" className="w-9 h-9 border border-[#EDE4D8] bg-white/50 flex items-center justify-center text-[#2A2A2A]/70 hover:text-[#2D5016] hover:border-[#2D5016] hover:bg-white transition-all rounded-full shadow-sm">
-                <Facebook size={16} />
-              </a>
-              <a href="https://youtube.com" target="_blank" rel="noreferrer" className="w-9 h-9 border border-[#EDE4D8] bg-white/50 flex items-center justify-center text-[#2A2A2A]/70 hover:text-[#2D5016] hover:border-[#2D5016] hover:bg-white transition-all rounded-full shadow-sm">
-                <Youtube size={16} />
-              </a>
-            </div>
-          </div>
-
-          {/* Dynamic Link Columns */}
-          {Object.entries(FOOTER_LINKS).map(([section, links]) => (
-            <div key={section}>
-              <h4 className="text-[#2A2A2A] font-bold text-xs uppercase tracking-widest mb-4 border-b border-[#EDE4D8]/60 pb-2">{section}</h4>
-              <ul className="space-y-3">
-                {links.map((link) => (
+    <footer className="relative overflow-hidden bg-[#f5f5f5] text-black">
+      <div
+        className="relative"
+        style={{
+          height: "80vh",
+          minHeight: "650px",
+          padding: "18px 42px 0",
+          backgroundImage:
+            "url('https://cdn.shopify.com/s/files/1/0779/4887/9170/files/lifencolors_eka-Kannan_footer_desktop__banner.webp?v=1778859517')",
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center bottom",
+        }}
+      >
+        <div
+          className="mx-auto items-start"
+          style={{
+            display: "grid",
+            gridTemplateColumns: "180px 245px 305px minmax(390px, 1fr)",
+            columnGap: "28px",
+            maxWidth: "1800px",
+            width: "100%",
+          }}
+        >
+          {footerColumns.map((column) => (
+            <div key={column.title} style={{ width: column.title === "Life n Colors" ? 170 : column.title === "Connect" ? 230 : 270, flex: "0 0 auto" }}>
+              <h2 className="font-sans text-[24px] font-bold leading-none text-black lg:text-[26px]">{column.title}</h2>
+              <ul className="mt-6 space-y-4 lg:space-y-5">
+                {column.links.map((link) => (
                   <li key={link.label}>
-                    {link.isExternal ? (
-                      <a
-                        href={link.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-sm text-[#2A2A2A]/75 hover:text-[#2D5016] hover:font-medium transition-all"
-                      >
-                        {link.label}
-                      </a>
-                    ) : (
-                      <Link
-                        to={link.href}
-                        className="text-sm text-[#2A2A2A]/75 hover:text-[#2D5016] hover:font-medium transition-all"
-                      >
-                        {link.label}
-                      </Link>
-                    )}
+                    <FooterLink link={link} />
                   </li>
                 ))}
               </ul>
             </div>
           ))}
 
-          {/* Newsletter Column */}
-          <div className="space-y-4">
-            <h4 className="text-[#2A2A2A] font-bold text-xs uppercase tracking-widest mb-4 border-b border-[#EDE4D8]/60 pb-2">Our Newsletter</h4>
-            <p className="text-xs text-[#2A2A2A]/75 leading-relaxed">
-              Subscribe to stay updated on new designer collections, installation tips, and exclusive previews.
+          <div className="text-center" style={{ width: 330, justifySelf: "end", marginRight: 18 }}>
+            <h2 className="font-sans text-[20px] font-bold leading-none text-black lg:text-[22px]">Our Newsletter</h2>
+            <p className="mx-auto mt-7 max-w-[300px] font-sans text-[13px] leading-6 text-black lg:text-[14px]">
+              Stay informed about the latest
+              <br />
+              trends in home decor.
             </p>
-            <form className="flex flex-col gap-2" onSubmit={(e) => e.preventDefault()}>
+
+            <form
+              className="mx-auto mt-7 flex max-w-[330px] flex-row gap-3"
+              onSubmit={(event) => event.preventDefault()}
+            >
               <input
                 type="email"
-                placeholder="Your email address"
-                className="bg-white border border-[#EDE4D8] px-3.5 py-2 text-xs text-[#2A2A2A] placeholder:text-[#2A2A2A]/40 focus:outline-none focus:border-[#2D5016] w-full rounded shadow-sm"
+                placeholder="Email"
+                className="h-11 min-w-0 flex-1 rounded border border-[#cfcfcf] bg-white px-3 font-sans text-sm text-black outline-none placeholder:text-[#666]"
               />
-              <button type="submit" className="bg-[#2D5016] text-white px-4 py-2 text-xs font-semibold uppercase tracking-wider hover:bg-[#3D6B20] transition-colors w-full rounded shadow-sm">
+              <button
+                type="submit"
+                className="h-11 rounded bg-[#292929] px-5 font-sans text-sm font-bold uppercase text-white transition hover:bg-black"
+              >
                 Subscribe
               </button>
             </form>
           </div>
         </div>
+
       </div>
 
-      {/* Bottom Bar: Copyright and Payment Gateways */}
-      <div className="border-t border-[#EDE4D8] pt-6 mt-6">
-        <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-[#2A2A2A]/60">© {new Date().getFullYear()}, Siddhi Decor. All rights reserved.</p>
-          
-          {/* Supported Payment Channels */}
-          <div className="flex items-center gap-3.5 opacity-70">
-            <span className="text-[10px] tracking-widest font-sans font-bold text-[#2A2A2A]/60 uppercase">VISA • MASTERCARD • GPAY • PAYPAL • AMEX</span>
+      <div className="relative border-t border-[#e4d7c4] bg-[#e8dcc6] px-4 py-7 sm:px-6 lg:px-4">
+        <div className="mx-auto flex max-w-[1880px] flex-col items-center justify-between gap-5 sm:flex-row">
+          <p className="font-sans text-[15px] text-black">@2026, Life n Colors</p>
+          <div className="flex items-center gap-3">
+            {paymentIcons.map((icon) => (
+              <img key={icon.alt} src={icon.src} alt={icon.alt} className="h-8 w-auto bg-white object-contain" />
+            ))}
           </div>
         </div>
       </div>
+
+      <a
+        href="https://wa.me/918700986208"
+        target="_blank"
+        rel="noreferrer"
+        className="fixed bottom-[112px] right-7 z-[70] grid h-[70px] w-[70px] place-items-center rounded-full bg-[#20d466] text-white shadow-lg transition hover:scale-105"
+        aria-label="WhatsApp"
+      >
+        <FaWhatsapp size={36} />
+      </a>
+      <a
+        href="tel:+919310845706"
+        className="fixed bottom-8 right-7 z-[70] grid h-[74px] w-[74px] place-items-center rounded-full bg-[#9d2a1c] text-white shadow-lg transition hover:scale-105"
+        aria-label="Call"
+      >
+        <Phone size={31} fill="currentColor" />
+      </a>
     </footer>
   );
 }

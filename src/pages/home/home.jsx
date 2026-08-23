@@ -7,9 +7,10 @@ import CategorySlider from "./CategorySlider";
 import LookbookPreview from "./LookbookPreview";
 import DesignWorld from "./DesignWorld";
 import TrustedBy from "./TrustedBy";
-import BestsellerSection from "./BestsellerSection";
+import FeaturedCollectionSection from "./FeaturedCollectionSection";
+import CuratedLivingSection from "./CuratedLivingSection";
+import BlogStoriesSection from "./BlogStoriesSection";
 import PromoBanner from "./PromoBanner";
-import HomeNewArrivals from "../HomeNewArrivals";
 //import MobileCategorySection from "../category/MobileCategorySection";
 import WhyChooseUs from "./WhyChooseUs";
 
@@ -39,10 +40,11 @@ function Home() {
         <LookbookPreview />
         <DesignWorld />
         <TrustedBy />
-        <BestsellerSection />
-        <HomeNewArrivals />
-        <PromoBanner />
-        <WhyChooseUs />
+        <FeaturedCollectionSection />
+        <CuratedLivingSection />
+        <BlogStoriesSection />
+        {/* <PromoBanner />
+        <WhyChooseUs /> */}
         {/* other homepage sections */}
       </div>
     </div>
