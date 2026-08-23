@@ -439,6 +439,33 @@ export default function ProductPage() {
                 className="w-full h-auto object-cover transition-transform duration-700 ease-out group-hover:scale-103"
                 style={{ aspectRatio: '4/5' }}
               />
+              {product.productType === 'Wallpaper' && (
+                <div className="absolute inset-0 bg-black/40 flex items-center justify-center p-4">
+                  <div
+                    className="border-2 border-dashed border-white bg-transparent relative flex items-center justify-center shadow-2xl transition-all duration-300 rounded"
+                    style={{
+                      aspectRatio: `${wallpaperWidth} / ${wallpaperHeight}`,
+                      maxWidth: '95%',
+                      maxHeight: '95%',
+                      width: wallpaperWidth >= wallpaperHeight ? '95%' : `${(wallpaperWidth / wallpaperHeight) * 95}%`,
+                      height: wallpaperHeight >= wallpaperWidth ? '95%' : `${(wallpaperHeight / wallpaperWidth) * 95}%`
+                    }}
+                  >
+                    {/* Corner crop marks */}
+                    <div className="absolute -top-1 -left-1 w-3 h-3 border-t-2 border-l-2 border-white"></div>
+                    <div className="absolute -top-1 -right-1 w-3 h-3 border-t-2 border-r-2 border-white"></div>
+                    <div className="absolute -bottom-1 -left-1 w-3 h-3 border-b-2 border-l-2 border-white"></div>
+                    <div className="absolute -bottom-1 -right-1 w-3 h-3 border-b-2 border-r-2 border-white"></div>
+                    
+                    <span className="absolute top-2 left-2 bg-charcoal/90 text-white text-[9px] px-2 py-0.5 rounded font-sans uppercase tracking-widest font-semibold">
+                      Print Preview Area
+                    </span>
+                    <span className="absolute bottom-2 right-2 bg-charcoal/90 text-white text-[10px] px-2 py-0.5 rounded font-sans font-medium">
+                      {wallpaperWidth} × {wallpaperHeight} ft
+                    </span>
+                  </div>
+                </div>
+              )}
               {disc > 0 && (
                 <div className="absolute top-4 left-4 bg-charcoal text-white text-[10px] font-sans font-semibold px-3 py-1.5 uppercase tracking-widest">
                   {disc}% OFF
@@ -543,6 +570,33 @@ export default function ProductPage() {
                       onChange={(e) => setWallpaperHeight(parseFloat(e.target.value) || 0)}
                       className="w-full px-3.5 py-2.5 border border-cream-dark bg-white font-sans text-sm text-charcoal focus:outline-none focus:border-charcoal transition"
                     />
+                  </div>
+                </div>
+
+                {/* Common Size Presets */}
+                <div className="space-y-1.5">
+                  <span className="block text-[10px] font-sans font-semibold text-muted uppercase tracking-wider">
+                    Common Wall Sizes (Presets)
+                  </span>
+                  <div className="flex flex-wrap gap-2">
+                    {[
+                      { label: "8 × 10 ft", w: 8, h: 10 },
+                      { label: "10 × 10 ft", w: 10, h: 10 },
+                      { label: "12 × 9 ft", w: 12, h: 9 },
+                      { label: "14 × 10 ft", w: 14, h: 10 }
+                    ].map((preset) => (
+                      <button
+                        type="button"
+                        key={preset.label}
+                        onClick={() => {
+                          setWallpaperWidth(preset.w);
+                          setWallpaperHeight(preset.h);
+                        }}
+                        className="px-2.5 py-1 text-[11px] font-sans border border-cream-dark hover:border-charcoal bg-white transition rounded"
+                      >
+                        {preset.label}
+                      </button>
+                    ))}
                   </div>
                 </div>
 
@@ -708,6 +762,19 @@ export default function ProductPage() {
               >
                 BUY IT NOW
               </button>
+              {product.productType === 'Wallpaper' && (
+                <a
+                  href={`https://wa.me/919999999999?text=Hi,%20I'm%20interested%20in%20customizing%20the%20wallpaper%20"${product.name}"%20with%20dimensions%20${wallpaperWidth}x${wallpaperHeight}%20ft.`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full flex items-center justify-center gap-2 border-2 border-green-600 text-green-600 hover:bg-green-600 hover:text-white py-4 text-xs font-sans tracking-widest uppercase transition-all duration-300 font-semibold rounded"
+                >
+                  <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.63-1.023-5.101-2.885-6.966C16.59 2.016 14.12 1.01 11.999 1.01c-5.442 0-9.866 4.372-9.87 9.802 0 1.714.47 3.387 1.357 4.842L2.46 20.89l5.244-1.372z" />
+                  </svg>
+                  Customize on WhatsApp
+                </a>
+              )}
             </div>
 
             {/* Wishlist & Share */}

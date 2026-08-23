@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&display=swap');
 
 @import "tailwindcss";
 
@@ -64,7 +64,7 @@
   /* Font mappings */
   --font-serif: 'Cormorant Garamond', Georgia, serif;
   --font-cinzel: 'Cormorant Garamond', Georgia, serif;
-  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-sans: 'Outfit', 'Inter', system-ui, sans-serif;
   
   /* Previous variables */
   --color-cream: #F5F0E8;
@@ -265,4 +265,79 @@
 
 @keyframes spiritual-loader-counter-spin {
   to { transform: rotate(-360deg); }
+}
+
+/* --- Premium Navigation & Brand Alignment --- */
+.announcement-bar {
+  background-color: var(--color-green);
+  color: var(--color-cream);
+  text-align: center;
+  padding: 6px 12px;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  font-family: var(--font-sans);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar {
+  background-color: #FFFFFF;
+  border-bottom: 1px solid var(--color-cream-dark);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(12px);
+  background-color: rgba(255, 255, 255, 0.95);
+}
+
+.cart-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background-color: var(--color-gold);
+  color: #FFFFFF;
+  font-size: 9px;
+  font-weight: 600;
+  width: 15px;
+  height: 15px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-dropdown {
+  position: relative;
+}
+
+.nav-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #FFFFFF;
+  border: 1px solid var(--color-cream-dark);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+  padding: 8px 0;
+  min-width: 200px;
+  display: none;
+  z-index: 100;
+}
+
+.nav-dropdown:hover .nav-dropdown-menu {
+  display: block;
+}
+
+.nav-dropdown-menu a {
+  display: block;
+  padding: 8px 20px;
+  font-size: 13px;
+  color: var(--color-charcoal);
+  transition: all 0.2s;
+}
+
+.nav-dropdown-menu a:hover {
+  background-color: var(--color-cream);
+  color: var(--color-green);
 }
