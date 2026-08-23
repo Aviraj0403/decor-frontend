@@ -9,7 +9,7 @@ import {
 import { SiPaytm } from "react-icons/si";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
 import { Link } from "react-router-dom";
-import footerImage from "../../image/divya-mantra-logo-white.png";
+import footerImage from "../../image/lifencolors-logo.webp";
 
 export default function Footer() {
   return (
@@ -22,11 +22,11 @@ export default function Footer() {
           <Link
             to="/"
             className="flex h-[82px] w-full max-w-[320px] items-center justify-start overflow-visible"
-            aria-label="Divya Mantra home"
+            aria-label="Life n Colors home"
           >
             <img
               src={footerImage}
-              alt="Divya Mantra"
+              alt="Life n Colors"
               className="h-full w-full object-contain object-left"
             />
           </Link>

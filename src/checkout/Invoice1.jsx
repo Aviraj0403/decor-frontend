@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { Printer, Download, Truck } from "lucide-react";
-import logo from "../image/divya-mantra-logo-transparent.png";
+import logo from "../image/lifencolors-logo.webp";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import Axios from "../utils/Axios"; // Import Axios for fetching fallback

@@ -1,5 +1,6 @@
 import React from "react";
 import { Flame, Flower2, Gem, Sparkles, Sun } from "lucide-react";
+import logo from "../image/lifencolors-logo.webp";
 
 const orbitItems = [
   { Icon: Flame, label: "Sacred flame", angle: 0 },
@@ -31,11 +32,11 @@ const SpiritualLoader = ({ fullScreen = true }) => {
       </div>
 
       <div className="spiritual-loader__center" aria-hidden="true">
-        <img src="/divya-mantra-logo-transparent.png" alt="" />
+        <img src={logo} alt="" />
       </div>
 
       <span className="spiritual-loader__text">Loading divine essentials...</span>
-      <span className="sr-only">Loading Divya Mantra</span>
+      <span className="sr-only">Loading Life n Colors</span>
     </div>
   );
 };

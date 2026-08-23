@@ -1,7 +1,12 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 import BannerSlider from "./BannerSlider";
+import HorseStripe from "./HorseStripe";
+import FeaturedIn from "./FeaturedIn";
 import CategorySlider from "./CategorySlider";
+import LookbookPreview from "./LookbookPreview";
+import DesignWorld from "./DesignWorld";
+import TrustedBy from "./TrustedBy";
 import BestsellerSection from "./BestsellerSection";
 import PromoBanner from "./PromoBanner";
 import HomeNewArrivals from "../HomeNewArrivals";
@@ -33,9 +38,14 @@ function Home() {
       {/* <MobileCategorySection /> */}
       <div className="max-w-[1920px] mx-auto shadow-sm">
         <BannerSlider />
+        <HorseStripe />
+        <FeaturedIn />
       </div>
       <div className="px-0 sm:px-4 md:px-8 space-y-4 md:space-y-8 pb-12">
         <CategorySlider />
+        <LookbookPreview />
+        <DesignWorld />
+        <TrustedBy />
         <ComboSection />
         <BestsellerSection />
         <HomeNewArrivals />

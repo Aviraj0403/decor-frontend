@@ -3,6 +3,7 @@ import { FaStar } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { createReview } from "../../services/reviewApi";
 import { useAuth } from "../../context/AuthContext";
+import fallbackLogo from "../../image/lifencolors-logo.webp";
 
 // Review Form Component for submitting a new review
 const ReviewForm = ({ productId, reviews , setReviews }) => {
@@ -292,7 +293,7 @@ const ReviewList = ({ reviews }) => {
           >
             <div className="flex items-start gap-3 mb-3">
               <img
-                src={review.user.avatar || "/divya-mantra-logo-transparent.png"}
+                src={review.user.avatar || fallbackLogo}
                 alt={review.user.userName}
                 className="w-12 h-12 rounded-full object-cover border-2 border-primary-100"
               />

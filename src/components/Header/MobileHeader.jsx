@@ -17,7 +17,7 @@ import {
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
-import logo from "../../image/divya-mantra-logo-transparent.png";
+import logo from "../../image/lifencolors-logo.webp";
 import { getMenuCategories } from "../../services/categoryApi";
 import { useAuth } from "../../context/AuthContext";
 
@@ -92,11 +92,11 @@ export default function MobileHeader() {
           <Link
             to="/"
             className="mx-auto flex h-12 w-[180px] min-w-0 items-center justify-center overflow-hidden"
-            aria-label="Divya Mantra home"
+            aria-label="Life n Colors home"
           >
             <img
               src={logo}
-              alt="Divya Mantra"
+              alt="Life n Colors"
               className="w-[168px] max-w-none object-contain"
             />
           </Link>

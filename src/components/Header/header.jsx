@@ -1,16 +1,18 @@
 import React from "react";
-import DesktopHeader from "./DesktopHeader"; // your current header
-import MobileHeader from "./MobileHeader";   // new mobile version
+import { useLocation } from "react-router-dom";
+import DesktopHeader from "./DesktopHeader";
+import MobileHeader from "./MobileHeader";
 
 export default function Header() {
+  const { pathname } = useLocation();
+  const isHomePage = pathname === "/";
+
   return (
     <>
-      {/* Desktop View */}
       <div className="hidden md:block">
-        <DesktopHeader />
+        <DesktopHeader isHomePage={isHomePage} />
       </div>
 
-      {/* Mobile View */}
       <div className="block md:hidden">
         <MobileHeader />
       </div>

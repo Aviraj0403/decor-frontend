@@ -6,7 +6,7 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { toast } from 'react-toastify'; // Assuming you use react-toastify for notifications
 import { useAuth } from "../context/AuthContext";
-import logo from "../image/divya-mantra-logo-transparent.png";
+import logo from "../image/lifencolors-logo.webp";
 
 export default function AddressSidebar({ isOpen, onClose, refreshAddresses, userName, email, address: propAddress, embedded = false }) {
   const { user } = useAuth();
@@ -286,7 +286,7 @@ export default function AddressSidebar({ isOpen, onClose, refreshAddresses, user
             </MapContainer>
           ) : (
             <div className="flex flex-col items-center justify-center gap-2 h-full text-gray-500">
-              <img src={logo} alt="Divya Mantra" className="w-40 h-20 object-contain" />
+              <img src={logo} alt="Life n Colors" className="w-40 h-20 object-contain" />
               <p className="text-sm text-center px-4">Map will appear here after syncing location</p>
             </div>
           )}

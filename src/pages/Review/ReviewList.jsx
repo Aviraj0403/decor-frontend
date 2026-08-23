@@ -3,6 +3,7 @@ import { FaStar, FaTrash } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { deleteReview } from "../../services/reviewApi";
 import { useAuth } from "../../context/AuthContext";
+import fallbackLogo from "../../image/lifencolors-logo.webp";
 
 const ReviewList = ({ reviews, onDeleteReview }) => {
   const { user } = useAuth();
@@ -47,7 +48,7 @@ const ReviewList = ({ reviews, onDeleteReview }) => {
             ['admin', 'superadmin'].includes(user.roleType)
           );
           const userName = review.user?.userName || review.userName || "Customer";
-          const userAvatar = review.user?.avatar || "/divya-mantra-logo-transparent.png";
+          const userAvatar = review.user?.avatar || fallbackLogo;
 
           return (
             <div
