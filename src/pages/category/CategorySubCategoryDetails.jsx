@@ -14,6 +14,8 @@ export default function CategorySubCategoryDetails() {
   const [currentPage, setCurrentPage] = useState(1);
   const [categoryName, setCategoryName] = useState("");
   const [subCategoryName, setSubCategoryName] = useState("");
+  const [subCategoryDescription, setSubCategoryDescription] = useState("");
+  const [subCategoryImages, setSubCategoryImages] = useState([]);
 
   const fetchProducts = async (page = 1) => {
     setLoading(true);
@@ -25,8 +27,10 @@ export default function CategorySubCategoryDetails() {
         setProducts(data.products);
         setPagination(data.pagination);
         setCurrentPage(page);
-        setCategoryName(data.categoryName || categorySlug); // Assuming the API returns categoryName
-        setSubCategoryName(data.subCategoryName || subCategorySlug); // Assuming the API returns subCategoryName
+        setCategoryName(data.categoryName || categorySlug);
+        setSubCategoryName(data.subCategoryName || subCategorySlug);
+        setSubCategoryDescription(data.subCategoryDescription || "");
+        setSubCategoryImages(data.subCategoryImage || []);
       } else {
         setError("Failed to load products");
       }
@@ -42,11 +46,22 @@ export default function CategorySubCategoryDetails() {
   }, [categorySlug, subCategorySlug, currentPage]);
 
   if (loading) {
-    return <div>Loading products...</div>;
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-brand-bg">
+        <div className="animate-pulse flex flex-col items-center gap-4">
+          <div className="w-12 h-12 border-4 border-[#2D5016] border-t-transparent rounded-full animate-spin"></div>
+          <p className="text-sm font-medium text-[#2D5016]">Loading collection...</p>
+        </div>
+      </div>
+    );
   }
 
   if (error) {
-    return <div>{error}</div>;
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-brand-bg text-red-500 font-medium">
+        {error}
+      </div>
+    );
   }
 
   const handleProductClick = (productId) => {
@@ -54,15 +69,48 @@ export default function CategorySubCategoryDetails() {
   };
 
   return (
-    <section className="py-10 bg-brand-bg">
-      <div className="max-w-7xl mx-auto px-4">
-        <h2 className="text-2xl md:text-3xl font-bold text-primary-500 mb-8 text-center">
-          {categoryName} : {subCategoryName }
-        </h2>
+    <section className="bg-brand-bg min-h-screen pb-16">
+      {/* 🖼 Category Banner Header */}
+      {subCategoryImages.length > 0 ? (
+        <div className="relative w-full h-[280px] md:h-[400px] overflow-hidden mb-12">
+          <img
+            src={subCategoryImages[1] || subCategoryImages[0]}
+            alt={subCategoryName}
+            className="w-full h-full object-cover object-center"
+          />
+          {/* Dark scrim overlay for high legibility */}
+          <div className="absolute inset-0 bg-black/40 flex flex-col justify-center items-center text-center p-6">
+            <h1 className="font-serif text-3xl md:text-5xl text-white tracking-widest uppercase font-semibold mb-4 drop-shadow-md">
+              {categoryName} : {subCategoryName}
+            </h1>
+            {subCategoryDescription && (
+              <p className="max-w-2xl text-white/90 text-sm md:text-base font-light leading-relaxed drop-shadow-sm font-sans">
+                {subCategoryDescription}
+              </p>
+            )}
+          </div>
+        </div>
+      ) : (
+        /* 🏷 Backup Header: Clean Tan-Beige box */
+        <div className="bg-[#FBF8F3] border-b border-[#EDE4D8] py-14 px-6 text-center mb-12">
+          <h1 className="font-serif text-3xl md:text-4xl text-[#2A2A2A] tracking-wider uppercase font-semibold mb-4">
+            {categoryName} : {subCategoryName}
+          </h1>
+          {subCategoryDescription && (
+            <p className="max-w-3xl mx-auto text-[#2A2A2A]/75 text-sm md:text-base leading-relaxed font-light font-sans">
+              {subCategoryDescription}
+            </p>
+          )}
+        </div>
+      )}
 
-        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Product Grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
           {products.length === 0 ? (
-            <div>No products found in this category and subcategory.</div>
+            <div className="col-span-full py-12 text-center text-muted font-light">
+              No products found in this collection.
+            </div>
           ) : (
             products.map((product) => (
               <ProductCard
@@ -74,20 +122,23 @@ export default function CategorySubCategoryDetails() {
           )}
         </div>
 
+        {/* Pagination */}
         {pagination.totalPages > 1 && (
-          <div className="mt-8 flex justify-center">
+          <div className="mt-14 flex justify-center items-center gap-4">
             <button
               onClick={() => fetchProducts(currentPage - 1)}
               disabled={currentPage <= 1}
-              className="px-4 py-2 bg-primary-500 text-white rounded-md disabled:opacity-50"
+              className="px-6 py-2.5 bg-white border border-[#EDE4D8] text-[#2A2A2A] rounded font-medium shadow-sm hover:bg-[#F2EAE1] disabled:opacity-50 transition-all"
             >
               Previous
             </button>
-            <span className="mx-4">{currentPage} / {pagination.totalPages}</span>
+            <span className="px-4 py-2 bg-[#F2EAE1] text-[#2A2A2A] rounded font-medium text-sm">
+              {currentPage} / {pagination.totalPages}
+            </span>
             <button
               onClick={() => fetchProducts(currentPage + 1)}
               disabled={currentPage >= pagination.totalPages}
-              className="px-4 py-2 bg-primary-500 text-white rounded-md disabled:opacity-50"
+              className="px-6 py-2.5 bg-[#2D5016] text-white rounded font-medium shadow-sm hover:bg-[#3D6B20] disabled:opacity-50 transition-all"
             >
               Next
             </button>

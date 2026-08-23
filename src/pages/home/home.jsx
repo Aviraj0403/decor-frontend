@@ -11,14 +11,7 @@ import BestsellerSection from "./BestsellerSection";
 import PromoBanner from "./PromoBanner";
 import HomeNewArrivals from "../HomeNewArrivals";
 //import MobileCategorySection from "../category/MobileCategorySection";
-import BeautyBanner from "./BeautyDiscountBanner";
-import ComboSection from "./ComboSection";
-import BeautyHighlightSection from "./BeautyHighlightSection";
-import CosmeticTestimonials from "./CosmeticTestimonials";
 import WhyChooseUs from "./WhyChooseUs";
-// import FloatingNewArrival from "./FloatingNewArrival";
-
-
 
 function Home() {
   const location = useLocation();
@@ -46,14 +39,10 @@ function Home() {
         <LookbookPreview />
         <DesignWorld />
         <TrustedBy />
-        <ComboSection />
         <BestsellerSection />
         <HomeNewArrivals />
         <PromoBanner />
-        <BeautyBanner />
-        <BeautyHighlightSection />
         <WhyChooseUs />
-        <CosmeticTestimonials />
         {/* other homepage sections */}
       </div>
     </div>
