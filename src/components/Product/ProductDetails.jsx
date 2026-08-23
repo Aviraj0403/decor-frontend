@@ -79,8 +79,16 @@ const getColorHex = (colorName) => {
   return colorMap[normalized] || null;
 }; 
 
-const findImageForColor = (images, color, selectedVariant = null) => {
+const findImageForColor = (images, color, selectedVariant = null, colorImageMap = null) => {
   if (!images || !images.length || !color) return -1;
+
+  // 0. Try direct mapping from colorImageMap
+  if (colorImageMap && colorImageMap[color]) {
+    const mappedUrl = colorImageMap[color];
+    const idx = images.indexOf(mappedUrl);
+    if (idx !== -1) return idx;
+  }
+
   const normalizedColor = color.toLowerCase().trim();
   
   // 1. Try smart substring match on filename
@@ -128,6 +136,11 @@ export default function ProductDetails() {
   const [showPopup, setShowPopup] = useState(false);
   const [popupMessage, setPopupMessage] = useState("");
 
+  // Wallpaper custom sizing states
+  const [wallpaperWidth, setWallpaperWidth] = useState(10);
+  const [wallpaperHeight, setWallpaperHeight] = useState(10);
+  const [selectedMaterial, setSelectedMaterial] = useState(null);
+
   useEffect(() => {
     if (showPopup) {
       const timer = setTimeout(() => {
@@ -157,12 +170,24 @@ export default function ProductDetails() {
       setSelectedColor(product.variants[0]?.color[0]);
       setQuantity(1);
       setActiveTab("additional");
+
+      if (product.productType === 'Wallpaper') {
+        const materialsList = product.wallpaperMaterials?.length > 0
+          ? product.wallpaperMaterials
+          : [
+              { materialName: 'Premium Non-Woven (Matte)', pricePerSqFt: 120 },
+              { materialName: 'Canvas Peel & Stick', pricePerSqFt: 160 },
+              { materialName: 'Classic Textured (Paper)', pricePerSqFt: 100 },
+              { materialName: 'Luxury Leatherette', pricePerSqFt: 220 }
+            ];
+        setSelectedMaterial(materialsList[0]);
+      }
     }
   }, [product]);
 
   useEffect(() => {
     if (selectedColor && product?.pimages) {
-      const imgIdx = findImageForColor(product.pimages, selectedColor, selectedVariant);
+      const imgIdx = findImageForColor(product.pimages, selectedColor, selectedVariant, product.colorImageMap);
       if (imgIdx !== -1) {
         setMainImage(product.pimages[imgIdx]);
       }
@@ -200,6 +225,28 @@ export default function ProductDetails() {
     reviews
   } = product;
 
+  const materialsList = product?.wallpaperMaterials?.length > 0
+    ? product.wallpaperMaterials
+    : [
+        { materialName: 'Premium Non-Woven (Matte)', pricePerSqFt: 120 },
+        { materialName: 'Canvas Peel & Stick', pricePerSqFt: 160 },
+        { materialName: 'Classic Textured (Paper)', pricePerSqFt: 100 },
+        { materialName: 'Luxury Leatherette', pricePerSqFt: 220 }
+      ];
+
+  let wallpaperRealPrice = 0;
+  let wallpaperPrice = 0;
+  if (product?.productType === 'Wallpaper') {
+    const area = wallpaperWidth * wallpaperHeight;
+    const materialPricePerSqFt = selectedMaterial?.pricePerSqFt || 120;
+    wallpaperRealPrice = area * materialPricePerSqFt;
+    const disc = product?.discount || 0;
+    wallpaperPrice = disc > 0 ? wallpaperRealPrice - (wallpaperRealPrice * disc / 100) : wallpaperRealPrice;
+  }
+
+  const displayPrice = product?.productType === 'Wallpaper' ? wallpaperPrice : (selectedVariant?.price || 0);
+  const displayRealPrice = product?.productType === 'Wallpaper' ? wallpaperRealPrice : (selectedVariant?.realPrice || 0);
+
   const handleVariantSelect = (variant) => {
     setSelectedVariant(variant);
     setSelectedColor(variant.color[0]);
@@ -211,10 +258,18 @@ export default function ProductDetails() {
 
   // 🔧 FIX: Correct data structure for addToCart
  const handleAddToCart = async () => {
-  if (!selectedVariant || !selectedColor) {
+  if (product.productType !== 'Wallpaper' && (!selectedVariant || !selectedColor)) {
     alert("Please select size and color");
     return;
   }
+
+  const cartSize = product.productType === 'Wallpaper'
+    ? `${wallpaperWidth} W x ${wallpaperHeight} H ft (${selectedMaterial?.materialName || 'Standard'})`
+    : selectedVariant.size;
+
+  const cartPrice = product.productType === 'Wallpaper'
+    ? wallpaperRealPrice
+    : selectedVariant.price;
 
   const response = await addToCart(
     {
@@ -222,12 +277,12 @@ export default function ProductDetails() {
       name: product.name,
       pimage: pimages[0],
       variants: {
-        price: selectedVariant.price,
-        size: selectedVariant.size,
+        price: cartPrice,
+        size: cartSize,
         color: selectedColor
       },
     },
-    selectedVariant.size,
+    cartSize,
     selectedColor,
     quantity
   );
@@ -238,7 +293,7 @@ export default function ProductDetails() {
       content_name: product.name,
       content_type: "product",
       currency: "INR",
-      value: Number(selectedVariant.price || 0) * Number(quantity || 1),
+      value: Number(displayPrice || 0) * Number(quantity || 1),
       contents: [
         {
           id: product._id || product.productCode || product.name,
@@ -247,7 +302,7 @@ export default function ProductDetails() {
       ],
     });
     setPopupMessage(
-      `${name} (${selectedVariant.size}, ${selectedColor}) added to cart successfully!`
+      `${name} (${cartSize}, ${selectedColor}) added to cart successfully!`
     );
     setShowPopup(true);
   } else {
@@ -257,54 +312,62 @@ export default function ProductDetails() {
 
   const handleBuyNow = async () => {
     // ✅ Popup helpers
-const popupImage =
-  selectedVariant?.images?.[0] ||
-  product?.pimages?.[0];
+    const popupImage =
+      selectedVariant?.images?.[0] ||
+      product?.pimages?.[0];
 
-const popupPrice = selectedVariant?.price;
+    const popupPrice = displayPrice;
 
-  if (!selectedVariant || !selectedColor) {
-    alert("Please select size and color");
-    return;
-  }
+    if (product.productType !== 'Wallpaper' && (!selectedVariant || !selectedColor)) {
+      alert("Please select size and color");
+      return;
+    }
 
-  const response = await addToCart(
-    {
-      _id: product._id,
-      name: product.name,
-      pimage: pimages[0],
-      variants: {
-        price: selectedVariant.price,
-        size: selectedVariant.size,
-        color: selectedColor
-      },
-    },
-    selectedVariant.size,
-    selectedColor,
-    quantity
-  );
+    const cartSize = product.productType === 'Wallpaper'
+      ? `${wallpaperWidth} W x ${wallpaperHeight} H ft (${selectedMaterial?.materialName || 'Standard'})`
+      : selectedVariant.size;
 
-  if (response.success) {
-    trackMetaEvent("AddToCart", {
-      content_ids: [product._id || product.productCode || product.name],
-      content_name: product.name,
-      content_type: "product",
-      currency: "INR",
-      value: Number(selectedVariant.price || 0) * Number(quantity || 1),
-      contents: [
-        {
-          id: product._id || product.productCode || product.name,
-          quantity: Number(quantity || 1),
+    const cartPrice = product.productType === 'Wallpaper'
+      ? wallpaperRealPrice
+      : selectedVariant.price;
+
+    const response = await addToCart(
+      {
+        _id: product._id,
+        name: product.name,
+        pimage: pimages[0],
+        variants: {
+          price: cartPrice,
+          size: cartSize,
+          color: selectedColor
         },
-      ],
-    });
-    setPopupMessage("Product added to cart successfully!");
-    setShowPopup(true);
-    setTimeout(() => navigate("/cart"), 1200);
-  } else {
-    alert("Failed to add to cart");
-  }
-};
+      },
+      cartSize,
+      selectedColor,
+      quantity
+    );
+
+    if (response.success) {
+      trackMetaEvent("AddToCart", {
+        content_ids: [product._id || product.productCode || product.name],
+        content_name: product.name,
+        content_type: "product",
+        currency: "INR",
+        value: Number(displayPrice || 0) * Number(quantity || 1),
+        contents: [
+          {
+            id: product._id || product.productCode || product.name,
+            quantity: Number(quantity || 1),
+          },
+        ],
+      });
+      setPopupMessage("Product added to cart successfully!");
+      setShowPopup(true);
+      setTimeout(() => navigate("/cart"), 1200);
+    } else {
+      alert("Failed to add to cart");
+    }
+  };
 
 
   return (
@@ -363,10 +426,12 @@ const popupPrice = selectedVariant?.price;
 
             {/* Price */}
             <div className="flex items-center gap-3 mb-4">
-              <p className="text-2xl font-bold text-primary-500">₹{selectedVariant?.price}</p>
-              <p className="text-gray-400 line-through">
-                ₹{selectedVariant?.realPrice?.toFixed(2)}
-              </p>
+              <p className="text-2xl font-bold text-primary-500">₹{displayPrice?.toFixed(0)}</p>
+              {displayRealPrice > displayPrice && (
+                <p className="text-gray-400 line-through">
+                  ₹{displayRealPrice?.toFixed(0)}
+                </p>
+              )}
               <span className="bg-green-100 text-green-700 text-xs font-semibold px-2 py-1 rounded-md">
                 In Stock
               </span>
@@ -375,20 +440,87 @@ const popupPrice = selectedVariant?.price;
 
             {/* Variants */}
             <div className="mb-5">
-              <p className="text-brand-text font-medium mb-2">Size</p>
-              <div className="flex gap-2 flex-wrap mb-3">
-                {variants.map((variant, i) => (
-                  <button
-                    key={i}
-                    onClick={() => handleVariantSelect(variant)}
-                    className={`border border-gray-300 rounded-md px-3 py-1 text-sm hover:border-primary-500 hover:text-primary-500 transition ${
-                      selectedVariant?.size === variant.size ? "bg-primary-100 border-primary-500" : ""
-                    }`}
-                  >
-                    {variant.size}
-                  </button>
-                ))}
-              </div>
+              {product.productType !== 'Wallpaper' && (
+                <>
+                  <p className="text-brand-text font-medium mb-2">Size</p>
+                  <div className="flex gap-2 flex-wrap mb-3">
+                    {variants.map((variant, i) => (
+                      <button
+                        key={i}
+                        onClick={() => handleVariantSelect(variant)}
+                        className={`border border-gray-300 rounded-md px-3 py-1 text-sm hover:border-primary-500 hover:text-primary-500 transition ${
+                          selectedVariant?.size === variant.size ? "bg-primary-100 border-primary-500" : ""
+                        }`}
+                      >
+                        {variant.size}
+                      </button>
+                    ))}
+                  </div>
+                </>
+              )}
+
+              {/* Wallpaper Custom Sizing UI */}
+              {product.productType === 'Wallpaper' && (
+                <div className="mb-5 p-4 border border-gray-200 rounded-lg bg-gray-50/50 space-y-4">
+                  <p className="text-brand-text font-semibold text-sm uppercase tracking-wider">Custom Dimensions & Material</p>
+                  
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-xs font-medium text-gray-500 mb-1">Width (ft)</label>
+                      <input
+                        type="number"
+                        min="1"
+                        step="0.1"
+                        value={wallpaperWidth}
+                        onChange={(e) => setWallpaperWidth(parseFloat(e.target.value) || 0)}
+                        className="w-full border border-gray-300 rounded-md px-3 py-1.5 text-sm bg-white focus:outline-none focus:border-primary-500"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-medium text-gray-500 mb-1">Height (ft)</label>
+                      <input
+                        type="number"
+                        min="1"
+                        step="0.1"
+                        value={wallpaperHeight}
+                        onChange={(e) => setWallpaperHeight(parseFloat(e.target.value) || 0)}
+                        className="w-full border border-gray-300 rounded-md px-3 py-1.5 text-sm bg-white focus:outline-none focus:border-primary-500"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="block text-xs font-medium text-gray-500">Select Wallpaper Material</label>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                      {materialsList.map((mat) => {
+                        const isSelected = selectedMaterial?.materialName === mat.materialName;
+                        return (
+                          <button
+                            type="button"
+                            key={mat.materialName}
+                            onClick={() => setSelectedMaterial(mat)}
+                            className={`p-2.5 text-left border rounded-md transition-all flex flex-col justify-between ${
+                              isSelected
+                                ? 'border-primary-500 bg-primary-50 text-primary-900 shadow-sm'
+                                : 'border-gray-300 bg-white text-gray-700 hover:border-primary-500'
+                            }`}
+                          >
+                            <span className="text-xs font-semibold">{mat.materialName}</span>
+                            <span className={`text-[10px] mt-0.5 ${isSelected ? 'text-primary-700' : 'text-gray-500'}`}>
+                              ₹{mat.pricePerSqFt} / sq. ft.
+                            </span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  <div className="pt-3 border-t border-gray-200 flex justify-between items-center text-xs text-gray-700">
+                    <span>Total Wallpaper Area:</span>
+                    <span className="font-semibold">{(wallpaperWidth * wallpaperHeight).toFixed(2)} sq. ft.</span>
+                  </div>
+                </div>
+              )}
 
               <p className="text-brand-text font-medium mb-2">Color</p>
               <div className="flex gap-2 flex-wrap">

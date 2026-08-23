@@ -77,8 +77,16 @@ const getColorHex = (colorName) => {
   return colorMap[normalized] || null;
 };
 
-const findImageForColor = (images, color, selectedVariant = null) => {
+const findImageForColor = (images, color, selectedVariant = null, colorImageMap = null) => {
   if (!images || !images.length || !color) return -1;
+
+  // 0. Try direct mapping from colorImageMap
+  if (colorImageMap && colorImageMap[color]) {
+    const mappedUrl = colorImageMap[color];
+    const idx = images.indexOf(mappedUrl);
+    if (idx !== -1) return idx;
+  }
+
   const normalizedColor = color.toLowerCase().trim();
   
   // 1. Try smart substring match on filename
@@ -133,6 +141,11 @@ export default function ProductPage() {
   const [pincodeResult, setPincodeResult] = useState(null);
   const [activeTab, setActiveTab] = useState('story');
   
+  // Wallpaper custom sizing states
+  const [wallpaperWidth, setWallpaperWidth] = useState(10);
+  const [wallpaperHeight, setWallpaperHeight] = useState(10);
+  const [selectedMaterial, setSelectedMaterial] = useState(null);
+  
   // Cross-sell selected items state
   const [selectedCrossSells, setSelectedCrossSells] = useState([]);
   
@@ -155,12 +168,24 @@ export default function ProductPage() {
       const firstVariant = data.product.variants?.[0] || null;
       setSelectedVariant(firstVariant);
       setSelectedColor(firstVariant?.color?.[0] || null);
+
+      if (data.product.productType === 'Wallpaper') {
+        const materialsList = data.product.wallpaperMaterials?.length > 0
+          ? data.product.wallpaperMaterials
+          : [
+              { materialName: 'Premium Non-Woven (Matte)', pricePerSqFt: 120 },
+              { materialName: 'Canvas Peel & Stick', pricePerSqFt: 160 },
+              { materialName: 'Classic Textured (Paper)', pricePerSqFt: 100 },
+              { materialName: 'Luxury Leatherette', pricePerSqFt: 220 }
+            ];
+        setSelectedMaterial(materialsList[0]);
+      }
     }
   }, [data]);
 
   useEffect(() => {
     if (selectedColor && data?.product?.pimages) {
-      const imgIdx = findImageForColor(data.product.pimages, selectedColor, selectedVariant);
+      const imgIdx = findImageForColor(data.product.pimages, selectedColor, selectedVariant, data.product.colorImageMap);
       if (imgIdx !== -1) {
         setSelectedImg(imgIdx);
       }
@@ -204,7 +229,22 @@ export default function ProductPage() {
   const product = data.product;
   const crossSellProducts = data.crossSellProducts || [];
 
-  const price = selectedVariant?.price || product.variants?.[0]?.price || 0;
+  const materialsList = product?.wallpaperMaterials?.length > 0
+    ? product.wallpaperMaterials
+    : [
+        { materialName: 'Premium Non-Woven (Matte)', pricePerSqFt: 120 },
+        { materialName: 'Canvas Peel & Stick', pricePerSqFt: 160 },
+        { materialName: 'Classic Textured (Paper)', pricePerSqFt: 100 },
+        { materialName: 'Luxury Leatherette', pricePerSqFt: 220 }
+      ];
+
+  let price = selectedVariant?.price || product.variants?.[0]?.price || 0;
+  if (product.productType === 'Wallpaper') {
+    const area = wallpaperWidth * wallpaperHeight;
+    const materialPricePerSqFt = selectedMaterial?.pricePerSqFt || 120;
+    price = area * materialPricePerSqFt;
+  }
+
   const disc = product.discount || 0;
   const finalPrice = disc > 0 ? price - (price * disc / 100) : price;
   const wishlisted = has(product._id);
@@ -220,7 +260,15 @@ export default function ProductPage() {
   const combinedPrice = (finalPrice * qty) + crossSellsPrice;
 
   const handleAddToCart = async () => {
-    if (!selectedVariant) return toast.error('Please select a variant');
+    if (product.productType !== 'Wallpaper' && !selectedVariant) return toast.error('Please select a variant');
+    
+    const cartSize = product.productType === 'Wallpaper'
+      ? `${wallpaperWidth} W x ${wallpaperHeight} H ft (${selectedMaterial?.materialName || 'Standard'})`
+      : selectedVariant.size;
+
+    const cartPrice = product.productType === 'Wallpaper'
+      ? price
+      : selectedVariant.price;
     
     // Add main product
     const response = await addToCart(
@@ -229,12 +277,12 @@ export default function ProductPage() {
         name: product.name,
         pimage: product.pimages?.[0] || '',
         variants: {
-          price: selectedVariant.price,
-          size: selectedVariant.size,
+          price: cartPrice,
+          size: cartSize,
           color: selectedColor
         },
       },
-      selectedVariant.size,
+      cartSize,
       selectedColor,
       qty
     );
@@ -432,7 +480,7 @@ export default function ProductPage() {
             </div>
 
             {/* Sizes */}
-            {product.variants?.length > 0 && (
+            {product.productType !== 'Wallpaper' && product.variants?.length > 0 && (
               <div className="space-y-3.5">
                 <p className="text-xs font-sans font-semibold text-charcoal uppercase tracking-widest">
                   Select Size: <span className="font-light normal-case text-muted ml-1">{selectedVariant?.size}</span>
@@ -457,6 +505,80 @@ export default function ProductPage() {
                       </button>
                     );
                   })}
+                </div>
+              </div>
+            )}
+
+            {/* Custom Dimensions & Material for Wallpaper */}
+            {product.productType === 'Wallpaper' && (
+              <div className="space-y-6 border border-cream-dark p-5 bg-cream-light/35 rounded">
+                <p className="text-xs font-sans font-semibold text-charcoal uppercase tracking-widest">
+                  Custom Dimensions & Material
+                </p>
+
+                {/* Width & Height inputs */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-[10px] font-sans font-semibold text-muted uppercase tracking-wider mb-1.5">
+                      Width (ft)
+                    </label>
+                    <input
+                      type="number"
+                      min="1"
+                      step="0.1"
+                      value={wallpaperWidth}
+                      onChange={(e) => setWallpaperWidth(parseFloat(e.target.value) || 0)}
+                      className="w-full px-3.5 py-2.5 border border-cream-dark bg-white font-sans text-sm text-charcoal focus:outline-none focus:border-charcoal transition"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-sans font-semibold text-muted uppercase tracking-wider mb-1.5">
+                      Height (ft)
+                    </label>
+                    <input
+                      type="number"
+                      min="1"
+                      step="0.1"
+                      value={wallpaperHeight}
+                      onChange={(e) => setWallpaperHeight(parseFloat(e.target.value) || 0)}
+                      className="w-full px-3.5 py-2.5 border border-cream-dark bg-white font-sans text-sm text-charcoal focus:outline-none focus:border-charcoal transition"
+                    />
+                  </div>
+                </div>
+
+                {/* Material Choices */}
+                <div className="space-y-2">
+                  <label className="block text-[10px] font-sans font-semibold text-muted uppercase tracking-wider">
+                    Select Material
+                  </label>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    {materialsList.map((mat) => {
+                      const isSelected = selectedMaterial?.materialName === mat.materialName;
+                      return (
+                        <button
+                          type="button"
+                          key={mat.materialName}
+                          onClick={() => setSelectedMaterial(mat)}
+                          className={`p-3 text-left border rounded transition-all flex flex-col justify-between ${
+                            isSelected
+                              ? 'border-charcoal bg-charcoal text-white shadow-sm'
+                              : 'border-cream-dark bg-white text-charcoal hover:border-charcoal'
+                          }`}
+                        >
+                          <span className="text-xs font-semibold tracking-wide">{mat.materialName}</span>
+                          <span className={`text-[10px] mt-1 ${isSelected ? 'text-cream-light/85' : 'text-muted'}`}>
+                            ₹{mat.pricePerSqFt} / sq. ft.
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Live calculation stats */}
+                <div className="pt-4 border-t border-cream-dark/60 flex justify-between items-center text-xs font-sans text-charcoal">
+                  <span>Total Area:</span>
+                  <span className="font-semibold">{(wallpaperWidth * wallpaperHeight).toFixed(2)} sq. ft.</span>
                 </div>
               </div>
             )}
