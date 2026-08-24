@@ -1,5 +1,7 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { productAPI } from "../../api/services";
 
 const filters = [
   "All",
@@ -206,6 +208,9 @@ export const bestSellingProducts = [
 
 function CollectionProductCard({ product }) {
   const navigate = useNavigate();
+  const title = product.title || product.name || '';
+  const image = product.image || product.pimages?.[0] || '';
+  const price = product.price || product.variants?.[0]?.price || '0';
 
   return (
     <article className="group min-w-0">
@@ -213,11 +218,11 @@ function CollectionProductCard({ product }) {
         type="button"
         onClick={() => navigate(`/product/${product.slug}`)}
         className="block aspect-[0.86/1] w-full overflow-hidden bg-[#D7D7D7]"
-        aria-label={product.title}
+        aria-label={title}
       >
         <img
-          src={product.image}
-          alt={product.title}
+          src={image}
+          alt={title}
           className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
           loading="lazy"
         />
@@ -229,12 +234,12 @@ function CollectionProductCard({ product }) {
         className="mt-4 block w-full text-left"
       >
         <h3 className="font-sans text-[12px] font-normal leading-5 text-black transition group-hover:text-primary-700 sm:text-[13px]">
-          {product.title}
+          {title}
         </h3>
       </button>
       <p className="mt-1 font-sans text-[10px] leading-4 text-[#2D545E] sm:text-[11px]">
         Starts from {"\u20b9"}
-        {product.price}
+        {price}
       </p>
     </article>
   );
@@ -262,11 +267,40 @@ function HelpTile() {
   );
 }
 
-export function WallpaperCollectionPage({ title, description, products, showFilters = true }) {
+export function WallpaperCollectionPage({ title, description, products: initialProducts = [], showFilters = true }) {
+  const { pathname } = useLocation();
+  const slug = pathname.split("/").filter(Boolean).at(-1);
+
+  const { data: apiProducts } = useQuery({
+    queryKey: ['collection-page', slug],
+    queryFn: async () => {
+      const params = { limit: 40 };
+      if (slug === 'best-selling-wallpapers') {
+        params.isBestSeller = true;
+        params.category = 'wallpapers';
+      } else if (slug === 'latest-wallpaper-collection') {
+        params.sort = '-createdAt';
+        params.category = 'wallpapers';
+      } else {
+        params.category = slug;
+      }
+      const res = await productAPI.getAll(params);
+      return res.data?.data?.products || res.data?.products || res.data || [];
+    },
+    staleTime: 5 * 60 * 1000,
+  });
+
+  const products = apiProducts?.length > 0 ? apiProducts : initialProducts;
   const [selectedFilter, setSelectedFilter] = React.useState("All");
 
   const visibleProducts =
-    selectedFilter === "All" ? products : products.filter((product) => product.tag === selectedFilter);
+    selectedFilter === "All" ? products : products.filter((product) => {
+      const tag = product.tag || (product.tags && product.tags[0]) || 
+        (product.name && product.name.toLowerCase().includes('chinoiserie') ? 'Chinoiserie' : '') || 
+        (product.name && product.name.toLowerCase().includes('heritage') ? 'Indian' : '') || 
+        (product.name && product.name.toLowerCase().includes('tropical') ? 'Tropical' : '') || '';
+      return tag === selectedFilter;
+    });
 
   return (
     <main className="min-h-screen bg-white">

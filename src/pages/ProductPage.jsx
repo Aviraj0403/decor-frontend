@@ -318,7 +318,15 @@ export default function ProductPage() {
   };
 
   const handleBuyNow = async () => {
-    if (!selectedVariant) return toast.error('Please select a variant');
+    if (product.productType !== 'Wallpaper' && !selectedVariant) return toast.error('Please select a variant');
+    
+    const cartSize = product.productType === 'Wallpaper'
+      ? `${wallpaperWidth} W x ${wallpaperHeight} H ft (${selectedMaterial?.materialName || 'Standard'})`
+      : selectedVariant.size;
+
+    const cartPrice = product.productType === 'Wallpaper'
+      ? price
+      : selectedVariant.price;
     
     // Add main product
     const response = await addToCart(
@@ -327,12 +335,12 @@ export default function ProductPage() {
         name: product.name,
         pimage: product.pimages?.[0] || '',
         variants: {
-          price: selectedVariant.price,
-          size: selectedVariant.size,
+          price: cartPrice,
+          size: cartSize,
           color: selectedColor
         },
       },
-      selectedVariant.size,
+      cartSize,
       selectedColor,
       qty
     );
