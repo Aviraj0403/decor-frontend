@@ -1,18 +1,23 @@
-import React, { useState, useEffect } from "react";
-import { useAuth } from "../../context/AuthContext";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
+import { ArrowRight, Lock, Mail, Phone, ShieldCheck, Sparkles } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
-import { useNavigate, useLocation, Link } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
-import OtpInput from "../../components/OtpInput";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { motion, AnimatePresence } from "framer-motion";
-import { Sparkles, Mail, Phone, ArrowRight, ShieldCheck, Lock } from "lucide-react";
+import OtpInput from "../../components/OtpInput";
+import { useAuth } from "../../context/AuthContext";
+import authWallpaper from "../../image/category-customised-wallpapers.webp";
+
+const logo = "/logo.png";
+
+const inputClass =
+  "h-12 w-full rounded-md border border-[#D7D7D7] bg-white px-4 text-sm text-[#103438] outline-none transition placeholder:text-[#2D545E]/55 focus:border-[#C99665] focus:ring-2 focus:ring-[#E2B385]/35";
 
 const SignInPage = () => {
   const [loginType, setLoginType] = useState("mobile");
   const [emailOrUsername, setEmailOrUsername] = useState("");
   const [password, setPassword] = useState("");
-  
   const [mobile, setMobile] = useState("");
   const [otp, setOtp] = useState("");
   const [sessionId, setSessionId] = useState(null);
@@ -24,18 +29,19 @@ const SignInPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const redirectTo = location.state?.from?.pathname || 
-                     location.state?.from || 
-                     new URLSearchParams(location.search).get('redirect') || 
-                     "/";
+  const redirectTo =
+    location.state?.from?.pathname ||
+    location.state?.from ||
+    new URLSearchParams(location.search).get("redirect") ||
+    "/";
 
-  /* ---------------- EMAIL LOGIN ---------------- */
-  const handleCustomSignIn = async (e) => {
-    if(e) e.preventDefault();
+  const handleCustomSignIn = async (event) => {
+    event?.preventDefault();
     if (!emailOrUsername || !password) {
       toast.error("Please fill all fields");
       return;
     }
+
     setIsSubmitting(true);
     try {
       await login({
@@ -52,22 +58,22 @@ const SignInPage = () => {
     }
   };
 
-  /* ---------------- PHONE OTP V2 ---------------- */
   const handleSendOTP = async () => {
     if (mobile.length !== 10) {
       toast.error("Enter valid 10 digit mobile number");
       return;
     }
+
     setIsSubmitting(true);
     try {
       const response = await sendPhoneOTP(`+91${mobile}`, sessionId);
-      
+
       if (response.bypassOtp) {
         toast.success(response.message || "Login successful");
         navigate(redirectTo, { replace: true });
         return;
       }
-      
+
       setSessionId(response.sessionId);
       setOtpSent(true);
       setTimer(30);
@@ -84,6 +90,7 @@ const SignInPage = () => {
       toast.error("Please enter 4 digit OTP");
       return;
     }
+
     setIsSubmitting(true);
     try {
       await verifyPhoneOTP(sessionId, otp);
@@ -104,7 +111,6 @@ const SignInPage = () => {
     }
   };
 
-  /* ---------------- GOOGLE LOGIN ---------------- */
   const handleGoogleLogin = async () => {
     setIsSubmitting(true);
     try {
@@ -118,243 +124,250 @@ const SignInPage = () => {
     }
   };
 
-  /* ---------------- AUTO SUBMIT OTP ---------------- */
   useEffect(() => {
     if (otp.length === 4 && otpSent && sessionId && !isSubmitting) {
       handleVerifyOTP();
     }
   }, [otp, otpSent, sessionId]);
 
-  /* ---------------- RESEND TIMER ---------------- */
   useEffect(() => {
-    if (!otpSent || timer === 0) return;
-    const interval = setInterval(() => setTimer((t) => t - 1), 1000);
+    if (!otpSent || timer === 0) return undefined;
+    const interval = setInterval(() => setTimer((value) => value - 1), 1000);
     return () => clearInterval(interval);
   }, [otpSent, timer]);
 
   return (
-    <div
-      className="flex items-center justify-center md:justify-end min-h-screen bg-cover bg-center p-6 md:pr-24 relative overflow-hidden font-sans"
-      style={{
-        backgroundImage: `url(/frontend-login-bg.png)`
-      }}
-    >
-      <div className="w-full max-w-md bg-black/40 backdrop-blur-xl rounded-2xl p-8 shadow-[0_0_50px_rgba(255,165,0,0.15)] border border-white/10 relative z-10">
-        
-        {/* Header */}
-        <div className="text-center mb-8">
-          <Link to="/" className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-primary-500/20 border border-primary-500/30 text-primary-300 mb-3 hover:bg-primary-500/30 transition">
-            <Sparkles className="w-7 h-7" />
-          </Link>
-          <h2 className="text-2xl font-bold text-white tracking-wide">Welcome to DivyaMantra</h2>
-          <p className="text-sm text-gray-300 mt-1">Sign in to continue your spiritual journey</p>
-        </div>
-
-        {/* Login Type Toggle */}
-        <div className="flex p-1 bg-black/30 rounded-xl mb-8 border border-white/5">
-          <button
-            onClick={() => {
-              setLoginType("mobile");
-              setOtpSent(false);
-              setOtp("");
-            }}
-            className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-sm font-medium transition-all duration-300 ${
-              loginType === "mobile"
-                ? "bg-primary-500 text-white shadow-lg shadow-primary-500/20"
-                : "text-gray-400 hover:text-white"
-            }`}
-          >
-            <Phone size={16} /> Phone
-          </button>
-          <button
-            onClick={() => setLoginType("email")}
-            className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-sm font-medium transition-all duration-300 ${
-              loginType === "email"
-                ? "bg-primary-500 text-white shadow-lg shadow-primary-500/20"
-                : "text-gray-400 hover:text-white"
-            }`}
-          >
-            <Mail size={16} /> Email
-          </button>
-        </div>
-
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={loginType}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2 }}
-          >
-            {/* EMAIL LOGIN */}
-            {loginType === "email" && (
-              <form className="space-y-5" onSubmit={handleCustomSignIn}>
-                <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-1.5">Email or Username</label>
-                  <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <Mail className="h-5 w-5 text-gray-400" />
-                    </div>
-                    <input
-                      type="text"
-                      className="block w-full pl-10 pr-3 py-3 border border-white/10 rounded-xl focus:ring-1 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all bg-black/20 focus:bg-black/40 text-white placeholder-gray-500"
-                      placeholder="you@example.com"
-                      value={emailOrUsername}
-                      onChange={(e) => setEmailOrUsername(e.target.value)}
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <div className="flex items-center justify-between mb-1.5">
-                    <label className="block text-sm font-medium text-gray-300">Password</label>
-                    <Link to="/forgot-password" className="text-sm font-medium text-primary-400 hover:text-primary-300 transition-colors">
-                      Forgot password?
-                    </Link>
-                  </div>
-                  <div className="relative">
-                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <Lock className="h-5 w-5 text-gray-400" />
-                    </div>
-                    <input
-                      type="password"
-                      className="block w-full pl-10 pr-3 py-3 border border-white/10 rounded-xl focus:ring-1 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all bg-black/20 focus:bg-black/40 text-white placeholder-gray-500"
-                      placeholder="••••••••"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                    />
-                  </div>
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-primary-500 to-primary-600 text-white py-3.5 rounded-xl hover:from-primary-600 hover:to-primary-700 transition-all active:scale-[0.98] disabled:opacity-70 disabled:active:scale-100 font-semibold shadow-lg shadow-primary-500/20 mt-2"
-                >
-                  {isSubmitting ? "Signing in..." : "Sign In"}
-                  {!isSubmitting && <ArrowRight size={18} />}
-                </button>
-              </form>
-            )}
-
-            {/* PHONE OTP LOGIN */}
-            {loginType === "mobile" && (
-              <div className="space-y-5">
-                {!otpSent ? (
-                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-5">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-300 mb-1.5">Mobile Number</label>
-                      <div className="flex rounded-xl overflow-hidden border border-white/10 focus-within:ring-1 focus-within:ring-primary-500 focus-within:border-primary-500 transition-all bg-black/20 focus-within:bg-black/40">
-                        <span className="flex items-center justify-center px-4 border-r border-white/10 text-primary-400 font-medium bg-black/20">
-                          +91
-                        </span>
-                        <input
-                          autoFocus
-                          maxLength="10"
-                          className="flex-1 w-full px-4 py-3 outline-none bg-transparent text-white placeholder-gray-500"
-                          placeholder="Enter 10 digit number"
-                          value={mobile}
-                          onChange={(e) => setMobile(e.target.value.replace(/\D/g, ""))}
-                          onKeyPress={(e) => e.key === 'Enter' && handleSendOTP()}
-                        />
-                      </div>
-                    </div>
-                    
-                    <button
-                      onClick={handleSendOTP}
-                      disabled={isSubmitting || mobile.length !== 10}
-                      className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-primary-500 to-primary-600 text-white py-3.5 rounded-xl hover:from-primary-600 hover:to-primary-700 transition-all active:scale-[0.98] disabled:opacity-70 disabled:active:scale-100 font-semibold shadow-lg shadow-primary-500/20"
-                    >
-                      {isSubmitting ? "Processing..." : "Sign In"}
-                    </button>
-                  </motion.div>
-                ) : (
-                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
-                    <div className="text-center">
-                      <div className="inline-flex items-center justify-center w-14 h-14 bg-green-500/20 text-green-400 border border-green-500/30 rounded-full mb-3 shadow-[0_0_20px_rgba(34,197,94,0.2)]">
-                        <ShieldCheck size={28} />
-                      </div>
-                      <h3 className="text-lg font-semibold text-white">Verification Code</h3>
-                      <p className="text-sm text-gray-400 mt-1">
-                        Enter the 4-digit code sent to <br/><span className="font-medium text-primary-300">+91 {mobile}</span>
-                      </p>
-                    </div>
-
-                    <div className="flex justify-center">
-                      <OtpInput value={otp} onChange={setOtp} />
-                    </div>
-
-                    <button
-                      onClick={handleVerifyOTP}
-                      disabled={isSubmitting || otp.length !== 4}
-                      className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-primary-500 to-primary-600 text-white py-3.5 rounded-xl hover:from-primary-600 hover:to-primary-700 transition-all active:scale-[0.98] disabled:opacity-70 disabled:active:scale-100 font-semibold shadow-lg shadow-primary-500/20"
-                    >
-                      {isSubmitting ? "Verifying..." : "Verify & Sign In"}
-                    </button>
-
-                    <div className="flex items-center justify-between text-sm">
-                      <button
-                        onClick={() => {
-                          setOtpSent(false);
-                          setOtp("");
-                          setSessionId(null);
-                        }}
-                        className="text-gray-400 hover:text-white font-medium transition-colors"
-                      >
-                        Change Number
-                      </button>
-
-                      {timer > 0 ? (
-                        <span className="text-primary-400/70">Resend in {timer}s</span>
-                      ) : (
-                        <button
-                          onClick={handleSendOTP}
-                          disabled={isSubmitting}
-                          className="text-primary-400 font-medium hover:text-primary-300 transition-colors"
-                        >
-                          Resend Code
-                        </button>
-                      )}
-                    </div>
-                  </motion.div>
-                )}
-              </div>
-            )}
-          </motion.div>
-        </AnimatePresence>
-
-        <div className="mt-8">
-          <div className="relative">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-white/10"></div>
-            </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="px-4 bg-[#14100E] text-gray-500 rounded-full border border-white/5">Or continue with</span>
+    <main className="min-h-screen bg-[#D7D7D7] px-4 py-8 text-[#103438] sm:px-6 lg:px-10">
+      <div className="mx-auto grid min-h-[calc(100vh-64px)] max-w-6xl overflow-hidden rounded-md bg-white shadow-[0_24px_80px_rgba(16,52,56,0.14)] lg:grid-cols-[1.02fr_0.98fr]">
+        <section className="relative hidden min-h-full overflow-hidden lg:block">
+          <img src={authWallpaper} alt="" className="absolute inset-0 h-full w-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#103438]/15 via-[#103438]/20 to-[#103438]/80" />
+          <div className="relative z-10 flex h-full flex-col justify-between p-10 text-white">
+            <Link to="/" className="inline-flex w-fit items-center gap-3">
+              <img src={logo} alt="Life n Colors" className="h-12 w-auto rounded bg-white/90 px-2 py-1" />
+            </Link>
+            <div className="max-w-md">
+              <p className="mb-3 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.28em] text-[#E2B385]">
+                <Sparkles size={15} /> Curated homes
+              </p>
+              <h1 className="font-serif text-5xl font-semibold leading-tight text-white">
+                Bring every wall closer to home.
+              </h1>
+              <p className="mt-4 text-sm leading-6 text-white/85">
+                Sign in to view orders, save favourites, and continue designing with Life n Colors.
+              </p>
             </div>
           </div>
+        </section>
 
-          <div className="mt-6">
+        <section className="flex items-center justify-center px-5 py-9 sm:px-10">
+          <div className="w-full max-w-md">
+            <div className="mb-8 text-center lg:text-left">
+              <Link to="/" className="mb-6 inline-flex lg:hidden">
+                <img src={logo} alt="Life n Colors" className="h-12 w-auto" />
+              </Link>
+              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[#C99665]">Welcome back</p>
+              <h2 className="mt-2 font-serif text-4xl font-semibold text-[#103438]">Sign in</h2>
+              <p className="mt-2 text-sm leading-6 text-[#2D545E]">
+                Access your account using mobile OTP or email password.
+              </p>
+            </div>
+
+            <div className="mb-7 grid grid-cols-2 rounded-md border border-[#D7D7D7] bg-[#D7D7D7]/45 p-1">
+              <button
+                type="button"
+                onClick={() => {
+                  setLoginType("mobile");
+                  setOtpSent(false);
+                  setOtp("");
+                }}
+                className={`flex h-10 items-center justify-center gap-2 rounded text-sm font-semibold transition ${
+                  loginType === "mobile" ? "bg-[#103438] text-white shadow-sm" : "text-[#2D545E] hover:text-[#103438]"
+                }`}
+              >
+                <Phone size={16} /> Phone
+              </button>
+              <button
+                type="button"
+                onClick={() => setLoginType("email")}
+                className={`flex h-10 items-center justify-center gap-2 rounded text-sm font-semibold transition ${
+                  loginType === "email" ? "bg-[#103438] text-white shadow-sm" : "text-[#2D545E] hover:text-[#103438]"
+                }`}
+              >
+                <Mail size={16} /> Email
+              </button>
+            </div>
+
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={loginType}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.18 }}
+              >
+                {loginType === "email" && (
+                  <form className="space-y-4" onSubmit={handleCustomSignIn}>
+                    <label className="block">
+                      <span className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.16em] text-[#2D545E]">
+                        Email or username
+                      </span>
+                      <div className="relative">
+                        <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#C99665]" />
+                        <input
+                          type="text"
+                          className={`${inputClass} pl-10`}
+                          placeholder="you@example.com"
+                          value={emailOrUsername}
+                          onChange={(event) => setEmailOrUsername(event.target.value)}
+                        />
+                      </div>
+                    </label>
+
+                    <label className="block">
+                      <span className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.16em] text-[#2D545E]">
+                        Password
+                      </span>
+                      <div className="relative">
+                        <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#C99665]" />
+                        <input
+                          type="password"
+                          className={`${inputClass} pl-10`}
+                          placeholder="Enter password"
+                          value={password}
+                          onChange={(event) => setPassword(event.target.value)}
+                        />
+                      </div>
+                    </label>
+
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="flex h-12 w-full items-center justify-center gap-2 rounded-md bg-[#2D545E] text-sm font-bold uppercase tracking-[0.12em] text-white transition hover:bg-[#103438] disabled:opacity-60"
+                    >
+                      {isSubmitting ? "Signing in..." : "Sign in"}
+                      {!isSubmitting && <ArrowRight size={17} />}
+                    </button>
+                  </form>
+                )}
+
+                {loginType === "mobile" && (
+                  <div className="space-y-4">
+                    {!otpSent ? (
+                      <>
+                        <label className="block">
+                          <span className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.16em] text-[#2D545E]">
+                            Mobile number
+                          </span>
+                          <div className="flex overflow-hidden rounded-md border border-[#D7D7D7] bg-white focus-within:border-[#C99665] focus-within:ring-2 focus-within:ring-[#E2B385]/35">
+                            <span className="grid h-12 w-16 place-items-center border-r border-[#D7D7D7] bg-[#E2B385]/35 text-sm font-bold text-[#103438]">
+                              +91
+                            </span>
+                            <input
+                              autoFocus
+                              maxLength="10"
+                              className="h-12 min-w-0 flex-1 bg-transparent px-4 text-sm text-[#103438] outline-none placeholder:text-[#2D545E]/55"
+                              placeholder="Enter 10 digit number"
+                              value={mobile}
+                              onChange={(event) => setMobile(event.target.value.replace(/\D/g, ""))}
+                              onKeyDown={(event) => event.key === "Enter" && handleSendOTP()}
+                            />
+                          </div>
+                        </label>
+
+                        <button
+                          type="button"
+                          onClick={handleSendOTP}
+                          disabled={isSubmitting || mobile.length !== 10}
+                          className="flex h-12 w-full items-center justify-center gap-2 rounded-md bg-[#2D545E] text-sm font-bold uppercase tracking-[0.12em] text-white transition hover:bg-[#103438] disabled:opacity-60"
+                        >
+                          {isSubmitting ? "Processing..." : "Send OTP"}
+                          {!isSubmitting && <ArrowRight size={17} />}
+                        </button>
+                      </>
+                    ) : (
+                      <div className="space-y-5">
+                        <div className="rounded-md border border-[#D7D7D7] bg-[#E2B385]/20 p-5 text-center">
+                          <div className="mx-auto mb-3 grid h-11 w-11 place-items-center rounded-full bg-[#2D545E] text-white">
+                            <ShieldCheck size={22} />
+                          </div>
+                          <h3 className="font-serif text-2xl font-semibold text-[#103438]">Verify OTP</h3>
+                          <p className="mt-1 text-sm text-[#2D545E]">Code sent to +91 {mobile}</p>
+                        </div>
+
+                        <div className="flex justify-center">
+                          <OtpInput value={otp} onChange={setOtp} />
+                        </div>
+
+                        <button
+                          type="button"
+                          onClick={handleVerifyOTP}
+                          disabled={isSubmitting || otp.length !== 4}
+                          className="flex h-12 w-full items-center justify-center gap-2 rounded-md bg-[#2D545E] text-sm font-bold uppercase tracking-[0.12em] text-white transition hover:bg-[#103438] disabled:opacity-60"
+                        >
+                          {isSubmitting ? "Verifying..." : "Verify & Sign In"}
+                        </button>
+
+                        <div className="flex items-center justify-between text-sm">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setOtpSent(false);
+                              setOtp("");
+                              setSessionId(null);
+                            }}
+                            className="font-semibold text-[#2D545E] hover:text-[#103438]"
+                          >
+                            Change number
+                          </button>
+                          {timer > 0 ? (
+                            <span className="text-[#2D545E]/75">Resend in {timer}s</span>
+                          ) : (
+                            <button
+                              type="button"
+                              onClick={handleSendOTP}
+                              disabled={isSubmitting}
+                              className="font-semibold text-[#C99665] hover:text-[#103438]"
+                            >
+                              Resend code
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </motion.div>
+            </AnimatePresence>
+
+            <div className="my-7 flex items-center gap-4">
+              <span className="h-px flex-1 bg-[#D7D7D7]" />
+              <span className="text-xs font-semibold uppercase tracking-[0.16em] text-[#2D545E]/70">or</span>
+              <span className="h-px flex-1 bg-[#D7D7D7]" />
+            </div>
+
             <button
+              type="button"
               onClick={handleGoogleLogin}
               disabled={isSubmitting}
-              className="w-full flex items-center justify-center gap-3 bg-brand-bg/5 border border-white/10 text-white py-3.5 rounded-xl hover:bg-brand-bg/10 hover:border-white/20 transition-all active:scale-[0.98] font-medium shadow-sm"
+              className="flex h-12 w-full items-center justify-center gap-3 rounded-md border border-[#D7D7D7] bg-white text-sm font-semibold text-[#103438] transition hover:border-[#C99665] hover:bg-[#E2B385]/15 disabled:opacity-60"
             >
               <FcGoogle size={22} />
               Continue with Google
             </button>
-          </div>
-        </div>
 
-        <p className="text-center text-sm text-gray-400 mt-8">
-          Don't have an account?{" "}
-          <Link to="/signup" className="text-primary-400 font-semibold hover:text-primary-300 transition-colors">
-            Create an account
-          </Link>
-        </p>
+            <p className="mt-7 text-center text-sm text-[#2D545E]">
+              Don't have an account?{" "}
+              <Link to="/signup" className="font-bold text-[#C99665] hover:text-[#103438]">
+                Create account
+              </Link>
+            </p>
+          </div>
+        </section>
       </div>
       <div id="sign-in-recaptcha-container"></div>
-      <ToastContainer position="top-right" autoClose={3000} theme="dark" />
-    </div>
+      <ToastContainer position="top-right" autoClose={3000} theme="light" />
+    </main>
   );
 };
 

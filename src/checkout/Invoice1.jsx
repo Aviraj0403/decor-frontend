@@ -1,7 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { Printer, Download, Truck } from "lucide-react";
-import logo from "../image/lifencolors-logo.webp";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import Axios from "../utils/Axios"; // Import Axios for fetching fallback
@@ -9,6 +8,8 @@ import Axios from "../utils/Axios"; // Import Axios for fetching fallback
 export default function Invoice() {
   const { orderId } = useParams(); // Get the dynamic orderId from the URL
   const invoiceRef = useRef();
+
+const logo = "/logo.png";
   const location = useLocation(); // Get the state passed via navigate
 
   const [orderData, setOrderData] = useState(null);

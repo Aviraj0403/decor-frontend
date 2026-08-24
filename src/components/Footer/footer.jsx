@@ -57,7 +57,7 @@ const paymentIcons = [
 ];
 
 function FooterLink({ link }) {
-  const className = "font-sans text-[16px] leading-none text-[#103438] transition hover:text-[#2D545E]/70";
+  const className = "font-sans text-[14px] leading-none text-[#103438] transition hover:text-[#2D545E]/70";
 
   if (link.external) {
     return (
@@ -102,7 +102,7 @@ export default function Footer() {
         >
           {footerColumns.map((column) => (
             <div key={column.title} style={{ width: column.title === "Life n Colors" ? 170 : column.title === "Connect" ? 230 : 270, flex: "0 0 auto" }}>
-              <h2 className="font-sans text-[24px] font-bold leading-none text-[#103438] lg:text-[26px]">{column.title}</h2>
+              <h2 className="font-sans text-[21px] font-bold leading-none text-[#103438] lg:text-[23px]">{column.title}</h2>
               <ul className="mt-6 space-y-4 lg:space-y-5">
                 {column.links.map((link) => (
                   <li key={link.label}>

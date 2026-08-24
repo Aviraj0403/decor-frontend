@@ -17,9 +17,10 @@ import {
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
-import logo from "../../image/lifencolors-logo.webp";
 import { getMenuCategories } from "../../services/categoryApi";
 import { useAuth } from "../../context/AuthContext";
+
+const logo = "/logo.png";
 
 export default function MobileHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -73,7 +74,7 @@ export default function MobileHeader() {
   };
 
   const bottomItemClass = (active) =>
-    `flex min-w-[52px] flex-col items-center justify-center gap-1 text-[10px] font-semibold transition ${active ? "text-primary-600" : "text-[#736b60]"
+    `flex min-w-[52px] flex-col items-center justify-center gap-1 text-[10px] font-semibold transition ${active ? "text-primary-600" : "text-[#2D545E]"
     }`;
 
   return (
@@ -91,13 +92,13 @@ export default function MobileHeader() {
 
           <Link
             to="/"
-            className="mx-auto flex h-12 w-[180px] min-w-0 items-center justify-center overflow-hidden"
+            className="mx-auto flex h-[58px] w-[182px] min-w-0 items-center justify-center"
             aria-label="Life n Colors home"
           >
             <img
               src={logo}
               alt="Life n Colors"
-              className="w-[168px] max-w-none object-contain"
+              className="h-[54px] w-auto object-contain"
             />
           </Link>
 
@@ -105,7 +106,7 @@ export default function MobileHeader() {
             <button
               type="button"
               onClick={handleProfileClick}
-              className="grid h-10 w-10 place-items-center rounded-full text-[#3E2723] transition hover:bg-secondary-50 hover:text-accent active:scale-95"
+              className="grid h-10 w-10 place-items-center rounded-full text-[#103438] transition hover:bg-secondary-50 hover:text-accent active:scale-95"
               aria-label={user ? "Open profile" : "Sign in"}
             >
               <CircleUserRound size={24} strokeWidth={1.7} />
@@ -113,7 +114,7 @@ export default function MobileHeader() {
 
             <Link
               to="/cart"
-              className="relative grid h-10 w-10 place-items-center rounded-full text-[#3E2723] transition hover:bg-secondary-50 hover:text-accent active:scale-95"
+              className="relative grid h-10 w-10 place-items-center rounded-full text-[#103438] transition hover:bg-secondary-50 hover:text-accent active:scale-95"
               aria-label="Open cart"
             >
               <ShoppingBasket size={24} strokeWidth={1.7} />
@@ -227,7 +228,7 @@ export default function MobileHeader() {
           <div className="grid grid-cols-3 gap-2 px-4 py-4">
             <Link
               to="/new-products"
-            className="flex flex-col items-center gap-2 rounded-2xl border border-secondary-200 bg-brand-bg px-2 py-3 text-center text-[10px] font-semibold text-[#463d32] shadow-sm"
+            className="flex flex-col items-center gap-2 rounded-2xl border border-secondary-200 bg-brand-bg px-2 py-3 text-center text-[10px] font-semibold text-[#103438] shadow-sm"
             >
               <span className="grid h-9 w-9 place-items-center rounded-full bg-secondary-50 text-accent">
                 <Sparkles size={18} />
@@ -236,7 +237,7 @@ export default function MobileHeader() {
             </Link>
             <Link
               to="/#combo-products"
-              className="flex flex-col items-center gap-2 rounded-2xl border border-secondary-200 bg-brand-bg px-2 py-3 text-center text-[10px] font-semibold text-[#463d32] shadow-sm"
+              className="flex flex-col items-center gap-2 rounded-2xl border border-secondary-200 bg-brand-bg px-2 py-3 text-center text-[10px] font-semibold text-[#103438] shadow-sm"
             >
               <span className="grid h-9 w-9 place-items-center rounded-full bg-secondary-50 text-accent">
                 <Tag size={18} />
@@ -245,7 +246,7 @@ export default function MobileHeader() {
             </Link>
             <Link
               to="/#best-sellers"
-              className="flex flex-col items-center gap-2 rounded-2xl border border-secondary-200 bg-brand-bg px-2 py-3 text-center text-[10px] font-semibold text-[#463d32] shadow-sm"
+              className="flex flex-col items-center gap-2 rounded-2xl border border-secondary-200 bg-brand-bg px-2 py-3 text-center text-[10px] font-semibold text-[#103438] shadow-sm"
             >
               <span className="grid h-9 w-9 place-items-center rounded-full bg-secondary-50 text-accent">
                 <PackageSearch size={18} />
@@ -260,13 +261,13 @@ export default function MobileHeader() {
 
           <ul className="mx-3 overflow-hidden rounded-2xl border border-secondary-200 bg-brand-bg shadow-sm">
             {isLoading && (
-              <li className="px-4 py-5 text-center text-xs text-[#8a8177]">Loading categories...</li>
+              <li className="px-4 py-5 text-center text-xs text-[#2D545E]">Loading categories...</li>
             )}
             {isError && (
               <li className="px-4 py-5 text-center text-xs text-primary-700">Unable to load categories</li>
             )}
             {!isLoading && !isError && menuItems.length === 0 && (
-              <li className="px-4 py-5 text-center text-xs text-[#8a8177]">No categories available</li>
+              <li className="px-4 py-5 text-center text-xs text-[#2D545E]">No categories available</li>
             )}
 
             {menuItems.map((item, index) => {
@@ -277,7 +278,7 @@ export default function MobileHeader() {
                 <li key={item._id || item.slug} className="border-b border-secondary-200 last:border-b-0">
                   <button
                     type="button"
-                    className={`flex w-full items-center justify-between px-4 py-3.5 text-left text-[13px] font-semibold transition ${isOpen ? "bg-secondary-50 text-accent" : "text-[#443b31] hover:bg-secondary-50"
+                    className={`flex w-full items-center justify-between px-4 py-3.5 text-left text-[13px] font-semibold transition ${isOpen ? "bg-secondary-50 text-accent" : "text-[#103438] hover:bg-secondary-50"
                       }`}
                     onClick={() => {
                       if (hasSubcategories) setOpenSubMenu(isOpen ? null : index);
@@ -307,7 +308,7 @@ export default function MobileHeader() {
                         <li key={sub._id || sub.slug}>
                           <Link
                             to={`/${item.slug}/${sub.slug}`}
-                            className="block px-6 py-2.5 text-xs text-[#665d52] transition hover:bg-secondary-100 hover:text-accent"
+                            className="block px-6 py-2.5 text-xs text-[#2D545E] transition hover:bg-secondary-100 hover:text-accent"
                           >
                             {sub.name}
                           </Link>

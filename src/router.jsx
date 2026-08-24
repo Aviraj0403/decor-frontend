@@ -35,6 +35,10 @@ import ThankYouPage from "./checkout/ThankYouPage.jsx";
 import NewProducts from "./pages/newProduct/NewProducts.jsx";
 import MobileSearchPage from "./components/Header/MobileSearchPage.jsx";
 import BestSellingWallpapers from "./pages/collections/BestSellingWallpapers.jsx";
+import NewArrivalsWallpapers from "./pages/collections/NewArrivalsWallpapers.jsx";
+import ShopAllWallpapers from "./pages/collections/ShopAllWallpapers.jsx";
+import WallpaperCollectionLanding from "./pages/collections/WallpaperCollectionLanding.jsx";
+import FabricHomeCollectionLanding from "./pages/collections/FabricHomeCollectionLanding.jsx";
 // import Login from "./authentication/Login.jsx";
 // import Signup from "./authentication/Signup.jsx";
 import RequireAuth from "./components/RequireAuth.jsx";
@@ -84,6 +88,33 @@ const router = createBrowserRouter([
        {path : "/profile/invoice/:orderId", element: <Invoice />},
        {path:"/new-products", element:<NewProducts />},
        {path:"/collections/best-selling-wallpapers", element:<BestSellingWallpapers />},
+       {path:"/collections/latest-wallpaper-collection", element:<NewArrivalsWallpapers />},
+       {path:"/collections/buy-wallpapers-online", element:<ShopAllWallpapers />},
+       {path:"/collections/indian-traditional-wallpapers", element:<WallpaperCollectionLanding />},
+       {path:"/collections/chinoiserie-room-wallpapers", element:<WallpaperCollectionLanding />},
+       {path:"/collections/tropical-theme-room-wallpapers", element:<WallpaperCollectionLanding />},
+       {path:"/collections/amazora-world-art-wallpapers-fabrics", element:<WallpaperCollectionLanding />},
+       {path:"/collections/abstract-wallpapers-for-room", element:<WallpaperCollectionLanding />},
+       {path:"/collections/pichwai-theme-wallpapers", element:<WallpaperCollectionLanding />},
+       {path:"/collections/bedroom-wallpaper-collection", element:<WallpaperCollectionLanding />},
+       {path:"/collections/living-room-wallpaper-collection", element:<WallpaperCollectionLanding />},
+       {path:"/collections/kids-room-wallpapers", element:<WallpaperCollectionLanding />},
+       {path:"/collections/pooja-room-wallpapers", element:<WallpaperCollectionLanding />},
+       {path:"/collections/commercial-areas-wallpapers", element:<WallpaperCollectionLanding />},
+       {path:"/collections/ceiling-wallpapers", element:<WallpaperCollectionLanding />},
+       {path:"/collections/powder-room-wallpapers", element:<WallpaperCollectionLanding />},
+       {path:"/collections/wardrobe-wallpapers", element:<WallpaperCollectionLanding />},
+       {path:"/collections/2026-wallpaper-collection", element:<WallpaperCollectionLanding />},
+       {path:"/collections/suneherii-wallpaper-collection", element:<WallpaperCollectionLanding />},
+       {path:"/collections/neelvana-collection-by-life-n-colors-shabnam-gupta", element:<WallpaperCollectionLanding />},
+       {path:"/collections/atarangi-affordable-wallpaper-collection", element:<WallpaperCollectionLanding />},
+       {path:"/collections/ready-made-curtains", element:<FabricHomeCollectionLanding />},
+       {path:"/collections/sofa-and-chair-fabric", element:<FabricHomeCollectionLanding />},
+       {path:"/collections/cushion-covers", element:<FabricHomeCollectionLanding />},
+       {path:"/collections/tabler-runners-mats", element:<FabricHomeCollectionLanding />},
+       {path:"/collections/stitched-stories-hand-embroidered-wall-art", element:<FabricHomeCollectionLanding />},
+       {path:"/collections/wallart-posters", element:<FabricHomeCollectionLanding />},
+       {path:"/collections/beautiful-curtain-tie-backs", element:<FabricHomeCollectionLanding />},
        {path :"/search", element:<MobileSearchPage />},
 
       // {path: "/auth", element: < Login/>},

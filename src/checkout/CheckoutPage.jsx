@@ -572,7 +572,7 @@ export default function CheckoutPage() {
           email: user.email,
           contact: selectedAddress.phoneNumber,
         },
-        theme: { color: "#8B1E1E" },
+        theme: { color: "#103438" },
         retry: {
           enabled: false
         },

@@ -28,11 +28,11 @@ export default function BeautyDiscountBanner() {
               <span className="text-secondary-300">Prices to Celebrate</span>
             </h2>
 
-            <p className="mt-4 max-w-[500px] text-sm leading-6 text-[#f1ded7] sm:text-base sm:leading-7">
+            <p className="mt-4 max-w-[500px] text-sm leading-6 text-[#E2B385] sm:text-base sm:leading-7">
               Enjoy up to <strong className="text-white">20% off</strong> on selected spiritual essentials, sacred gifts and devotional decor.
             </p>
 
-            <div className="mt-6 flex flex-wrap gap-x-5 gap-y-3 text-[11px] font-medium text-[#f3e5dc] sm:text-xs">
+            <div className="mt-6 flex flex-wrap gap-x-5 gap-y-3 text-[11px] font-medium text-[#E2B385] sm:text-xs">
               <span className="inline-flex items-center gap-1.5">
                 <BadgeCheck size={16} className="text-secondary-300" /> 100% Authentic Products
               </span>

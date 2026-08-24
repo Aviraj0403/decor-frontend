@@ -97,8 +97,8 @@ function CarouselDots({ activeIndex, onSelect }) {
         <button
           key={slide.image}
           type="button"
-          className={`h-[8px] w-[8px] rounded-full border border-[#8f0018] transition ${
-            index === activeIndex ? "bg-[#8f0018]" : "bg-white"
+          className={`h-[8px] w-[8px] rounded-full border border-[#103438] transition ${
+            index === activeIndex ? "bg-[#103438]" : "bg-white"
           }`}
           aria-label={`Show slide ${index + 1}`}
           onClick={() => onSelect(index)}
@@ -138,7 +138,7 @@ export default function LookbookPreview() {
 
   return (
     <section className="bg-white px-4 pb-10 pt-7 md:px-10 md:pb-12 md:pt-8">
-      <h2 className="text-center text-[32px] font-light uppercase tracking-[0.08em] text-[#8f0018] md:text-[46px]">
+      <h2 className="text-center text-[32px] font-light uppercase tracking-[0.08em] text-[#103438] md:text-[46px]">
         LOOKBOOK
       </h2>
 
@@ -147,7 +147,7 @@ export default function LookbookPreview() {
           <p className="text-[11px] uppercase tracking-[0.3em] text-black">
             LOOKBOOKS
           </p>
-          <h3 className="mt-3 text-[25px] font-normal leading-tight text-[#8f0018] md:text-[32px]">
+          <h3 className="mt-3 text-[25px] font-normal leading-tight text-[#103438] md:text-[32px]">
             The Art of Inspiration
           </h3>
           <p className="mx-auto mt-3 max-w-[610px] text-[14px] leading-[1.6] text-black md:text-[16px]">

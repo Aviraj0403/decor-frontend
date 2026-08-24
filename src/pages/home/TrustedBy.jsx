@@ -54,7 +54,7 @@ const logos = [
 export default function TrustedBy() {
   return (
     <section
-      className="border-b border-[#e8e2d8] bg-white px-5 py-12"
+      className="border-b border-[#D7D7D7] bg-white px-5 py-12"
       aria-label="Trusted by"
     >
       <div className="mx-auto max-w-[1200px]">
@@ -79,7 +79,7 @@ export default function TrustedBy() {
           ))}
         </div>
 
-        <p className="mt-5 text-center text-[10px] font-normal leading-relaxed text-[#9a9488] md:text-[11px]">
+        <p className="mt-5 text-center text-[10px] font-normal leading-relaxed text-[#2D545E] md:text-[11px]">
           13+ years · 17,000+ homes · 28+ countries
         </p>
       </div>

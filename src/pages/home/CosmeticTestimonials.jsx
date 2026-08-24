@@ -94,15 +94,15 @@ export default function CosmeticTestimonials() {
           >
             {testimonials.map((testimonial) => (
               <SwiperSlide key={testimonial.id}>
-                <div className="flex h-full flex-col justify-between rounded-xl bg-[#fdfaf6] p-8 shadow-sm">
+                <div className="flex h-full flex-col justify-between rounded-xl bg-[#E2B385] p-8 shadow-sm">
                   <div>
                     <div className="mb-4 font-serif text-4xl text-primary-600">“</div>
-                    <p className="text-sm font-medium leading-relaxed text-[#5c4a3d]">
+                    <p className="text-sm font-medium leading-relaxed text-[#2D545E]">
                       {testimonial.feedback}
                     </p>
                   </div>
                   <div className="mt-8">
-                    <h4 className="font-bold text-[#3E2723]">{testimonial.name}</h4>
+                    <h4 className="font-bold text-[#103438]">{testimonial.name}</h4>
                     <p className="text-xs text-gray-500">{testimonial.location}</p>
                   </div>
                 </div>
@@ -116,13 +116,13 @@ export default function CosmeticTestimonials() {
       </div>
 
       {/* Footer Banner */}
-      <div className="mt-10 border-y border-primary-500/20 bg-[#fff9f0] py-6">
+      <div className="mt-10 border-y border-primary-500/20 bg-[#E2B385] py-6">
         <div className="mx-auto max-w-[1360px] px-4 sm:px-6">
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             <div className="flex items-center justify-center gap-4 text-left">
               <Truck size={32} strokeWidth={1.5} className="text-primary-600" />
               <div>
-                <h4 className="text-sm font-bold text-[#3E2723]">Free Shipping</h4>
+                <h4 className="text-sm font-bold text-[#103438]">Free Shipping</h4>
                 <p className="text-xs text-gray-600">On Orders Above ₹999</p>
               </div>
             </div>
@@ -130,7 +130,7 @@ export default function CosmeticTestimonials() {
             <div className="flex items-center justify-center gap-4 text-left">
               <ShieldCheck size={32} strokeWidth={1.5} className="text-primary-600" />
               <div>
-                <h4 className="text-sm font-bold text-[#3E2723]">Secure Payments</h4>
+                <h4 className="text-sm font-bold text-[#103438]">Secure Payments</h4>
                 <p className="text-xs text-gray-600">100% Safe & Secure</p>
               </div>
             </div>
@@ -138,7 +138,7 @@ export default function CosmeticTestimonials() {
             <div className="flex items-center justify-center gap-4 text-left">
               <RefreshCw size={32} strokeWidth={1.5} className="text-primary-600" />
               <div>
-                <h4 className="text-sm font-bold text-[#3E2723]">Easy Returns</h4>
+                <h4 className="text-sm font-bold text-[#103438]">Easy Returns</h4>
                 <p className="text-xs text-gray-600">Hassle Free Returns</p>
               </div>
             </div>
@@ -146,7 +146,7 @@ export default function CosmeticTestimonials() {
             <div className="flex items-center justify-center gap-4 text-left">
               <Headphones size={32} strokeWidth={1.5} className="text-primary-600" />
               <div>
-                <h4 className="text-sm font-bold text-[#3E2723]">24/7 Support</h4>
+                <h4 className="text-sm font-bold text-[#103438]">24/7 Support</h4>
                 <p className="text-xs text-gray-600">We're Here to Help</p>
               </div>
             </div>

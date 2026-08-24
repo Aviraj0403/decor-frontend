@@ -85,20 +85,20 @@ const styles = {
   title: {
     fontSize: "2rem", // Larger font size for emphasis
     fontWeight: "700",
-    color: "#006a6a", // Marine blue-green for the title
+    color: "#2D545E", // Marine blue-green for the title
     marginBottom: "15px",
     fontFamily: "Segoe UI, sans-serif",
   },
   message: {
     fontSize: "1.2rem", // Slightly larger text for better readability
-    color: "#880e4f", // Marine blue-green for the text
+    color: "#103438", // Marine blue-green for the text
     maxWidth: "750px",
     marginBottom: "25px",
   },
   button: {
     display: "inline-block",
     padding: "12px 24px",
-    background: "#c2185b", // Beauty pink button color
+    background: "#2D545E", // Beauty pink button color
     color: "#fff",
     textDecoration: "none",
     borderRadius: "8px",
@@ -109,7 +109,7 @@ const styles = {
 
 // Add hover effect manually to the button
 styles.button["&:hover"] = {
-  background: "#880e4f", // Darker pink on hover
+  background: "#103438", // Darker pink on hover
 };
 
 export default EB;

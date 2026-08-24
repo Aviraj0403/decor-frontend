@@ -15,16 +15,16 @@ export default function PromoBanner() {
         />
 
         <div className="relative z-10 flex h-full min-h-[270px] flex-col items-center justify-center px-6 text-center sm:min-h-[300px] lg:min-h-[340px]">
-          <h2 className="font-serif text-[28px] font-semibold leading-tight text-[#3e3424] sm:text-[38px] lg:text-[46px]">
+          <h2 className="font-serif text-[28px] font-semibold leading-tight text-[#103438] sm:text-[38px] lg:text-[46px]">
             Bring Home<br />
             Divine Energy
           </h2>
-          <p className="mt-3 text-sm font-medium text-[#4b402e] sm:text-[15px] lg:text-[16px]">
+          <p className="mt-3 text-sm font-medium text-[#2D545E] sm:text-[15px] lg:text-[16px]">
             Pure Products. Powerful Results. Positive Life.
           </p>
           <Link
             to="/new-products"
-            className="mt-6 inline-flex h-10 items-center gap-2 rounded bg-[#352f1e] px-7 text-sm font-semibold text-[#efdec1] shadow-md transition hover:-translate-y-0.5 hover:bg-[#252115]"
+            className="mt-6 inline-flex h-10 items-center gap-2 rounded bg-[#103438] px-7 text-sm font-semibold text-[#E2B385] shadow-md transition hover:-translate-y-0.5 hover:bg-[#103438]"
           >
             Shop Now <ArrowRight size={16} />
           </Link>

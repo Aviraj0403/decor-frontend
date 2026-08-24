@@ -3,7 +3,8 @@ import { FaStar } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { createReview } from "../../services/reviewApi";
 import { useAuth } from "../../context/AuthContext";
-import fallbackLogo from "../../image/lifencolors-logo.webp";
+
+const fallbackLogo = "/logo.png";
 
 // Review Form Component for submitting a new review
 const ReviewForm = ({ productId, reviews , setReviews }) => {

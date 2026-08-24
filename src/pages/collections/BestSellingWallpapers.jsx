@@ -12,7 +12,7 @@ const filters = [
   "Abstract",
 ];
 
-const products = [
+export const bestSellingProducts = [
   {
     title: "the syntax of spring customised wallpaper",
     slug: "the-syntax-of-spring-customised-wallpaper",
@@ -212,7 +212,7 @@ function CollectionProductCard({ product }) {
       <button
         type="button"
         onClick={() => navigate(`/product/${product.slug}`)}
-        className="block aspect-[0.86/1] w-full overflow-hidden bg-[#f5f1eb]"
+        className="block aspect-[0.86/1] w-full overflow-hidden bg-[#D7D7D7]"
         aria-label={product.title}
       >
         <img
@@ -232,7 +232,7 @@ function CollectionProductCard({ product }) {
           {product.title}
         </h3>
       </button>
-      <p className="mt-1 font-sans text-[10px] leading-4 text-[#8b8b8b] sm:text-[11px]">
+      <p className="mt-1 font-sans text-[10px] leading-4 text-[#2D545E] sm:text-[11px]">
         Starts from {"\u20b9"}
         {product.price}
       </p>
@@ -240,21 +240,21 @@ function CollectionProductCard({ product }) {
   );
 }
 
-function HelpTile({ compact = false }) {
+function HelpTile() {
   return (
-    <div className={`bg-[#8f251b] p-6 text-white ${compact ? "col-span-full" : "col-span-full lg:col-span-2"}`}>
+    <div className="col-span-full flex min-h-[210px] flex-col justify-center bg-[#103438] px-5 py-8 text-white sm:px-9 lg:min-h-[235px] lg:px-10">
       <p className="font-sans text-[10px] uppercase tracking-[0.22em] text-white/75">Design help</p>
-      <h2 className="mt-3 font-serif text-[20px] font-normal leading-tight text-white sm:text-[24px]">
+      <h2 className="mt-4 font-serif text-[24px] font-normal leading-tight text-white sm:text-[30px]">
         Need help choosing the right wallpaper?
       </h2>
-      <p className="mt-4 max-w-xl font-sans text-xs leading-5 text-white/85">
+      <p className="mt-5 max-w-[760px] font-sans text-[13px] font-semibold leading-6 text-white/90 sm:text-[15px]">
         Share your room photo on WhatsApp and our design team will suggest options that fit your space and style.
       </p>
       <a
         href="https://wa.me/918700986208"
         target="_blank"
         rel="noreferrer"
-        className="mt-6 inline-block border-b border-white pb-1 font-sans text-xs uppercase tracking-[0.16em] text-white"
+        className="mt-7 inline-block w-fit border-b border-white pb-1 font-sans text-[13px] font-bold uppercase tracking-[0.2em] text-white"
       >
         WhatsApp Us
       </a>
@@ -262,7 +262,7 @@ function HelpTile({ compact = false }) {
   );
 }
 
-export default function BestSellingWallpapers() {
+export function WallpaperCollectionPage({ title, description, products, showFilters = true }) {
   const [selectedFilter, setSelectedFilter] = React.useState("All");
 
   const visibleProducts =
@@ -272,7 +272,7 @@ export default function BestSellingWallpapers() {
     <main className="min-h-screen bg-white">
       <section className="px-4 pb-8 pt-5 sm:px-6 lg:px-9">
         <div className="mx-auto max-w-[1680px]">
-          <div className="text-center font-sans text-[9px] uppercase tracking-[0.16em] text-[#262626] sm:text-[10px]">
+          <div className="text-center font-sans text-[9px] uppercase tracking-[0.16em] text-[#103438] sm:text-[10px]">
             <span className="inline-block">* 4.95/5 Rating</span>
             <span className="mx-4 inline-block text-black/55">.</span>
             <span className="inline-block">17,000+ Homes</span>
@@ -281,54 +281,57 @@ export default function BestSellingWallpapers() {
           </div>
 
           <h1 className="mt-7 text-center font-serif text-[24px] font-normal leading-tight text-black sm:text-[32px]">
-            Best Selling Wallpaper Designs
+            {title}
           </h1>
-          <p className="mx-auto mt-3 max-w-[820px] text-center font-sans text-[13px] leading-6 text-[#1f2937] sm:text-[16px]">
-            The wallpapers most homes across 28 countries keep coming back to - from the misty calm of Sukoon to the
-            Mughal detail of Meena Bazar. The designs that earned their place on more walls than any others.
+          <p className="mx-auto mt-3 max-w-[820px] text-center font-sans text-[13px] leading-6 text-[#103438] sm:text-[16px]">
+            {description}
           </p>
 
-          <div className="mt-8 flex justify-center sm:justify-end">
-            <label className="sr-only" htmlFor="design-filter">
-              Shop by Design
-            </label>
-            <select
-              id="design-filter"
-              value={selectedFilter}
-              onChange={(event) => setSelectedFilter(event.target.value)}
-              className="h-9 border border-[#d7d0c8] bg-white px-3 font-sans text-xs text-[#4f453f] outline-none transition hover:border-black"
-            >
-              <option value="All">Shop by Design</option>
-              {filters
-                .filter((filter) => filter !== "All")
-                .map((filter) => (
-                  <option key={filter} value={filter}>
-                    {filter}
-                  </option>
-                ))}
-            </select>
-          </div>
-
-          <div className="mt-8 flex flex-wrap justify-center gap-2.5 sm:gap-3">
-            {filters.map((filter) => {
-              const isActive = selectedFilter === filter;
-
-              return (
-                <button
-                  key={filter}
-                  type="button"
-                  onClick={() => setSelectedFilter(filter)}
-                  className={`h-9 rounded-full border px-5 font-sans text-[11px] uppercase tracking-[0.08em] transition sm:min-w-[82px] ${
-                    isActive
-                      ? "border-[#151515] bg-[#151515] text-white"
-                      : "border-[#d8d0c7] bg-white text-[#1f2937] hover:border-[#151515]"
-                  }`}
+          {showFilters && (
+            <>
+              <div className="mt-8 flex justify-center sm:justify-end">
+                <label className="sr-only" htmlFor="design-filter">
+                  Shop by Design
+                </label>
+                <select
+                  id="design-filter"
+                  value={selectedFilter}
+                  onChange={(event) => setSelectedFilter(event.target.value)}
+                  className="h-9 border border-[#D7D7D7] bg-white px-3 font-sans text-xs text-[#103438] outline-none transition hover:border-black"
                 >
-                  {filter}
-                </button>
-              );
-            })}
-          </div>
+                  <option value="All">Shop by Design</option>
+                  {filters
+                    .filter((filter) => filter !== "All")
+                    .map((filter) => (
+                      <option key={filter} value={filter}>
+                        {filter}
+                      </option>
+                    ))}
+                </select>
+              </div>
+
+              <div className="mt-8 flex flex-wrap justify-center gap-2.5 sm:gap-3">
+                {filters.map((filter) => {
+                  const isActive = selectedFilter === filter;
+
+                  return (
+                    <button
+                      key={filter}
+                      type="button"
+                      onClick={() => setSelectedFilter(filter)}
+                      className={`h-9 rounded-full border px-5 font-sans text-[11px] uppercase tracking-[0.08em] transition sm:min-w-[82px] ${
+                        isActive
+                          ? "border-[#103438] bg-[#103438] text-white"
+                          : "border-[#D7D7D7] bg-white text-[#103438] hover:border-[#103438]"
+                      }`}
+                    >
+                      {filter}
+                    </button>
+                  );
+                })}
+              </div>
+            </>
+          )}
         </div>
       </section>
 
@@ -349,5 +352,15 @@ export default function BestSellingWallpapers() {
         </div>
       </div>
     </main>
+  );
+}
+
+export default function BestSellingWallpapers() {
+  return (
+    <WallpaperCollectionPage
+      title="Best Selling Wallpaper Designs"
+      description="The wallpapers most homes across 28 countries keep coming back to - from the misty calm of Sukoon to the Mughal detail of Meena Bazar. The designs that earned their place on more walls than any others."
+      products={bestSellingProducts}
+    />
   );
 }

@@ -12,51 +12,52 @@ import {
 import { FaInstagram, FaPinterestP, FaWhatsapp } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { useAuth } from "../../context/AuthContext";
-import logo from "../../image/lifencolors-logo.webp";
+
+const logo = "/logo.png";
 
 const shopLinks = [
   {
     title: "Popular",
     links: [
-      { label: "Best Sellers", to: "/new-products" },
-      { label: "New Arrivals", to: "/new-products" },
-      { label: "Shop All", to: "/new-products" },
+      { label: "Best Sellers", to: "/collections/best-selling-wallpapers" },
+      { label: "New Arrivals", to: "/collections/latest-wallpaper-collection" },
+      { label: "Shop All", to: "/collections/buy-wallpapers-online" },
     ],
   },
   {
     title: "By Style",
     links: [
-      { label: "Indian Heritage", to: "/new-products" },
-      { label: "Chinoiserie", to: "/new-products" },
-      { label: "Tropical", to: "/new-products" },
-      { label: "European", to: "/new-products" },
-      { label: "Modern & Abstract", to: "/new-products" },
-      { label: "Pichwai", to: "/new-products" },
+      { label: "Indian Heritage", to: "/collections/indian-traditional-wallpapers" },
+      { label: "Chinoiserie", to: "/collections/chinoiserie-room-wallpapers" },
+      { label: "Tropical", to: "/collections/tropical-theme-room-wallpapers" },
+      { label: "European", to: "/collections/amazora-world-art-wallpapers-fabrics" },
+      { label: "Modern & Abstract", to: "/collections/abstract-wallpapers-for-room" },
+      { label: "Pichwai", to: "/collections/pichwai-theme-wallpapers" },
     ],
   },
   {
     title: "By Room",
     links: [
-      { label: "Bedrooms", to: "/new-products" },
-      { label: "Living Rooms", to: "/new-products" },
-      { label: "Kids & Nursery", to: "/new-products" },
-      { label: "Pooja Room", to: "/new-products" },
-      { label: "Commercial", to: "/new-products" },
-      { label: "Ceiling", to: "/new-products" },
-      { label: "Powder Room", to: "/new-products" },
-      { label: "Wardrobes", to: "/new-products" },
-      { label: "All Rooms", to: "/new-products" },
+      { label: "Bedrooms", to: "/collections/bedroom-wallpaper-collection" },
+      { label: "Living Rooms", to: "/collections/living-room-wallpaper-collection" },
+      { label: "Kids & Nursery", to: "/collections/kids-room-wallpapers" },
+      { label: "Pooja Room", to: "/collections/pooja-room-wallpapers" },
+      { label: "Commercial", to: "/collections/commercial-areas-wallpapers" },
+      { label: "Ceiling", to: "/collections/ceiling-wallpapers" },
+      { label: "Powder Room", to: "/collections/powder-room-wallpapers" },
+      { label: "Wardrobes", to: "/collections/wardrobe-wallpapers" },
+      { label: "All Rooms", to: "/collections/buy-wallpapers-online" },
     ],
   },
   {
     title: "By Collection",
     links: [
-      { label: "2026 Edit", to: "/new-products" },
-      { label: "Suneherii", to: "/new-products" },
-      { label: "Amazora", to: "/new-products" },
-      { label: "Neelvana", to: "/new-products" },
-      { label: "Atarangi", to: "/new-products" },
-      { label: "Sparkle & Shine", to: "/new-products" },
+      { label: "2026 Edit", to: "/collections/2026-wallpaper-collection" },
+      { label: "Suneherii", to: "/collections/suneherii-wallpaper-collection" },
+      { label: "Amazora", to: "/collections/amazora-world-art-wallpapers-fabrics" },
+      { label: "Neelvana", to: "/collections/neelvana-collection-by-life-n-colors-shabnam-gupta" },
+      { label: "Atarangi", to: "/collections/atarangi-affordable-wallpaper-collection" },
+      { label: "Sparkle & Shine", to: "/collections/kids-room-wallpapers" },
     ],
   },
 ];
@@ -65,18 +66,18 @@ const fabricHomeMenu = [
   {
     title: "Textiles",
     links: [
-      { label: "Curtains", to: "/new-products" },
-      { label: "Upholstery Fabrics", to: "/new-products" },
-      { label: "Cushion Covers", to: "/new-products" },
-      { label: "Table Linen", to: "/new-products" },
+      { label: "Curtains", to: "/collections/ready-made-curtains" },
+      { label: "Upholstery Fabrics", to: "/collections/sofa-and-chair-fabric" },
+      { label: "Cushion Covers", to: "/collections/cushion-covers" },
+      { label: "Table Linen", to: "/collections/tabler-runners-mats" },
     ],
   },
   {
     title: "Decor",
     links: [
-      { label: "Embroidered Wall Arts", to: "/new-products" },
-      { label: "Printed Wall Arts", to: "/new-products" },
-      { label: "Curtain Tiebacks", to: "/new-products" },
+      { label: "Embroidered Wall Arts", to: "/collections/stitched-stories-hand-embroidered-wall-art" },
+      { label: "Printed Wall Arts", to: "/collections/wallart-posters" },
+      { label: "Curtain Tiebacks", to: "/collections/beautiful-curtain-tie-backs" },
     ],
   },
 ];
@@ -130,8 +131,6 @@ export default function DesktopHeader({ isHomePage = false }) {
   const expandedHeightClass = isHomePage || isScrolled ? "h-[154px]" : "h-[118px]";
   const spacerHeightClass = isScrolled ? "h-[92px]" : "h-[118px]";
   const expandedInnerPadding = isHomePage ? "pt-7" : "pt-5";
-  const expandedLogoClass = isHomePage ? "top-3 h-[50px] w-[175px]" : "top-2 h-[40px] w-[150px]";
-  const expandedLogoImageClass = isHomePage ? "w-[160px]" : "w-[140px]";
   const expandedSocialClass = isHomePage ? "right-12 top-2 gap-4 text-[15px]" : "right-12 top-2 gap-3 text-[13px]";
   const megaTopClass = isHomePage
     ? expandedMode
@@ -146,7 +145,7 @@ export default function DesktopHeader({ isHomePage = false }) {
   return (
     <header className="relative z-[999] w-full">
       {isHomePage && (
-        <div className="fixed left-0 top-0 z-[999] flex h-[42px] w-full items-center bg-[#cbb58e] px-8 text-[16px] font-semibold text-white transition-colors duration-300">
+        <div className="fixed left-0 top-0 z-[999] flex h-[42px] w-full items-center bg-[#C99665] px-8 text-[16px] font-semibold text-white transition-colors duration-300">
           <div className="mx-auto grid w-full max-w-[1220px] grid-cols-[1fr_auto_1fr] items-center">
             <ChevronLeft size={18} className="justify-self-end text-white/70" strokeWidth={1.5} />
             <p className="px-28 text-center">Shipping to 28+ Countries</p>
@@ -164,34 +163,35 @@ export default function DesktopHeader({ isHomePage = false }) {
         }}
         className={`fixed left-0 ${navTopClass} z-[998] w-full transition-all duration-300 ${transparentMode
           ? "h-[154px] border-b border-transparent bg-transparent"
-          : `${expandedMode ? expandedHeightClass : "h-[92px]"} border-b border-black/10 bg-[#f7f5f2] shadow-[0_5px_22px_rgba(0,0,0,0.08)]`
+          : `${expandedMode ? expandedHeightClass : "h-[92px]"} border-b border-black/10 bg-[#D7D7D7] shadow-[0_5px_22px_rgba(0,0,0,0.08)]`
           }`}
       >
         <div
           className={`relative mx-auto flex h-full max-w-[1800px] items-center justify-center px-12 transition-all duration-300 ${expandedMode ? expandedInnerPadding : ""
             }`}
         >
-          <Link
-            to="/"
-            className={`absolute left-1/2 flex -translate-x-1/2 items-center justify-center overflow-hidden transition-all duration-300 ${expandedMode ? `${expandedLogoClass} opacity-100` : "pointer-events-none top-0 h-0 w-0 opacity-0"
-              }`}
-            aria-label="Life n Colors home"
-          >
-            <img
-              src={logo}
-              alt="Life n Colors"
-              className={`${expandedLogoImageClass} max-w-none object-contain`}
-            />
-          </Link>
+          <div className={`absolute left-12 flex items-center gap-1 transition-colors ${textClass}`}>
+            <Link
+              to="/"
+              className="flex h-[82px] w-[248px] items-center justify-start"
+              aria-label="Life n Colors home"
+            >
+              <img
+                src={logo}
+                alt="Life n Colors"
+                className="h-[80px] w-auto object-contain"
+              />
+            </Link>
 
-          <button
-            type="button"
-            onClick={() => navigate("/search")}
-            className={`absolute left-12 transition ${textClass} ${hoverClass}`}
-            aria-label="Search"
-          >
-            <Search size={31} strokeWidth={1.7} />
-          </button>
+            <button
+              type="button"
+              onClick={() => navigate("/search")}
+              className={`-ml-24 transition ${hoverClass}`}
+              aria-label="Search"
+            >
+              <Search size={27} strokeWidth={1.7} />
+            </button>
+          </div>
 
           <ul className={`mx-auto flex items-center justify-center gap-8 whitespace-nowrap text-[14px] font-medium uppercase transition-colors xl:gap-9 ${textClass}`}>
             <li

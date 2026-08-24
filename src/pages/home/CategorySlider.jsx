@@ -50,7 +50,7 @@ export default function CategorySlider() {
             to={category.to}
             className="group block text-black no-underline"
           >
-            <div className="relative aspect-square w-full overflow-hidden bg-[#fffcf7]">
+            <div className="relative aspect-square w-full overflow-hidden bg-[#D7D7D7]">
               <img
                 src={category.image}
                 alt={category.title}

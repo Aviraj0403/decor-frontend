@@ -1,13 +1,14 @@
 import React, { useRef, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Printer, Download } from "lucide-react";
-import logo from "../image/lifencolors-logo.webp";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import Axios from "../utils/Axios"; // Axios for fetching order data
 
 export default function Invoice() {
   const { orderId } = useParams();
+
+const logo = "/logo.png";
   const invoiceRef = useRef();
   const [order, setOrder] = useState(null); // State to hold order data
   const [loading, setLoading] = useState(true); // Loading state

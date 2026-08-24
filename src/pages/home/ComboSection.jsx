@@ -159,7 +159,7 @@ export default function ComboSection({ categorySlug }) {
                     key={product._id}
                     className="group flex min-w-0 basis-[calc((100%_-_12px)/2)] shrink-0 snap-start flex-col sm:basis-[42%] md:basis-[30%] lg:basis-[calc((100%_-_80px)/5)]"
                   >
-                    <div className="relative overflow-hidden rounded-xl bg-[#f7f7f7]">
+                    <div className="relative overflow-hidden rounded-xl bg-[#D7D7D7]">
                       {discount > 0 && (
                         <span className="absolute left-2 top-2 z-10 rounded-md bg-[#2D545E] px-2.5 py-1 text-[9px] font-bold text-white shadow-sm sm:text-[10px]">
                           {discount}% OFF
@@ -192,7 +192,7 @@ export default function ComboSection({ categorySlug }) {
                       <h3 className="line-clamp-1 text-[12px] font-semibold text-brand-text transition group-hover:text-[#2D545E] sm:text-[13px]">
                         {product.name}
                       </h3>
-                      <p className="mt-1 line-clamp-1 text-[9px] text-[#888075] sm:text-[10px]">
+                      <p className="mt-1 line-clamp-1 text-[9px] text-[#2D545E] sm:text-[10px]">
                         {subtitle}
                       </p>
                     </button>
@@ -202,7 +202,7 @@ export default function ComboSection({ categorySlug }) {
                         ₹{formatPrice(variant.price)}
                       </span>
                       {variant.realPrice && Number(variant.realPrice) > Number(variant.price) && (
-                        <span className="text-[9px] text-[#999187] line-through sm:text-[10px]">
+                        <span className="text-[9px] text-[#2D545E] line-through sm:text-[10px]">
                           ₹{formatPrice(variant.realPrice)}
                         </span>
                       )}

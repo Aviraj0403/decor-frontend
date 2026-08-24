@@ -61,7 +61,7 @@ const styles = {
     padding: "20px",
     maxWidth: "500px",
     textAlign: "center",
-    backgroundColor: "#006a6a", // Marine blue-green background for the content
+    backgroundColor: "#2D545E", // Marine blue-green background for the content
     borderRadius: "10px", // Rounded corners for content box
     boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.3)", // Shadow for better separation
   },
@@ -80,7 +80,7 @@ const styles = {
   button: {
     display: "inline-block",
     padding: "12px 24px",
-    background: "#ff7043", // Button color for consistency
+    background: "#C99665", // Button color for consistency
     color: "#fff",
     textDecoration: "none",
     borderRadius: "8px",
@@ -91,7 +91,7 @@ const styles = {
 
 // Hover effect for the button
 styles.button["&:hover"] = {
-  background: "#d84315", // Darker orange shade for hover effect
+  background: "#103438", // Darker orange shade for hover effect
 };
 
 export default NotFoundPage;

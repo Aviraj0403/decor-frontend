@@ -40,7 +40,7 @@ const testimonials = [
 function BlogCard({ post }) {
   return (
     <a href={post.href} className="group relative block min-h-[270px] sm:min-h-[330px]">
-      <div className="h-[230px] w-[68%] overflow-hidden bg-[#eee8df] sm:h-[285px]">
+      <div className="h-[230px] w-[68%] overflow-hidden bg-[#D7D7D7] sm:h-[285px]">
         <img
           src={post.image}
           alt={post.title}
@@ -106,10 +106,10 @@ export default function BlogStoriesSection() {
           <div className="px-0 md:px-12 lg:px-16">
             <div className="font-sans text-[16px] tracking-[0.12em] text-black">*****</div>
             <p className="mt-4 max-w-4xl font-sans text-[14px] leading-5 text-[#555]">{active.quote}</p>
-            <p className="mt-3 font-sans text-[14px] text-[#8d8d8d]">- {active.author}</p>
+            <p className="mt-3 font-sans text-[14px] text-[#2D545E]">- {active.author}</p>
           </div>
 
-          <div className="aspect-[1/1] max-w-[320px] overflow-hidden bg-[#eee8df] justify-self-center md:max-w-none">
+          <div className="aspect-[1/1] max-w-[320px] overflow-hidden bg-[#D7D7D7] justify-self-center md:max-w-none">
             <img src={active.image} alt={active.author} className="h-full w-full object-cover" loading="lazy" />
           </div>
 

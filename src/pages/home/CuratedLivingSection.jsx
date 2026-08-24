@@ -74,11 +74,11 @@ export default function CuratedLivingSection() {
     <section className="overflow-hidden bg-white px-2 pb-12 pt-1 sm:px-4 sm:pb-16 lg:px-0">
       <div className="mx-auto max-w-[1800px]">
         <div className="text-center">
-          <p className="font-sans text-[11px] uppercase tracking-[0.34em] text-[#b6834a]">In Real Homes</p>
+          <p className="font-sans text-[11px] uppercase tracking-[0.34em] text-[#C99665]">In Real Homes</p>
           <h2 className="mt-4 font-serif text-[30px] font-normal leading-tight text-black sm:text-[38px]">
             Curated Living
           </h2>
-          <p className="mt-3 font-sans text-[13px] leading-6 text-[#2f3440] sm:text-[15px]">
+          <p className="mt-3 font-sans text-[13px] leading-6 text-[#103438] sm:text-[15px]">
             Real spaces, real stories, beautifully finished with Life n Colors.
           </p>
         </div>
@@ -101,7 +101,7 @@ export default function CuratedLivingSection() {
               <a
                 key={slide.video}
                 href={slide.href}
-                className="group relative block aspect-[0.56/1] w-[74vw] shrink-0 snap-start overflow-hidden rounded-[3px] bg-[#ece7df] sm:w-[38vw] md:w-[31vw] lg:w-[18vw]"
+                className="group relative block aspect-[0.56/1] w-[74vw] shrink-0 snap-start overflow-hidden rounded-[3px] bg-[#D7D7D7] sm:w-[38vw] md:w-[31vw] lg:w-[18vw]"
                 aria-label={slide.title}
               >
                 <video

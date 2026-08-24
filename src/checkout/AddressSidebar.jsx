@@ -6,7 +6,8 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { toast } from 'react-toastify'; // Assuming you use react-toastify for notifications
 import { useAuth } from "../context/AuthContext";
-import logo from "../image/lifencolors-logo.webp";
+
+const logo = "/logo.png";
 
 export default function AddressSidebar({ isOpen, onClose, refreshAddresses, userName, email, address: propAddress, embedded = false }) {
   const { user } = useAuth();

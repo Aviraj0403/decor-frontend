@@ -17,7 +17,7 @@ const Marquee = () => {
         `}
       </style>
 
-      <div className="w-full overflow-hidden border-y-2 border-[#caa85c] bg-gradient-to-b from-[#0b1d3a] to-[#142d5a] py-2">
+      <div className="w-full overflow-hidden border-y-2 border-[#C99665] bg-gradient-to-b from-[#103438] to-[#2D545E] py-2">
         <div
           className="flex w-max items-center whitespace-nowrap"
           style={{
@@ -26,12 +26,12 @@ const Marquee = () => {
         >
           {[...Array(17)].map((_, i) => (
             <React.Fragment key={i}>
-              <span className="mx-4 text-sm font-semibold tracking-widest text-[#f5e6b0]">
+              <span className="mx-4 text-sm font-semibold tracking-widest text-[#E2B385]">
                 NEW ARRIVALS
               </span>
 
               {/* vertical divider */}
-              <span className="h-4 w-px bg-[#caa85c] opacity-80" />
+              <span className="h-4 w-px bg-[#C99665] opacity-80" />
             </React.Fragment>
           ))}
         </div>

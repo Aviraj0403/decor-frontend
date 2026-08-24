@@ -53,7 +53,7 @@ const NewProducts = () => {
             <div className="h-2 w-2 rotate-45 bg-[#C99665]"></div>
             <div className="h-px w-12 bg-[#C99665]/40"></div>
           </div>
-          <p className="mt-4 text-sm font-medium text-[#5c4a3d] max-w-2xl mx-auto">
+          <p className="mt-4 text-sm font-medium text-[#2D545E] max-w-2xl mx-auto">
             Explore our extensive range of authentic spiritual products carefully curated to bring peace, prosperity, and positive energy to your life.
           </p>
         </div>
@@ -70,7 +70,7 @@ const NewProducts = () => {
         </div>
 
         {products.length === 0 && (
-          <div className="text-center py-12 text-[#5c4a3d] font-medium">
+          <div className="text-center py-12 text-[#2D545E] font-medium">
             No products available at the moment.
           </div>
         )}

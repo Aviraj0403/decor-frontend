@@ -25,13 +25,13 @@ export default function DesignWorld() {
   return (
     <section className="bg-white px-5 py-10 md:py-10" aria-label="Our design world">
       <div className="mx-auto ">
-        <p className="mb-2 text-center text-[13px] font-normal uppercase leading-tight tracking-[0.18em] text-[#b8924a]">
+        <p className="mb-2 text-center text-[13px] font-normal uppercase leading-tight tracking-[0.18em] text-[#C99665]">
           Our Design World
         </p>
-        <h2 className="mb-4 text-center text-[24px] font-normal leading-tight tracking-[0.02em] text-[#1a1a1a] md:text-[28px]">
+        <h2 className="mb-4 text-center text-[24px] font-normal leading-tight tracking-[0.02em] text-[#103438] md:text-[28px]">
           Every Design Begins With a Story
         </h2>
-        <p className="mx-auto mb-9 max-w-[680px] text-center text-[14px] font-normal leading-[1.7] text-[#414141] md:text-[15px]">
+        <p className="mx-auto mb-9 max-w-[680px] text-center text-[14px] font-normal leading-[1.7] text-[#2D545E] md:text-[15px]">
           A Pichwai tradition from Nathdwara. A Chinoiserie garden from Canton.
           A Madhubani rhythm from Mithila. We study the original art form, then
           reinterpret it for modern living spaces. The result is wallcoverings
@@ -59,7 +59,7 @@ export default function DesignWorld() {
                 <span className="mb-1 text-[13px] font-normal leading-normal text-white/65">
                   {card.desc}
                 </span>
-                <span className="mb-3 text-[11px] font-normal leading-normal text-[#b8924a]">
+                <span className="mb-3 text-[11px] font-normal leading-normal text-[#C99665]">
                   {card.forms}
                 </span>
                 <span className="text-[11px] font-normal uppercase tracking-[0.15em] text-white/70 transition group-hover:text-white">

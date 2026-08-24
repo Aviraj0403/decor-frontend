@@ -1,13 +1,13 @@
 import React from "react";
-import { Flame, Flower2, Gem, Sparkles, Sun } from "lucide-react";
-import logo from "../image/lifencolors-logo.webp";
 
-const orbitItems = [
-  { Icon: Flame, label: "Sacred flame", angle: 0 },
-  { Icon: Flower2, label: "Lotus", angle: 72 },
-  { Icon: Gem, label: "Crystal", angle: 144 },
-  { Icon: Sparkles, label: "Divine energy", angle: 216 },
-  { Icon: Sun, label: "Auspicious light", angle: 288 },
+const logo = "/logo.png";
+
+const palette = [
+  "#E2B385",
+  "#C99665",
+  "#2D545E",
+  "#103438",
+  "#D7D7D7",
 ];
 
 const SpiritualLoader = ({ fullScreen = true }) => {
@@ -17,25 +17,29 @@ const SpiritualLoader = ({ fullScreen = true }) => {
       role="status"
       aria-live="polite"
     >
-      <div className="spiritual-loader__halo" aria-hidden="true" />
+      <div className="spiritual-loader__panel" aria-hidden="true">
+        <div className="spiritual-loader__logo-wrap">
+          <img src={logo} alt="" />
+        </div>
 
-      <div className="spiritual-loader__orbit" aria-hidden="true">
-        {orbitItems.map(({ Icon, label, angle }) => (
-          <span
-            key={label}
-            className="spiritual-loader__item"
-            style={{ "--loader-angle": `${angle}deg` }}
-          >
-            <Icon size={22} strokeWidth={1.8} />
-          </span>
-        ))}
+        <div className="spiritual-loader__wallpaper">
+          <span className="spiritual-loader__roll" />
+          <span className="spiritual-loader__sheet spiritual-loader__sheet--one" />
+          <span className="spiritual-loader__sheet spiritual-loader__sheet--two" />
+          <span className="spiritual-loader__sheet spiritual-loader__sheet--three" />
+        </div>
+
+        <div className="spiritual-loader__palette">
+          {palette.map((color) => (
+            <span key={color} style={{ backgroundColor: color }} />
+          ))}
+        </div>
+
+        <span className="spiritual-loader__text">Curating beautiful spaces</span>
+        <span className="spiritual-loader__bar">
+          <span />
+        </span>
       </div>
-
-      <div className="spiritual-loader__center" aria-hidden="true">
-        <img src={logo} alt="" />
-      </div>
-
-      <span className="spiritual-loader__text">Loading divine essentials...</span>
       <span className="sr-only">Loading Life n Colors</span>
     </div>
   );

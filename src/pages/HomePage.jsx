@@ -17,7 +17,7 @@ const HERO_SLIDES = [
     imgAlt: 'Luxury cushion covers',
   },
   {
-    bg: 'from-[#3D2B1F] to-[#5C3D2E]',
+    bg: 'from-[#103438] to-[#2D545E]',
     tag: 'Handcrafted Excellence',
     heading: 'Luxury Cushion Covers\nFor Discerning Homes',
     sub: 'Embroidered with traditional Indian motifs. Made by skilled artisans across Rajasthan.',
@@ -26,7 +26,7 @@ const HERO_SLIDES = [
     imgAlt: 'Luxury living room',
   },
   {
-    bg: 'from-[#1A1A2E] to-[#16213E]',
+    bg: 'from-[#103438] to-[#2D545E]',
     tag: 'Statement Wallpapers',
     heading: 'Transform Every\nWall Into Art',
     sub: 'Premium wallpapers in Indian Heritage, Chinoiserie and Tropical designs. Ships worldwide.',
@@ -40,9 +40,9 @@ const HERO_SLIDES = [
 const CATEGORIES = [
   { label: 'Cushion Covers', href: '/collections/cushion-covers', emoji: '🛋️', color: '#C99665' },
   { label: 'Wallpapers', href: '/collections/wallpapers', emoji: '🖼️', color: '#2D545E' },
-  { label: 'Curtains', href: '/collections/curtains', emoji: '🪟', color: '#8B4513' },
-  { label: 'Table Linen', href: '/collections/table-linen', emoji: '🍽️', color: '#5B7FA6' },
-  { label: 'Wall Art', href: '/collections/wall-art', emoji: '🎨', color: '#8B6C3A' },
+  { label: 'Curtains', href: '/collections/curtains', emoji: '🪟', color: '#C99665' },
+  { label: 'Table Linen', href: '/collections/table-linen', emoji: '🍽️', color: '#2D545E' },
+  { label: 'Wall Art', href: '/collections/wall-art', emoji: '🎨', color: '#C99665' },
   { label: 'All Collections', href: '/collections/all', emoji: '✨', color: '#103438' },
 ];
 

@@ -105,13 +105,13 @@ const image =
 
       {/* 🏷️ Discount Badge */}
       {discount > 0 && (
-        <div className="absolute top-3 left-3 z-20 bg-[#86601F] text-white text-xs font-semibold px-2 py-1 rounded-md shadow">
+        <div className="absolute top-3 left-3 z-20 bg-[#C99665] text-white text-xs font-semibold px-2 py-1 rounded-md shadow">
           {discount}% OFF
         </div>
       )}
 
       {/* Static New Arrival Badge */}
-      <div className="absolute top-0 right-0 -translate-y-1/2 bg-[#86601F] z-20 text-white px-3 py-1 rounded-tl-xl rounded-bl-xl text-xs font-bold">
+      <div className="absolute top-0 right-0 -translate-y-1/2 bg-[#C99665] z-20 text-white px-3 py-1 rounded-tl-xl rounded-bl-xl text-xs font-bold">
         New Arrival
       </div>
 
@@ -192,17 +192,17 @@ const image =
       {/* 🛒 Button Area */}
       {quantity > 0 ? (
         <div className="flex flex-col md:flex-row gap-2 mt-3">
-          <div className="flex justify-between items-center border border-[#69030C] rounded flex-1 overflow-hidden">
+          <div className="flex justify-between items-center border border-[#103438] rounded flex-1 overflow-hidden">
             <button
               onClick={handleDecrement}
-              className="w-1/3 text-xl font-bold py-1.5 text-[#69030C] hover:bg-[#69030C]/10 transition"
+              className="w-1/3 text-xl font-bold py-1.5 text-[#103438] hover:bg-[#103438]/10 transition"
             >
               –
             </button>
             <span className="w-1/3 text-center font-medium text-sm">{quantity}</span>
             <button
               onClick={handleIncrement}
-              className="w-1/3 text-xl font-bold py-1.5 text-[#69030C] hover:bg-[#69030C]/10 transition"
+              className="w-1/3 text-xl font-bold py-1.5 text-[#103438] hover:bg-[#103438]/10 transition"
             >
               +
             </button>
@@ -210,7 +210,7 @@ const image =
 
           <button
             onClick={handleBuyNow}
-            className="flex-1 flex items-center justify-center gap-1.5 bg-[#69030C] text-white font-semibold py-1.5 rounded hover:bg-[#520209] transition text-xs"
+            className="flex-1 flex items-center justify-center gap-1.5 bg-[#103438] text-white font-semibold py-1.5 rounded hover:bg-[#103438] transition text-xs"
           >
             <Zap size={14} fill="currentColor" /> Buy Now
           </button>
@@ -219,14 +219,14 @@ const image =
         <div className="flex flex-col md:flex-row gap-2 mt-3">
           <button
             onClick={handleAddToCart}
-            className="flex-1 flex items-center justify-center gap-1.5 border border-[#69030C] text-[#69030C] font-semibold py-1.5 rounded hover:bg-[#69030C]/5 transition text-xs"
+            className="flex-1 flex items-center justify-center gap-1.5 border border-[#103438] text-[#103438] font-semibold py-1.5 rounded hover:bg-[#103438]/5 transition text-xs"
           >
             <ShoppingCart size={14} /> Add to Cart
           </button>
 
           <button
             onClick={handleBuyNow}
-            className="flex-1 flex items-center justify-center gap-1.5 bg-[#69030C] text-white font-semibold py-1.5 rounded hover:bg-[#520209] transition text-xs"
+            className="flex-1 flex items-center justify-center gap-1.5 bg-[#103438] text-white font-semibold py-1.5 rounded hover:bg-[#103438] transition text-xs"
           >
             <Zap size={14} fill="currentColor" /> Buy Now
           </button>

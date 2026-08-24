@@ -3,7 +3,8 @@ import { FaStar, FaTrash } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { deleteReview } from "../../services/reviewApi";
 import { useAuth } from "../../context/AuthContext";
-import fallbackLogo from "../../image/lifencolors-logo.webp";
+
+const fallbackLogo = "/logo.png";
 
 const ReviewList = ({ reviews, onDeleteReview }) => {
   const { user } = useAuth();

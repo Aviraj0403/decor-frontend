@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams, Link } from "react-router-dom";
 import { CheckCircle2, Package, Truck, ArrowRight, Download, Copy, Check, ShoppingBag, Calendar, ShieldCheck } from "lucide-react";
 import Axios from "../utils/Axios";
-import logo from "../image/lifencolors-logo.webp";
 import { trackMetaEvent, trackMetaPageView, cartToMetaParams } from "../utils/metaPixel";
+
+const logo = "/logo.png";
 
 export default function ThankYouPage() {
   const { orderId } = useParams();

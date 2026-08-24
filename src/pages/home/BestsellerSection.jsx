@@ -182,7 +182,7 @@ export default function BestsellerSection({ categorySlug }) {
                           <Star
                             key={index}
                             size={11}
-                            className={index < Math.round(rating) ? "fill-[#e9a500] text-[#e9a500]" : "text-brand-text/15"}
+                            className={index < Math.round(rating) ? "fill-[#C99665] text-[#C99665]" : "text-brand-text/15"}
                           />
                         ))}
                       </div>

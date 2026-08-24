@@ -69,7 +69,7 @@ function ProductCard({ product }) {
       <button
         type="button"
         onClick={() => navigate(href)}
-        className="block aspect-[1/1] w-full overflow-hidden bg-[#f6f2eb]"
+        className="block aspect-[1/1] w-full overflow-hidden bg-[#D7D7D7]"
         aria-label={product?.name || "View product"}
       >
         <img
@@ -81,12 +81,12 @@ function ProductCard({ product }) {
       </button>
 
       <button type="button" onClick={() => navigate(href)} className="mt-3 block w-full text-left">
-        <h3 className="font-sans text-[13px] font-normal leading-5 text-[#1d1d1d] transition group-hover:text-primary-700 sm:text-[15px]">
+        <h3 className="font-sans text-[13px] font-normal leading-5 text-[#103438] transition group-hover:text-primary-700 sm:text-[15px]">
           {product?.name}
         </h3>
       </button>
 
-      <p className="mt-1 font-sans text-[11px] leading-4 text-[#8f8f8f] sm:text-xs">
+      <p className="mt-1 font-sans text-[11px] leading-4 text-[#2D545E] sm:text-xs">
         Starts from {"\u20b9"}7,500
       </p>
     </article>
@@ -117,7 +117,7 @@ export default function FeaturedCollectionSection() {
                 className={`border-b-2 pb-2 font-sans text-[16px] leading-none transition sm:text-[19px] ${
                   isActive
                     ? "border-black text-black"
-                    : "border-transparent text-[#5f5f5f] hover:border-black/30 hover:text-black"
+                    : "border-transparent text-[#2D545E] hover:border-black/30 hover:text-black"
                 }`}
               >
                 {tab.label}
