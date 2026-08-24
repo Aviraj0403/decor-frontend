@@ -128,10 +128,10 @@ const logo = "/logo.png";
             <img src={logo} alt="Logo" className="w-20 md:w-24" />
             <div className="text-center md:text-left">
               <p className="text-2xl md:text-3xl font-bold text-primary-600">
-                DivyaMantra
+                Ayraj
               </p>
               <p className="text-gray-500 text-xs md:text-sm">
-                Premium Cosmetics & Beauty Products
+                Premium Wallpapers & Fabrics
               </p>
             </div>
           </div>

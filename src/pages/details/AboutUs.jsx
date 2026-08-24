@@ -16,10 +16,10 @@ export default function AboutUs() {
         />
         <div className="absolute top-0 left-0 w-full h-full flex flex-col justify-center items-center text-center text-white px-4">
           <h1 className="text-5xl md:text-6xl font-serif font-bold mb-4 drop-shadow-lg text-white">
-            About Divya Mantra
+            About Ayraj
           </h1>
           <p className="text-lg md:text-xl max-w-3xl mx-auto drop-shadow-md font-medium text-primary-50">
-            Where Spirituality Meets Purity. Handpicked sacred items to inspire peace, devotion, and bring divine energy into your life.
+            Where Art Meets Your Living Space. Handcrafted wallpapers, textiles, and home accents designed to transform your space.
           </p>
         </div>
       </div>
@@ -27,12 +27,12 @@ export default function AboutUs() {
       {/* Our Story Section */}
       <div className="grid md:grid-cols-2 gap-10 items-center py-20 px-4 md:px-16 max-w-7xl mx-auto">
         <div>
-          <h2 className="text-4xl font-serif font-semibold text-primary-600 mb-6">Our Spiritual Journey</h2>
+          <h2 className="text-4xl font-serif font-semibold text-primary-600 mb-6">Our Design Journey</h2>
           <p className="text-brand-text mb-4 leading-relaxed">
-            At Divya Mantra, we believe that true peace and prosperity stem from a strong spiritual foundation. Our sacred collection is thoughtfully curated to enhance your spiritual practices with products that are as pure as your devotion. Whether you’re looking for authentic Rudraksha, beautifully crafted idols, or essential pooja samagri, we’ve got you covered.
+            At Ayraj, we believe that a beautiful home inspires a beautiful life. Our collection of wallpapers, fabrics, and home décor accents is thoughtfully curated to bring elegance and premium aesthetic to your spaces. Whether you are looking for statement wall art, custom-fit wallpapers, or hand-embroidered cushion covers, we have you covered.
           </p>
           <p className="text-brand-text mb-4 leading-relaxed">
-            Every product we offer is carefully selected from traditional artisans and trusted sources, ensuring that only the most authentic and spiritually potent items make their way to your home. We are committed to preserving ancient traditions while providing you with high-quality spiritual wellness products.
+            Every product we offer is carefully selected from traditional artisans and trusted sources, ensuring that only the finest quality and most unique designs reach your home. We are committed to preserving traditional craftsmanship while adapting to modern design aesthetics.
           </p>
           <p className="text-brand-text leading-relaxed">
             Join us on this journey of devotion, inner peace, and divine connection. Because your soul deserves to vibrate at its highest frequency.
@@ -92,7 +92,7 @@ export default function AboutUs() {
 
       {/* Our Values */}
       <div className="text-center py-20 px-4 md:px-16 bg-primary-50">
-        <h2 className="text-4xl font-serif font-bold text-primary-600 mb-12">Why Choose Divya Mantra</h2>
+        <h2 className="text-4xl font-serif font-bold text-primary-600 mb-12">Why Choose Ayraj</h2>
         <div className="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto">
           <div className="bg-brand-bg rounded-2xl shadow-lg p-10 hover:-translate-y-2 transition-transform duration-300 border border-primary-100">
             <FaHeart className="text-accent text-5xl mb-6 mx-auto" />
@@ -125,14 +125,14 @@ export default function AboutUs() {
           <div className="bg-primary-50 p-8 rounded-2xl shadow-md hover:shadow-xl transition border border-primary-100 relative">
             <div className="absolute -top-5 left-8 text-6xl text-primary-200 font-serif">"</div>
             <p className="text-brand-text mb-6 mt-4 italic relative z-10 leading-relaxed">
-              The Rudraksha I ordered feels incredibly authentic. The packaging was beautiful and the energy it brings is wonderful.
+              The wallpaper I ordered looks incredibly premium. The print detail is excellent and it completely transformed my room.
             </p>
             <h4 className="font-semibold text-primary-600 text-lg">– Aarti Sharma</h4>
           </div>
           <div className="bg-primary-50 p-8 rounded-2xl shadow-md hover:shadow-xl transition border border-primary-100 relative">
             <div className="absolute -top-5 left-8 text-6xl text-primary-200 font-serif">"</div>
             <p className="text-brand-text mb-6 mt-4 italic relative z-10 leading-relaxed">
-              Fast delivery and excellent support. The brass idols are stunning and perfectly crafted. Highly recommend Divya Mantra!
+              Fast delivery and excellent support. The cushions are stunning and perfectly crafted. Highly recommend Ayraj!
             </p>
             <h4 className="font-semibold text-primary-600 text-lg">– Rohan Desai</h4>
           </div>

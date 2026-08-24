@@ -90,8 +90,7 @@ export default function Navbar() {
 
             {/* Logo */}
             <Link to="/" className="flex flex-col items-center mx-auto lg:mx-0">
-              <span className="font-serif text-2xl tracking-widest text-charcoal leading-none">SIDDHI</span>
-              <span className="text-[9px] tracking-[6px] text-gold uppercase mt-0.5">DECOR</span>
+              <span className="font-serif text-2xl tracking-widest text-charcoal leading-none">AYRAJ</span>
             </Link>
 
             {/* Desktop Nav */}

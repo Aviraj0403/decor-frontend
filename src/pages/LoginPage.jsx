@@ -31,7 +31,7 @@ export default function LoginPage() {
       <div className="w-full max-w-md bg-white p-8 shadow-sm">
         <div className="text-center mb-8">
           <p className="font-serif text-3xl text-charcoal">Welcome Back</p>
-          <p className="text-muted text-sm mt-2">Sign in to your Siddhi Decor account</p>
+          <p className="text-muted text-sm mt-2">Sign in to your Ayraj account</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-5">

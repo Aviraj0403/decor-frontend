@@ -83,7 +83,7 @@ export default function ProductCard({ product }) {
       {/* Info */}
       <div className="p-3.5">
         <p className="text-[11px] text-muted uppercase tracking-wider mb-1">
-          {product.brand || 'Siddhi Decor'}
+          {product.brand || 'Ayraj'}
         </p>
         <h3 className="font-serif text-base text-charcoal leading-snug line-clamp-2 group-hover:text-green transition-colors">
           {product.name}

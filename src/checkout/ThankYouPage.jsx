@@ -180,7 +180,7 @@ export default function ThankYouPage() {
             Order Confirmed!
           </h1>
           <p className="text-gray-600 font-medium text-sm sm:text-base max-w-lg mx-auto">
-            Thank you for shopping with <strong className="text-primary-700 font-bold">DivyaMantra</strong>. 
+            Thank you for shopping with <strong className="text-primary-700 font-bold">Ayraj</strong>. 
             {orderData.paymentMethod === "COD" 
               ? " Your Cash on Delivery order is confirmed and being prepared!"
               : " Your payment was successful and your order is confirmed!"}

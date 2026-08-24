@@ -46,7 +46,7 @@ export const useCartStore = create(
         return get().items.reduce((sum, i) => sum + i.quantity, 0);
       },
     }),
-    { name: 'siddhi_cart' }
+    { name: 'ayraj_cart' }
   )
 );
 
@@ -60,7 +60,7 @@ export const useAuthStore = create(
         const { data } = await apiClient.post('/auth/login', { email, password });
         const token = data?.data?.token || data?.token;
         const user = data?.data?.user || data?.user;
-        localStorage.setItem('siddhi_token', token);
+        localStorage.setItem('ayraj_token', token);
         set({ user, token });
         return data;
       },
@@ -69,19 +69,19 @@ export const useAuthStore = create(
         const { data } = await apiClient.post('/auth/register', payload);
         const token = data?.data?.token || data?.token;
         const user = data?.data?.user || data?.user;
-        localStorage.setItem('siddhi_token', token);
+        localStorage.setItem('ayraj_token', token);
         set({ user, token });
         return data;
       },
 
       logout: () => {
-        localStorage.removeItem('siddhi_token');
+        localStorage.removeItem('ayraj_token');
         set({ user: null, token: null });
       },
 
       isLoggedIn: () => !!get().token,
     }),
-    { name: 'siddhi_auth', partialize: (s) => ({ user: s.user, token: s.token }) }
+    { name: 'ayraj_auth', partialize: (s) => ({ user: s.user, token: s.token }) }
   )
 );
 
@@ -96,6 +96,6 @@ export const useWishlistStore = create(
       },
       has: (id) => get().items.some((i) => i._id === id),
     }),
-    { name: 'siddhi_wishlist' }
+    { name: 'ayraj_wishlist' }
   )
 );

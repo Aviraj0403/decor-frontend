@@ -434,7 +434,7 @@ export default function ProductPage() {
             {/* Main Preview Image */}
             <div className="flex-1 bg-cream-dark overflow-hidden relative group">
               <img
-                src={imgs[selectedImg] || 'https://via.placeholder.com/600x750/F5F0E8/2D5016?text=Siddhi+Decor'}
+                src={imgs[selectedImg] || 'https://via.placeholder.com/600x750/F5F0E8/2D5016?text=Ayraj'}
                 alt={product.name}
                 className="w-full h-auto object-cover transition-transform duration-700 ease-out group-hover:scale-103"
                 style={{ aspectRatio: '4/5' }}
@@ -477,7 +477,7 @@ export default function ProductPage() {
           {/* RIGHT COLUMN: Details & Purchase Options */}
           <div className="lg:col-span-5 space-y-8">
             <div className="border-b border-cream-dark pb-6">
-              <p className="text-xs font-sans text-muted uppercase tracking-widest mb-3">{product.brand || 'Siddhi Decor'}</p>
+              <p className="text-xs font-sans text-muted uppercase tracking-widest mb-3">{product.brand || 'Ayraj'}</p>
               <h1 className="font-serif text-3xl sm:text-4xl text-charcoal font-light leading-snug">{product.name}</h1>
               
               {/* Reviews rating */}

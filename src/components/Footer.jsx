@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Instagram, Facebook, Youtube, MapPin, Phone, Mail } from 'lucide-react';
 
 const FOOTER_LINKS = {
-  'Siddhi Decor': [
+  'Ayraj': [
     { label: 'Our Story', href: '/about-us' },
     { label: 'Sustainability', href: '/sustainability' },
     { label: 'Blogs', href: '/blogs' },
@@ -13,7 +13,7 @@ const FOOTER_LINKS = {
   'Connect': [
     { label: 'Call: +91 99999 99999', href: 'tel:+919999999999', isExternal: true },
     { label: 'WhatsApp: +91 99999 99999', href: 'https://wa.me/919999999999', isExternal: true },
-    { label: 'Email: hello@siddhidecor.in', href: 'mailto:hello@siddhidecor.in', isExternal: true },
+    { label: 'Email: hello@ayraj.com', href: 'mailto:hello@ayraj.com', isExternal: true },
     { label: 'Trade Program', href: '/trade-program' },
     { label: 'Contact Us', href: '/contact-us' },
   ],
@@ -37,8 +37,7 @@ export default function Footer() {
           {/* Brand Intro Column */}
           <div className="lg:col-span-2 space-y-5">
             <div>
-              <p className="font-serif text-3xl tracking-widest text-[#103438] font-semibold">SIDDHI</p>
-              <p className="text-[10px] tracking-[5px] text-[#C99665] uppercase font-bold mt-0.5">DECOR</p>
+              <p className="font-serif text-3xl tracking-widest text-[#103438] font-semibold">AYRAJ</p>
             </div>
             <p className="text-sm text-[#103438]/85 leading-relaxed max-w-sm">
               Handcrafted luxury home décor inspired by India's rich artistic heritage and designed for contemporary living. Loved by designers and homeowners globally.
@@ -109,7 +108,7 @@ export default function Footer() {
       {/* Bottom Bar: Copyright and Payment Gateways */}
       <div className="border-t border-[#D7D7D7] pt-6 mt-6">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-[#103438]/60">© {new Date().getFullYear()}, Siddhi Decor. All rights reserved.</p>
+          <p className="text-xs text-[#103438]/60">© {new Date().getFullYear()}, Ayraj. All rights reserved.</p>
           
           {/* Supported Payment Channels */}
           <div className="flex items-center gap-3.5 opacity-70">

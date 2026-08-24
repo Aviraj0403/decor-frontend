@@ -23,7 +23,7 @@ export default function ContactUs() {
         <div className="bg-primary-50 shadow-lg hover:shadow-2xl transition rounded-xl p-6 text-center">
           <FaEnvelope className="text-yellow-500 text-4xl mx-auto mb-4" />
           <h3 className="text-xl font-semibold mb-2">Email</h3>
-          <a href="mailto:divyamantraofficial@gmail.com" className="text-gray-600 hover:text-primary-600">divyamantraofficial@gmail.com</a>
+          <a href="mailto:ayrajofficial@gmail.com" className="text-gray-600 hover:text-primary-600">ayrajofficial@gmail.com</a>
         </div>
 
         <div className="bg-primary-50 shadow-lg hover:shadow-2xl transition rounded-xl p-6 text-center">

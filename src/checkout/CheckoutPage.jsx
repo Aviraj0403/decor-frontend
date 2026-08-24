@@ -414,7 +414,7 @@ export default function CheckoutPage() {
         amount: data.amount, // Already in paise from backend
         currency: "INR",
         order_id: data.order_id,
-        name: "DivyaMantra",
+        name: "Ayraj",
         description: "Complete your purchase",
         timeout: 600, // ✅ NEW: 10 minute timeout
         handler: async (response) => {

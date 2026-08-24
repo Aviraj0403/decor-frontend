@@ -297,7 +297,7 @@ export default function HomePage() {
       <section className="py-12 bg-cream-dark">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center">
           <p className="section-tag mb-2">Follow Our Story</p>
-          <h2 className="section-title mb-2">@SiddhiDecor</h2>
+          <h2 className="section-title mb-2">@Ayraj</h2>
           <p className="text-muted text-sm mb-6">Tag us in your home decor photos for a chance to be featured</p>
           <a
             href="https://instagram.com"

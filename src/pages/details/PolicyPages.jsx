@@ -18,7 +18,7 @@ import {
 } from "lucide-react";
 
 const support = {
-  email: "divyamantraofficial@gmail.com",
+  email: "ayrajofficial@gmail.com",
   phone: "+91 9588360684",
 };
 
@@ -27,7 +27,7 @@ const policyContent = {
     eyebrow: "Shipping Policy",
     title: "Fast, protected delivery for every sacred order.",
     description:
-      "We pack every Divya Mantra order with care and share tracking details as soon as your parcel is dispatched.",
+      "We pack every Ayraj order with care and share tracking details as soon as your parcel is dispatched.",
     updated: "Last updated: June 2026",
     icon: Truck,
     heroTone: "from-brand-text via-accent to-primary-700",
@@ -87,7 +87,7 @@ const policyContent = {
   },
   terms: {
     eyebrow: "Terms & Conditions",
-    title: "Clear terms for shopping with Divya Mantra.",
+    title: "Clear terms for shopping with Ayraj.",
     description:
       "These terms explain how orders, pricing, payments, content and customer responsibilities work on our website.",
     updated: "Last updated: June 2026",
@@ -102,7 +102,7 @@ const policyContent = {
       {
         title: "Use of Website",
         body: "By accessing this website, you agree to use it only for lawful shopping and information purposes.",
-        items: ["Do not misuse the website or attempt unauthorized access.", "Product content, photos and designs belong to Divya Mantra or its suppliers.", "We may update website features, prices or policies when required."],
+        items: ["Do not misuse the website or attempt unauthorized access.", "Product content, photos and designs belong to Ayraj or its suppliers.", "We may update website features, prices or policies when required."],
       },
       {
         title: "Products, Pricing & Orders",

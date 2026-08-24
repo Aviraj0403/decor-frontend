@@ -176,7 +176,7 @@ const TrackingTimeline = ({ order }) => {
           {/* Progress bar */}
           <div>
             <div className="flex items-center justify-between text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5">
-              <span>{trackingData?.tracking_data?.origin || "DivyaMantra.in Hub"}</span>
+              <span>{trackingData?.tracking_data?.origin || "Ayraj Hub"}</span>
               <span>{order.shippingAddress?.city || "Destination"}</span>
             </div>
             <div className="relative h-2 bg-gray-100 rounded-full overflow-hidden">
