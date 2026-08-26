@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { ShoppingBag, Heart, Share2, Star, Truck, RotateCcw, Shield, Plus, Minus, Check } from 'lucide-react';
-import { productAPI, shippingAPI } from '../api/services';
+import { productAPI } from '../api/services';
+import { checkPincodeServiceability } from '../services/shippingApi';
 import { useWishlistStore } from '../store';
 import { useCartActions } from '../hooks/useCartActions';
 import { toast } from 'sonner';
@@ -385,7 +386,7 @@ export default function ProductPage() {
       return toast.error('Please enter a valid 6-digit PIN code');
     }
     try {
-      const res = await shippingAPI.checkPincode(pincode);
+      const res = await checkPincodeServiceability(pincode);
       if (res.data?.success) {
         setPincodeResult({ ok: true, message: `Delivering to ${res.data?.city || 'your area'} in 3-5 days.` });
       } else {
