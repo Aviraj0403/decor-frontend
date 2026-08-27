@@ -16,28 +16,28 @@ export default function CosmeticTestimonials() {
       name: "Ankit Sharma",
       location: "Delhi",
       feedback:
-        "The quality of products is amazing. I felt positive energy after wearing Rudraksha. Thank you Divya Mantra!",
+        "The quality of the wallpapers is absolutely premium. The textures and color prints completely transformed our living room. Thank you Ayraj!",
     },
     {
       id: 2,
       name: "Pooja Verma",
       location: "Jaipur",
       feedback:
-        "Very authentic and pure products. Fast delivery and beautiful packaging. Highly recommended!",
+        "Very authentic and beautiful designs. Fast delivery and high-quality premium packaging. Highly recommended!",
     },
     {
       id: 3,
       name: "Rohit Mehta",
       location: "Mumbai",
       feedback:
-        "Divya Mantra has a wide range of spiritual products. My go-to store for all puja needs.",
+        "Ayraj has a wide range of custom wallpapers and home decor options. My go-to store for all home makeover needs.",
     },
     {
       id: 4,
       name: "Sneha Patel",
       location: "Ahmedabad",
       feedback:
-        "Loved the quality of the incense sticks. The fragrance is divine and long-lasting.",
+        "Loved the quality of the custom-fit fabrics. The texture is elegant and long-lasting.",
     },
   ];
 

@@ -1,6 +1,6 @@
 // src/pages/AboutUs.jsx
 import React from "react";
-import { FaHeart, FaLeaf, FaGift, FaBullseye, FaUsers, FaStar, FaOm } from "react-icons/fa";
+import { FaHeart, FaLeaf, FaGift, FaBullseye, FaUsers, FaStar, FaHome, FaPaintBrush } from "react-icons/fa";
 import heroImg from "../../image/divyamantra-hero.png";
 import storyImg from "../../image/divyamantra-story.png";
 
@@ -11,7 +11,7 @@ export default function AboutUs() {
       <div className="relative bg-primary-100">
         <img
           src={heroImg}
-          alt="Divya Mantra Hero"
+          alt="Ayraj Hero"
           className="w-full h-[500px] object-cover brightness-75"
         />
         <div className="absolute top-0 left-0 w-full h-full flex flex-col justify-center items-center text-center text-white px-4">
@@ -35,7 +35,7 @@ export default function AboutUs() {
             Every product we offer is carefully selected from traditional artisans and trusted sources, ensuring that only the finest quality and most unique designs reach your home. We are committed to preserving traditional craftsmanship while adapting to modern design aesthetics.
           </p>
           <p className="text-brand-text leading-relaxed">
-            Join us on this journey of devotion, inner peace, and divine connection. Because your soul deserves to vibrate at its highest frequency.
+            Join us on this journey of turning houses into homes, creating spaces that truly reflect your style and personality. Because your home deserves to be your sanctuary.
           </p>
         </div>
         <img
@@ -47,17 +47,17 @@ export default function AboutUs() {
 
       {/* Milestones / Stats */}
       <div className="bg-primary-50 py-16 text-center border-y border-primary-100">
-        <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary-600 mb-10">Our Divine Reach</h2>
+        <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary-600 mb-10">Our Milestones</h2>
         <div className="grid md:grid-cols-4 gap-8 max-w-6xl mx-auto px-4">
           <div className="bg-brand-bg p-8 rounded-xl shadow-lg hover:-translate-y-2 transition-transform duration-300 border border-primary-100">
-            <FaOm className="text-primary-500 text-5xl mb-4 mx-auto" />
+            <FaHome className="text-primary-500 text-5xl mb-4 mx-auto" />
             <h3 className="text-3xl font-bold mb-2 text-brand-text">10K+</h3>
-            <p className="text-primary-700 font-medium">Blessed Devotees</p>
+            <p className="text-primary-700 font-medium">Happy Customers</p>
           </div>
           <div className="bg-brand-bg p-8 rounded-xl shadow-lg hover:-translate-y-2 transition-transform duration-300 border border-primary-100">
             <FaLeaf className="text-green-600 text-5xl mb-4 mx-auto" />
             <h3 className="text-3xl font-bold mb-2 text-brand-text">500+</h3>
-            <p className="text-primary-700 font-medium">Sacred Items</p>
+            <p className="text-primary-700 font-medium">Design Options</p>
           </div>
           <div className="bg-brand-bg p-8 rounded-xl shadow-lg hover:-translate-y-2 transition-transform duration-300 border border-primary-100">
             <FaStar className="text-secondary text-5xl mb-4 mx-auto" />
@@ -67,7 +67,7 @@ export default function AboutUs() {
           <div className="bg-brand-bg p-8 rounded-xl shadow-lg hover:-translate-y-2 transition-transform duration-300 border border-primary-100">
             <FaHeart className="text-accent text-5xl mb-4 mx-auto" />
             <h3 className="text-3xl font-bold mb-2 text-brand-text">100%</h3>
-            <p className="text-primary-700 font-medium">Authenticity</p>
+            <p className="text-primary-700 font-medium">Quality Guaranteed</p>
           </div>
         </div>
       </div>
@@ -78,14 +78,14 @@ export default function AboutUs() {
           <FaBullseye className="text-white text-6xl mb-6 mx-auto opacity-90" />
           <h3 className="text-3xl font-serif font-bold mb-4">Our Mission</h3>
           <p className="text-primary-50 text-lg leading-relaxed">
-            To provide handpicked, authentic spiritual items that empower individuals in their devotion, bringing peace and positive energy to every household.
+            To provide premium, custom-fit wallpapers and home decor products that empower individuals to personalize their living spaces with ease and luxury.
           </p>
         </div>
         <div className="primary-gradient p-10 rounded-2xl shadow-xl hover:shadow-2xl transition text-center text-brand-text">
           <FaUsers className="text-brand-text text-6xl mb-6 mx-auto opacity-90" />
           <h3 className="text-3xl font-serif font-bold mb-4">Our Vision</h3>
           <p className="text-brand-text text-lg leading-relaxed font-medium">
-            To be the most trusted spiritual destination in India, known for ultimate purity, rich heritage, and a deeply fulfilling devotee experience.
+            To be the leading premium home decor and wallpaper destination in India, known for unmatched quality, rich contemporary designs, and an exceptional customer experience.
           </p>
         </div>
       </div>
@@ -95,24 +95,24 @@ export default function AboutUs() {
         <h2 className="text-4xl font-serif font-bold text-primary-600 mb-12">Why Choose Ayraj</h2>
         <div className="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto">
           <div className="bg-brand-bg rounded-2xl shadow-lg p-10 hover:-translate-y-2 transition-transform duration-300 border border-primary-100">
-            <FaHeart className="text-accent text-5xl mb-6 mx-auto" />
-            <h3 className="font-serif font-bold text-2xl mb-3 text-brand-text">Devotion First</h3>
+            <FaPaintBrush className="text-accent text-5xl mb-6 mx-auto" />
+            <h3 className="font-serif font-bold text-2xl mb-3 text-brand-text">Design First</h3>
             <p className="text-primary-700">
-              We treat every order with reverence. A deeply personalized experience for every devotee.
+              We treat every design project with utmost detail. A deeply personalized custom experience for every space.
             </p>
           </div>
           <div className="bg-brand-bg rounded-2xl shadow-lg p-10 hover:-translate-y-2 transition-transform duration-300 border border-primary-100">
             <FaLeaf className="text-green-600 text-5xl mb-6 mx-auto" />
-            <h3 className="font-serif font-bold text-2xl mb-3 text-brand-text">Ultimate Purity</h3>
+            <h3 className="font-serif font-bold text-2xl mb-3 text-brand-text">Ultimate Quality</h3>
             <p className="text-primary-700">
-              Only the purest materials make it to our store. Authenticity and sacredness guaranteed.
+              Only the finest quality papers and fabrics make it to our store. Durability and excellence guaranteed.
             </p>
           </div>
           <div className="bg-brand-bg rounded-2xl shadow-lg p-10 hover:-translate-y-2 transition-transform duration-300 border border-primary-100">
             <FaGift className="text-secondary text-5xl mb-6 mx-auto" />
-            <h3 className="font-serif font-bold text-2xl mb-3 text-brand-text">Blessed Selection</h3>
+            <h3 className="font-serif font-bold text-2xl mb-3 text-brand-text">Curated Selection</h3>
             <p className="text-primary-700">
-              Every single product is curated to bring joy, spiritual fulfillment, and divine blessings into your life.
+              Every single wallpaper and fabric pattern is handpicked to bring modern aesthetics and visual delight to your home.
             </p>
           </div>
         </div>
@@ -120,7 +120,7 @@ export default function AboutUs() {
 
       {/* Testimonials Section */}
       <div className="py-20 px-4 md:px-16 max-w-7xl mx-auto">
-        <h2 className="text-4xl font-serif font-bold text-primary-600 mb-14 text-center">What Devotees Say</h2>
+        <h2 className="text-4xl font-serif font-bold text-primary-600 mb-14 text-center">What Customers Say</h2>
         <div className="grid md:grid-cols-3 gap-8">
           <div className="bg-primary-50 p-8 rounded-2xl shadow-md hover:shadow-xl transition border border-primary-100 relative">
             <div className="absolute -top-5 left-8 text-6xl text-primary-200 font-serif">"</div>
@@ -139,7 +139,7 @@ export default function AboutUs() {
           <div className="bg-primary-50 p-8 rounded-2xl shadow-md hover:shadow-xl transition border border-primary-100 relative">
             <div className="absolute -top-5 left-8 text-6xl text-primary-200 font-serif">"</div>
             <p className="text-brand-text mb-6 mt-4 italic relative z-10 leading-relaxed">
-              The selection of pooja items is amazing! Every product feels thoughtfully chosen and deeply spiritual.
+              The selection of home decor items is amazing! Every product feels thoughtfully chosen and beautifully crafted.
             </p>
             <h4 className="font-semibold text-primary-600 text-lg">– Kavita Iyer</h4>
           </div>
@@ -148,9 +148,9 @@ export default function AboutUs() {
 
       {/* Call to Action */}
       <div className="text-center py-24 divine-gradient">
-        <h2 className="text-4xl font-serif font-bold text-white mb-6 text-glow-primary">Join Our Spiritual Community</h2>
+        <h2 className="text-4xl font-serif font-bold text-white mb-6 text-glow-primary">Join Our Design Community</h2>
         <p className="text-primary-100 mb-10 max-w-2xl mx-auto text-lg leading-relaxed">
-          Be the first to know about new sacred arrivals, auspicious day offers, and spiritual wisdom. Step closer to the divine with us.
+          Be the first to know about new collections, seasonal design trends, and exclusive offers. Elevate your space with us.
         </p>
         <button className="bg-white text-primary-600 font-bold px-10 py-4 rounded-full hover:bg-primary-50 transition-all duration-300 text-lg shadow-xl hover:shadow-2xl">
           Subscribe Now

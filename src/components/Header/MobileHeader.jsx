@@ -188,11 +188,11 @@ export default function MobileHeader() {
           <div className="relative flex items-center justify-between">
             <div className="flex items-center gap-3">
               <span className="grid h-10 w-10 place-items-center rounded-full border border-secondary-300/50 bg-brand-bg/10">
-                <Sparkles size={19} className="text-secondary-200" />
+                <Home size={19} className="text-secondary-200" />
               </span>
               <div>
-                <p className="font-serif text-lg font-semibold leading-5">Divya Mantra</p>
-                <p className="mt-1 text-[9px] tracking-[0.12em] text-secondary-100">AWAKEN YOUR INNER POWER</p>
+                <p className="font-serif text-lg font-semibold leading-5">Ayraj</p>
+                <p className="mt-1 text-[9px] tracking-[0.12em] text-secondary-100">CURATING BEAUTIFUL SPACES</p>
               </div>
             </div>
             <button

@@ -57,10 +57,10 @@ export default function WhyChooseUs() {
           {/* Left Column - Why Choose */}
           <div className="flex flex-1 flex-col-reverse lg:flex-row">
             <div className="h-64 w-full lg:h-auto lg:w-1/3">
-              <img src={leftImage} alt="Pooja setup" className="h-full w-full object-cover" loading="lazy" />
+              <img src={leftImage} alt="Beautiful wallpaper setup" className="h-full w-full object-cover" loading="lazy" />
             </div>
             <div className="flex-1 p-6 lg:p-8">
-              <h2 className="mb-6 font-serif text-2xl font-bold text-[#103438]">Why Choose Divya Mantra?</h2>
+              <h2 className="mb-6 font-serif text-2xl font-bold text-[#103438]">Why Choose Ayraj?</h2>
 
               <div className="space-y-6">
                 <div className="flex gap-4">
@@ -68,8 +68,8 @@ export default function WhyChooseUs() {
                     <CheckCircle2 size={20} />
                   </div>
                   <div>
-                    <h4 className="font-bold text-[#103438]">Authentic & Pure</h4>
-                    <p className="mt-1 text-sm text-gray-600">Every product is 100% authentic and made with devotion.</p>
+                    <h4 className="font-bold text-[#103438]">Premium Quality</h4>
+                    <p className="mt-1 text-sm text-gray-600">Every wallpaper and fabric is crafted with high-precision details and premium materials.</p>
                   </div>
                 </div>
 
@@ -78,8 +78,8 @@ export default function WhyChooseUs() {
                     <Heart size={20} />
                   </div>
                   <div>
-                    <h4 className="font-bold text-[#103438]">Positive Energy</h4>
-                    <p className="mt-1 text-sm text-gray-600">Designed to bring peace, positivity and prosperity.</p>
+                    <h4 className="font-bold text-[#103438]">Elegant Designs</h4>
+                    <p className="mt-1 text-sm text-gray-600">Curated designs that bring sophistication, elegance, and beauty to your walls.</p>
                   </div>
                 </div>
 
@@ -89,7 +89,7 @@ export default function WhyChooseUs() {
                   </div>
                   <div>
                     <h4 className="font-bold text-[#103438]">Trusted by Thousands</h4>
-                    <p className="mt-1 text-sm text-gray-600">Loved and trusted by 10,000+ happy customers.</p>
+                    <p className="mt-1 text-sm text-gray-600">Loved and trusted by 10,000+ happy customers nationwide.</p>
                   </div>
                 </div>
 
@@ -99,7 +99,7 @@ export default function WhyChooseUs() {
                   </div>
                   <div>
                     <h4 className="font-bold text-[#103438]">Easy & Secure Shopping</h4>
-                    <p className="mt-1 text-sm text-gray-600">Secure payments, fast delivery and easy returns.</p>
+                    <p className="mt-1 text-sm text-gray-600">Secure payments, fast delivery, and hassle-free support.</p>
                   </div>
                 </div>
               </div>
@@ -108,10 +108,10 @@ export default function WhyChooseUs() {
 
           <div className="hidden w-px bg-gray-200 lg:block"></div>
 
-          {/* Right Column - How to Use */}
+          {/* Right Column - Transformative Process */}
           <div className="flex flex-1 flex-col lg:flex-row">
             <div className="flex-1 p-6 lg:p-8">
-              <h2 className="mb-6 font-serif text-2xl font-bold text-[#103438]">How to Use Our Products</h2>
+              <h2 className="mb-6 font-serif text-2xl font-bold text-[#103438]">Our Transformative Process</h2>
 
               <div className="space-y-6">
                 <div className="flex gap-4">
@@ -119,8 +119,8 @@ export default function WhyChooseUs() {
                     1
                   </div>
                   <div>
-                    <h4 className="font-bold text-[#103438]">Cleanse Your Space</h4>
-                    <p className="mt-1 text-sm text-gray-600">Light dhoop or incense to purify the environment.</p>
+                    <h4 className="font-bold text-[#103438]">Choose Your Design</h4>
+                    <p className="mt-1 text-sm text-gray-600">Explore our curated collections of premium wallpapers and fabrics.</p>
                   </div>
                 </div>
 
@@ -129,8 +129,8 @@ export default function WhyChooseUs() {
                     2
                   </div>
                   <div>
-                    <h4 className="font-bold text-[#103438]">Set Your Intention</h4>
-                    <p className="mt-1 text-sm text-gray-600">Hold the product and focus on your goal.</p>
+                    <h4 className="font-bold text-[#103438]">Custom Fit & Measure</h4>
+                    <p className="mt-1 text-sm text-gray-600">Input your wall dimensions for a perfect custom-tailored fit.</p>
                   </div>
                 </div>
 
@@ -139,8 +139,8 @@ export default function WhyChooseUs() {
                     3
                   </div>
                   <div>
-                    <h4 className="font-bold text-[#103438]">Use Regularly</h4>
-                    <p className="mt-1 text-sm text-gray-600">Use daily for best results and positive energy.</p>
+                    <h4 className="font-bold text-[#103438]">Professional Installation</h4>
+                    <p className="mt-1 text-sm text-gray-600">Get seamless, expert installation for a clean and stunning look.</p>
                   </div>
                 </div>
 
@@ -149,14 +149,14 @@ export default function WhyChooseUs() {
                     4
                   </div>
                   <div>
-                    <h4 className="font-bold text-[#103438]">Feel the Difference</h4>
-                    <p className="mt-1 text-sm text-gray-600">Experience peace, prosperity and protection.</p>
+                    <h4 className="font-bold text-[#103438]">Enjoy Your Space</h4>
+                    <p className="mt-1 text-sm text-gray-600">Experience a renewed atmosphere of premium elegance.</p>
                   </div>
                 </div>
               </div>
             </div>
             <div className="h-64 w-full lg:h-auto lg:w-1/3">
-              <img src={rightImage} alt="Brass plate with diya" className="h-full w-full object-cover" loading="lazy" />
+              <img src={rightImage} alt="Elegant home decor" className="h-full w-full object-cover" loading="lazy" />
             </div>
           </div>
 
