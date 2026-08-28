@@ -10,7 +10,7 @@
       price: 699,
       originalPrice: 899,
       image:
-        "https://www.gurmeetkaurstore.in/uploads/16495Mars_Magic_Shinw_Fix_Spray.jpg",
+        "https://www.ayraj.in/uploads/16495Mars_Magic_Shinw_Fix_Spray.jpg",
       rating: 4.6,
     },
     {
@@ -20,7 +20,7 @@
       price: 999,
       originalPrice: 1299,
       image:
-        "https://www.gurmeetkaurstore.in/uploads/93366HR_Foundation_Nude_04.jpg",
+        "https://www.ayraj.in/uploads/93366HR_Foundation_Nude_04.jpg",
       rating: 4.8,
     },
     {
@@ -30,7 +30,7 @@
       price: 599,
       originalPrice: 799,
       image:
-        "https://www.gurmeetkaurstore.in/uploads/8147932435Untitled_design_(19).png",
+        "https://www.ayraj.in/uploads/8147932435Untitled_design_(19).png",
       rating: 4.7,
     },
     {
@@ -40,7 +40,7 @@
       price: 349,
       originalPrice: 499,
       image:
-        "https://www.gurmeetkaurstore.in/uploads/22793Dr_rashel_De-tan.png",
+        "https://www.ayraj.in/uploads/22793Dr_rashel_De-tan.png",
       rating: 4.5,
     },
     {
@@ -50,7 +50,7 @@
       price: 849,
       originalPrice: 1099,
       image:
-        "https://www.gurmeetkaurstore.in/uploads/57161Nice_&_Naughty_Bombshell_Lipistick_Mix_Color_D.png",
+        "https://www.ayraj.in/uploads/57161Nice_&_Naughty_Bombshell_Lipistick_Mix_Color_D.png",
       rating: 4.9,
     },
     {
@@ -60,7 +60,7 @@
       price: 699,
       originalPrice: 899,
       image:
-        "https://www.gurmeetkaurstore.in/uploads/16495Mars_Magic_Shinw_Fix_Spray.jpg",
+        "https://www.ayraj.in/uploads/16495Mars_Magic_Shinw_Fix_Spray.jpg",
       rating: 4.6,
     },
     {
@@ -70,7 +70,7 @@
       price: 999,
       originalPrice: 1299,
       image:
-        "https://www.gurmeetkaurstore.in/uploads/93366HR_Foundation_Nude_04.jpg",
+        "https://www.ayraj.in/uploads/93366HR_Foundation_Nude_04.jpg",
       rating: 4.8,
     },
     {
@@ -80,7 +80,7 @@
       price: 599,
       originalPrice: 799,
       image:
-        "https://www.gurmeetkaurstore.in/uploads/8147932435Untitled_design_(19).png",
+        "https://www.ayraj.in/uploads/8147932435Untitled_design_(19).png",
       rating: 4.7,
     },
     {
@@ -90,7 +90,7 @@
       price: 349,
       originalPrice: 499,
       image:
-        "https://www.gurmeetkaurstore.in/uploads/22793Dr_rashel_De-tan.png",
+        "https://www.ayraj.in/uploads/22793Dr_rashel_De-tan.png",
       rating: 4.5,
     },
     {
@@ -100,7 +100,7 @@
       price: 849,
       originalPrice: 1099,
       image:
-        "https://www.gurmeetkaurstore.in/uploads/57161Nice_&_Naughty_Bombshell_Lipistick_Mix_Color_D.png",
+        "https://www.ayraj.in/uploads/57161Nice_&_Naughty_Bombshell_Lipistick_Mix_Color_D.png",
       rating: 4.9,
     },
     {
@@ -110,7 +110,7 @@
       price: 699,
       originalPrice: 899,
       image:
-        "https://www.gurmeetkaurstore.in/uploads/16495Mars_Magic_Shinw_Fix_Spray.jpg",
+        "https://www.ayraj.in/uploads/16495Mars_Magic_Shinw_Fix_Spray.jpg",
       rating: 4.6,
     },
     {
@@ -120,7 +120,7 @@
       price: 999,
       originalPrice: 1299,
       image:
-        "https://www.gurmeetkaurstore.in/uploads/93366HR_Foundation_Nude_04.jpg",
+        "https://www.ayraj.in/uploads/93366HR_Foundation_Nude_04.jpg",
       rating: 4.8,
     },
     {
@@ -130,7 +130,7 @@
       price: 599,
       originalPrice: 799,
       image:
-        "https://www.gurmeetkaurstore.in/uploads/8147932435Untitled_design_(19).png",
+        "https://www.ayraj.in/uploads/8147932435Untitled_design_(19).png",
       rating: 4.7,
     },
     {
@@ -140,7 +140,7 @@
       price: 349,
       originalPrice: 499,
       image:
-        "https://www.gurmeetkaurstore.in/uploads/22793Dr_rashel_De-tan.png",
+        "https://www.ayraj.in/uploads/22793Dr_rashel_De-tan.png",
       rating: 4.5,
     },
     {
@@ -150,7 +150,7 @@
       price: 849,
       originalPrice: 1099,
       image:
-        "https://www.gurmeetkaurstore.in/uploads/57161Nice_&_Naughty_Bombshell_Lipistick_Mix_Color_D.png",
+        "https://www.ayraj.in/uploads/57161Nice_&_Naughty_Bombshell_Lipistick_Mix_Color_D.png",
       rating: 4.9,
     },
   ];

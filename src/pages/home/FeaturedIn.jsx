@@ -17,25 +17,25 @@ const featuredLogos = [
 
 export default function FeaturedIn() {
   return (
-    <section className="bg-white px-5 pb-0 pt-7 text-center md:px-10 md:pt-9">
+    <section className="bg-white px-4 pb-0 pt-6 text-center md:px-10 md:pt-9">
       <h2 className="m-0 text-[18px] font-normal leading-tight tracking-[0.02em] text-black md:text-[22px]">
         Featured in
       </h2>
 
-      <div className="mx-auto mt-5 flex  flex-wrap items-center justify-center gap-6 md:mt-7 md:gap-11 px-20">
+      <div className="mx-auto mt-5 grid grid-cols-3 items-center justify-items-center gap-x-5 gap-y-5 px-1 md:mt-7 md:flex md:flex-wrap md:justify-center md:gap-11 md:px-20">
         {featuredLogos.map((logo) => (
-          <div key={logo.alt} className="leading-none">
+          <div key={logo.alt} className="flex h-9 w-full items-center justify-center leading-none md:h-auto md:w-auto">
             <img
               src={logo.src}
               alt={logo.alt}
-              className="h-8 w-auto object-contain opacity-90 grayscale transition hover:opacity-80 hover:grayscale-0 md:h-20"
+              className="max-h-8 max-w-[88px] object-contain opacity-90 grayscale transition hover:opacity-80 hover:grayscale-0 md:h-20 md:max-h-none md:max-w-none"
               loading="lazy"
             />
           </div>
         ))}
       </div>
 
-      <p className="mx-auto mt-12  text-[14px] font-normal leading-[1.45] text-black md:text-[20px] px-50">
+      <p className="mx-auto mt-7 px-1 text-[13px] font-normal leading-[1.55] text-black md:mt-12 md:px-50 md:text-[20px] md:leading-[1.45]">
         Life n Colors is a luxury home décor brand where every design begins with a story drawn from
         world art and cultural craft. Our work lives in 5-star hotels, celebrity homes, brand stores,
         and private residences across 28 countries.

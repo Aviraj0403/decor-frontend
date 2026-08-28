@@ -8,7 +8,7 @@ import {
   Menu,
   PackageSearch,
   Search,
-  ShoppingBasket,
+  ShoppingBag,
   Sparkles,
   Store,
   Tag,
@@ -22,9 +22,10 @@ import { useAuth } from "../../context/AuthContext";
 
 const logo = "/logo.png";
 
-export default function MobileHeader() {
+export default function MobileHeader({ isHomePage = false }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [openSubMenu, setOpenSubMenu] = useState(null);
+  const [isScrolled, setIsScrolled] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const { user, logout } = useAuth();
@@ -44,6 +45,14 @@ export default function MobileHeader() {
     setIsMenuOpen(false);
     setOpenSubMenu(null);
   }, [location.pathname]);
+
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 18);
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   useEffect(() => {
     document.body.style.overflow = isMenuOpen ? "hidden" : "";
@@ -77,58 +86,70 @@ export default function MobileHeader() {
     `flex min-w-[52px] flex-col items-center justify-center gap-1 text-[10px] font-semibold transition ${active ? "text-primary-600" : "text-[#2D545E]"
     }`;
 
+  const transparentHome = isHomePage && !isScrolled && !isMenuOpen;
+  const headerBgClass = transparentHome
+    ? "border-transparent bg-transparent shadow-none"
+    : "border-secondary-200/70 bg-brand-bg/95 shadow-[0_5px_20px_rgba(139,30,30,0.09)] backdrop-blur-xl";
+  const headerIconClass = transparentHome
+    ? "text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.35)]"
+    : "text-[#103438]";
+
   return (
     <div className="w-full bg-brand-bg md:hidden">
-      <header className="fixed inset-x-0 top-0 z-[90] border-b border-secondary-200/70 bg-brand-bg/95 shadow-[0_5px_20px_rgba(139,30,30,0.09)] backdrop-blur-xl">
-        <div className="grid h-[72px] grid-cols-[44px_1fr_auto] items-center gap-2 px-3">
+      <header className={`fixed inset-x-0 top-0 z-[90] border-b transition-all duration-300 ${headerBgClass}`}>
+        <div className="grid h-[64px] grid-cols-[48px_1fr_88px] items-center gap-1 px-[15px]">
           <button
             type="button"
             onClick={() => setIsMenuOpen(true)}
-            className="grid h-10 w-10 place-items-center rounded-full border border-secondary-200 bg-secondary-50 text-accent transition active:scale-95"
+            className={`grid h-11 w-11 place-items-center transition active:scale-95 ${headerIconClass}`}
             aria-label="Open menu"
           >
-            <Menu size={22} strokeWidth={1.8} />
+            <Menu size={27} strokeWidth={1.55} />
           </button>
 
           <Link
             to="/"
-            className="mx-auto flex h-[58px] w-[182px] min-w-0 items-center justify-center"
+            className="mx-auto flex h-[42px] w-[128px] min-w-0 items-center justify-center"
             aria-label="Life n Colors home"
           >
             <img
               src={logo}
               alt="Life n Colors"
-              className="h-[54px] w-auto object-contain"
+              className="h-[32px] w-auto object-contain"
             />
           </Link>
 
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center justify-end gap-2">
             <button
               type="button"
-              onClick={handleProfileClick}
-              className="grid h-10 w-10 place-items-center rounded-full text-[#103438] transition hover:bg-secondary-50 hover:text-accent active:scale-95"
-              aria-label={user ? "Open profile" : "Sign in"}
+              onClick={() => navigate("/search")}
+              className={`grid h-10 w-10 place-items-center transition active:scale-95 ${headerIconClass}`}
+              aria-label="Search products"
             >
-              <CircleUserRound size={24} strokeWidth={1.7} />
+              <Search size={26} strokeWidth={1.55} />
             </button>
 
             <Link
               to="/cart"
-              className="relative grid h-10 w-10 place-items-center rounded-full text-[#103438] transition hover:bg-secondary-50 hover:text-accent active:scale-95"
+              className={`relative grid h-10 w-10 place-items-center transition active:scale-95 ${headerIconClass}`}
               aria-label="Open cart"
             >
-              <ShoppingBasket size={24} strokeWidth={1.7} />
-              {totalQuantity > 0 && (
-                <span className="absolute -right-0.5 -top-0.5 grid h-5 min-w-5 place-items-center rounded-full bg-primary-600 px-1 text-[9px] font-bold text-white ring-2 ring-white">
-                  {totalQuantity > 99 ? "99+" : totalQuantity}
-                </span>
-              )}
+              <ShoppingBag size={26} strokeWidth={1.55} />
+              <span
+                className={`absolute bottom-0 left-0 grid h-[17px] min-w-[17px] place-items-center rounded-full px-1 text-[9px] font-bold leading-none ${
+                  transparentHome
+                    ? "bg-white text-[#103438] ring-1 ring-white"
+                    : "bg-[#103438] text-white ring-2 ring-brand-bg"
+                }`}
+              >
+                {totalQuantity > 99 ? "99+" : totalQuantity}
+              </span>
             </Link>
           </div>
         </div>
       </header>
 
-      <div className="h-[72px]" />
+      {!isHomePage && <div className="h-[64px]" />}
 
       <nav className="fixed inset-x-0 bottom-0 z-[80] border-t border-secondary-200/80 bg-brand-bg/95 px-2 pb-[max(8px,env(safe-area-inset-bottom))] pt-2 shadow-[0_-8px_24px_rgba(139,30,30,0.11)] backdrop-blur-xl">
         <div className="mx-auto grid max-w-md grid-cols-5 items-end">

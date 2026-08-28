@@ -14,7 +14,7 @@ export default function Header() {
       </div>
 
       <div className="block md:hidden">
-        <MobileHeader />
+        <MobileHeader isHomePage={isHomePage} />
       </div>
     </>
   );

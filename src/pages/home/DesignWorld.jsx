@@ -1,12 +1,12 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 const designCards = [
   {
     name: "Suneherii",
     desc: "Indian art traditions, modern interpretation",
     forms: "Pichwai / Madhubani / Mughal / Kalamkari",
     cta: "Explore Suneherii ->",
-    href: "https://lifencolors.in/collections/suneherii-wallpaper-collection",
+    href: "/collections/suneherii-wallpaper-collection",
     image:
       "https://lifencolors.in/cdn/shop/files/Living-room-wallpaper-pink-kaleen.webp?v=1776333992&width=900",
   },
@@ -15,7 +15,7 @@ const designCards = [
     desc: "World art traditions, modern interpretation",
     forms: "Chinoiserie / European / Mexican / Grisaille",
     cta: "Explore Amazora ->",
-    href: "https://lifencolors.in/collections/amazora-world-art-wallpapers-fabrics",
+    href: "/collections/amazora-world-art-wallpapers-fabrics",
     image:
       "https://lifencolors.in/cdn/shop/files/indonesia-fresh-mural-boho-bedroom-styling.webp?v=1776935304&width=900",
   },
@@ -40,9 +40,9 @@ export default function DesignWorld() {
 
         <div className="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-4">
           {designCards.map((card) => (
-            <a
+            <Link
               key={card.name}
-              href={card.href}
+              to={card.href}
               className="group relative block aspect-[3/4] overflow-hidden text-white"
             >
               <img
@@ -66,7 +66,7 @@ export default function DesignWorld() {
                   {card.cta}
                 </span>
               </div>
-            </a>
+            </Link>
           ))}
         </div>
       </div>

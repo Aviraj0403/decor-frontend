@@ -12,7 +12,7 @@ const mobileHeroVideo =
 
 export default function BannerSlider() {
   return (
-    <section className="w-full overflow-hidden bg-white">
+    <section className="w-full overflow-hidden bg-white md:bg-white">
       <div className="relative aspect-[3/4] w-full overflow-hidden md:aspect-video">
         <video
           className="absolute inset-0 hidden h-full w-full object-cover object-center md:block"
@@ -26,7 +26,7 @@ export default function BannerSlider() {
           aria-label="Life n Colors and Prasanaakshi brand film"
         />
         <video
-          className="absolute inset-0 h-full w-full object-cover object-center md:hidden"
+          className="absolute -inset-px h-[calc(100%+2px)] w-[calc(100%+2px)] object-cover object-center md:hidden"
           src={mobileHeroVideo}
           poster={mobilePoster}
           autoPlay

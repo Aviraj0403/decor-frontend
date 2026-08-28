@@ -1,8 +1,8 @@
 // src/pages/AboutUs.jsx
 import React from "react";
 import { FaHeart, FaLeaf, FaGift, FaBullseye, FaUsers, FaStar, FaHome, FaPaintBrush } from "react-icons/fa";
-import heroImg from "../../image/divyamantra-hero.png";
-import storyImg from "../../image/divyamantra-story.png";
+import heroImg from "../../image/new-about-hero.png";
+import storyImg from "../../image/new-about-story.png";
 
 export default function AboutUs() {
   return (
