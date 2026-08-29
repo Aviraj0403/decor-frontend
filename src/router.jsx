@@ -40,6 +40,7 @@ import ShopAllWallpapers from "./pages/collections/ShopAllWallpapers.jsx";
 import WallpaperCollectionLanding from "./pages/collections/WallpaperCollectionLanding.jsx";
 import FabricHomeCollectionLanding from "./pages/collections/FabricHomeCollectionLanding.jsx";
 import DesignInspiration from "./pages/DesignInspiration.jsx";
+import Gifting from "./pages/Gifting.jsx";
 // import Login from "./authentication/Login.jsx";
 // import Signup from "./authentication/Signup.jsx";
 import RequireAuth from "./components/RequireAuth.jsx";
@@ -88,6 +89,7 @@ const router = createBrowserRouter([
        {path : "/order-success/:orderId", element: <ThankYouPage />},
        {path : "/profile/invoice/:orderId", element: <Invoice />},
        {path:"/new-products", element:<NewProducts />},
+       {path:"/gifting", element:<Gifting />},
        {path:"/design-inspiration", element:<DesignInspiration />},
        {path:"/collections/best-selling-wallpapers", element:<BestSellingWallpapers />},
        {path:"/collections/latest-wallpaper-collection", element:<NewArrivalsWallpapers />},

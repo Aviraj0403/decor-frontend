@@ -269,7 +269,7 @@ export default function DesktopHeader({ isHomePage = false }) {
               <Link to="/new-products" className={`transition ${hoverClass}`}>Prasanaakshi</Link>
             </li>
             <li onMouseEnter={() => setActiveMenu(null)}>
-              <Link to="/#combo-products" className={`transition ${hoverClass}`}>Gifting</Link>
+              <Link to="/gifting" className={`transition ${hoverClass}`}>Gifting</Link>
             </li>
             <li onMouseEnter={() => setActiveMenu(null)}>
               <Link to="/about-us" className={`flex items-center gap-2 transition ${hoverClass}`}>
