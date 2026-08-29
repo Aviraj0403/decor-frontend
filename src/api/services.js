@@ -55,3 +55,9 @@ export const shippingAPI = {
 export const settingsAPI = {
   get: () => apiClient.get('/admin/settings'),
 };
+
+// ── Lookbooks ────────────────────────────────────────────────
+export const lookbookAPI = {
+  getAll: () => apiClient.get('/lookbooks'),
+  getBySlug: (slug) => apiClient.get(`/lookbooks/${slug}`),
+};

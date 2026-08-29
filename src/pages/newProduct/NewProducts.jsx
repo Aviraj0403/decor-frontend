@@ -9,8 +9,8 @@ const NewProducts = () => {
 
   // Fetch new products from API using React Query
   const { data: productsData, isLoading, isError, error } = useQuery({
-    queryKey: ["miniProducts", { page: 1, limit: 1000, isBestSeller: false }],
-    queryFn: () => getMiniProducts(1, 1000, "", "", "", false),
+    queryKey: ["miniProducts", { page: 1, limit: 1000, isBestSeller: "" }],
+    queryFn: () => getMiniProducts(1, 1000, "", "", "", ""),
   });
 
   // Handle navigation to product details page
