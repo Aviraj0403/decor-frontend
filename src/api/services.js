@@ -42,6 +42,7 @@ export const offerAPI = {
 export const reviewAPI = {
   getForProduct: (productId) => apiClient.get(`/reviews/product/${productId}`),
   create: (payload) => apiClient.post('/reviews', payload),
+  getUserReviews: () => apiClient.get('/reviews/user-reviews'),
 };
 
 // ── Shipping ─────────────────────────────────────────────────
