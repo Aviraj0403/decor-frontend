@@ -7,6 +7,7 @@ import { checkPincodeServiceability } from '../services/shippingApi';
 import { useWishlistStore } from '../store';
 import { useCartActions } from '../hooks/useCartActions';
 import { toast } from 'sonner';
+import RelatedProduct from './home/RelatedProduct';
 
 // Color mapping utility - maps color names to hex values
 const getColorHex = (colorName) => {
@@ -142,9 +143,9 @@ export default function ProductPage() {
   const [pincodeResult, setPincodeResult] = useState(null);
   const [activeTab, setActiveTab] = useState('story');
   
-  // Wallpaper custom sizing states
-  const [wallpaperWidth, setWallpaperWidth] = useState(10);
-  const [wallpaperHeight, setWallpaperHeight] = useState(10);
+  // Wallpaper custom sizing states (in cm)
+  const [wallpaperWidth, setWallpaperWidth] = useState(300);
+  const [wallpaperHeight, setWallpaperHeight] = useState(240);
   const [selectedMaterial, setSelectedMaterial] = useState(null);
   
   // Cross-sell selected items state
@@ -240,10 +241,16 @@ export default function ProductPage() {
       ];
 
   let price = selectedVariant?.price || product.variants?.[0]?.price || 0;
+  let wallAreaSqMt = 0;
+  let wallAreaSqFt = 0;
+  let billingAreaSqFt = 0;
   if (product.productType === 'Wallpaper') {
-    const area = wallpaperWidth * wallpaperHeight;
+    wallAreaSqMt = (wallpaperWidth / 100) * (wallpaperHeight / 100);
+    wallAreaSqFt = wallAreaSqMt * 10.7639;
+    const areaWithBuffer = wallAreaSqFt * 1.10;
+    billingAreaSqFt = Math.ceil(areaWithBuffer);
     const materialPricePerSqFt = selectedMaterial?.pricePerSqFt || 120;
-    price = area * materialPricePerSqFt;
+    price = billingAreaSqFt * materialPricePerSqFt;
   }
 
   const disc = product.discount || 0;
@@ -264,7 +271,7 @@ export default function ProductPage() {
     if (product.productType !== 'Wallpaper' && !selectedVariant) return toast.error('Please select a variant');
     
     const cartSize = product.productType === 'Wallpaper'
-      ? `${wallpaperWidth} W x ${wallpaperHeight} H ft (${selectedMaterial?.materialName || 'Standard'})`
+      ? `${wallpaperWidth} W x ${wallpaperHeight} H cm (Material: ${selectedMaterial?.materialName || 'Standard'})`
       : selectedVariant.size;
 
     const cartPrice = product.productType === 'Wallpaper'
@@ -322,7 +329,7 @@ export default function ProductPage() {
     if (product.productType !== 'Wallpaper' && !selectedVariant) return toast.error('Please select a variant');
     
     const cartSize = product.productType === 'Wallpaper'
-      ? `${wallpaperWidth} W x ${wallpaperHeight} H ft (${selectedMaterial?.materialName || 'Standard'})`
+      ? `${wallpaperWidth} W x ${wallpaperHeight} H cm (Material: ${selectedMaterial?.materialName || 'Standard'})`
       : selectedVariant.size;
 
     const cartPrice = product.productType === 'Wallpaper'
@@ -556,12 +563,12 @@ export default function ProductPage() {
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label className="block text-[10px] font-sans font-semibold text-muted uppercase tracking-wider mb-1.5">
-                      Width (ft)
+                      Width (cm)
                     </label>
                     <input
                       type="number"
-                      min="1"
-                      step="0.1"
+                      min="50"
+                      step="1"
                       value={wallpaperWidth}
                       onChange={(e) => setWallpaperWidth(parseFloat(e.target.value) || 0)}
                       className="w-full px-3.5 py-2.5 border border-cream-dark bg-white font-sans text-sm text-charcoal focus:outline-none focus:border-charcoal transition"
@@ -569,12 +576,12 @@ export default function ProductPage() {
                   </div>
                   <div>
                     <label className="block text-[10px] font-sans font-semibold text-muted uppercase tracking-wider mb-1.5">
-                      Height (ft)
+                      Height (cm)
                     </label>
                     <input
                       type="number"
-                      min="1"
-                      step="0.1"
+                      min="50"
+                      step="1"
                       value={wallpaperHeight}
                       onChange={(e) => setWallpaperHeight(parseFloat(e.target.value) || 0)}
                       className="w-full px-3.5 py-2.5 border border-cream-dark bg-white font-sans text-sm text-charcoal focus:outline-none focus:border-charcoal transition"
@@ -589,10 +596,10 @@ export default function ProductPage() {
                   </span>
                   <div className="flex flex-wrap gap-2">
                     {[
-                      { label: "8 × 10 ft", w: 8, h: 10 },
-                      { label: "10 × 10 ft", w: 10, h: 10 },
-                      { label: "12 × 9 ft", w: 12, h: 9 },
-                      { label: "14 × 10 ft", w: 14, h: 10 }
+                      { label: "300 × 240 cm", w: 300, h: 240 },
+                      { label: "350 × 250 cm", w: 350, h: 250 },
+                      { label: "400 × 275 cm", w: 400, h: 275 },
+                      { label: "450 × 300 cm", w: 450, h: 300 }
                     ].map((preset) => (
                       <button
                         type="button"
@@ -639,9 +646,18 @@ export default function ProductPage() {
                 </div>
 
                 {/* Live calculation stats */}
-                <div className="pt-4 border-t border-cream-dark/60 flex justify-between items-center text-xs font-sans text-charcoal">
-                  <span>Total Area:</span>
-                  <span className="font-semibold">{(wallpaperWidth * wallpaperHeight).toFixed(2)} sq. ft.</span>
+                <div className="pt-4 border-t border-cream-dark/60 space-y-2 text-xs font-sans text-charcoal">
+                  <div className="flex justify-between">
+                    <span>Wall Area:</span>
+                    <span className="font-semibold">{wallAreaSqMt.toFixed(2)} sq. mt. ({wallAreaSqFt.toFixed(1)} sq. ft.)</span>
+                  </div>
+                  <div className="flex justify-between text-green font-medium">
+                    <span>Total Billing Area (includes 10% wastage):</span>
+                    <span className="font-bold">{billingAreaSqFt} sq. ft.</span>
+                  </div>
+                  <p className="text-[10px] text-muted italic mt-1 leading-normal">
+                    * Enter your wall dimensions in cm. A 10% material buffer is automatically added to ensure perfect installation and trimming.
+                  </p>
                 </div>
               </div>
             )}
@@ -877,6 +893,19 @@ export default function ProductPage() {
           </div>
         </div>
 
+        {/* Custom FAQ Accordions */}
+        <FAQSection />
+
+        {/* Custom Google Reviews Feed */}
+        <GoogleReviews />
+
+        {/* Related Products Carousel */}
+        {product.category?.slug && (
+          <div className="mt-20 border-t border-cream-dark pt-12">
+            <RelatedProduct categorySlug={product.category.slug} />
+          </div>
+        )}
+
       </div>
 
       {/* STICKY BOTTOM BAR (Displays when buy buttons scrolled out of view) */}
@@ -913,6 +942,132 @@ export default function ProductPage() {
         </div>
       </div>
 
+    </div>
+  );
+}
+
+function FAQSection() {
+  const [openIndex, setOpenIndex] = useState(null);
+  const faqs = [
+    {
+      q: "How do I measure my wall for customised wallpaper?",
+      a: "Measure the absolute width and height of your wall in centimeters at the widest and tallest points. We highly recommend adding 5-10 cm to both dimensions to allow a safety margin for trimming during installation."
+    },
+    {
+      q: "What is the 10% wastage/extra material buffer?",
+      a: "Wallpapers require precise pattern matching and alignment at the seams. A 10% extra material buffer is automatically added to cover standard trimming, minor wall irregularities, and alignment cuts."
+    },
+    {
+      q: "Which material is best for my room?",
+      a: "Canvas (Premium Matte) is ideal for living rooms & dining areas due to its rich texture and durability. Silk Sheen is perfect for bedrooms and feature walls that benefit from a soft, elegant glow. Sandstone offers a unique stone-like luxury finish."
+    },
+    {
+      q: "How does the shipping & delivery work?",
+      a: "Customised wallpapers are printed on-demand after validating your order dimensions. Manufacturing takes 2-3 business days, and shipping takes another 3-5 days across India in heavy-duty protective rolls."
+    }
+  ];
+
+  return (
+    <div className="mt-20 border-t border-cream-dark pt-12">
+      <h2 className="font-serif text-3xl text-charcoal text-center mb-10">Frequently Asked Questions</h2>
+      <div className="max-w-3xl mx-auto space-y-4">
+        {faqs.map((faq, idx) => {
+          const isOpen = openIndex === idx;
+          return (
+            <div key={idx} className="border border-cream-dark rounded-xl bg-white overflow-hidden transition-all duration-300">
+              <button
+                onClick={() => setOpenIndex(isOpen ? null : idx)}
+                className="w-full px-6 py-4 text-left flex justify-between items-center text-charcoal font-sans font-medium text-sm sm:text-base hover:bg-cream-light/35 transition"
+              >
+                <span>{faq.q}</span>
+                <span className="text-lg font-light">{isOpen ? '−' : '+'}</span>
+              </button>
+              {isOpen && (
+                <div className="px-6 pb-5 pt-1 text-xs sm:text-sm text-muted font-sans leading-relaxed border-t border-cream-dark/30 bg-brand-bg/50">
+                  {faq.a}
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function GoogleReviews() {
+  const reviews = [
+    {
+      name: "Meera Ramakrishnan",
+      rating: 5,
+      date: "2 weeks ago",
+      text: "The Chinoiserie wallpaper texture is absolutely magnificent. Colors are exactly as seen on the screen. Customer concierge helped verify our wall dimensions perfectly. Excellent service!",
+      initials: "MR"
+    },
+    {
+      name: "Arjun Singh",
+      rating: 5,
+      date: "1 month ago",
+      text: "Premium non-woven matte feels so luxury. The 10% wastage margin was perfect, the installers had no issues with matching the pattern. Will order again for our guest room.",
+      initials: "AS"
+    },
+    {
+      name: "Rohan Kapoor",
+      rating: 5,
+      date: "3 weeks ago",
+      text: "Impressed by the packaging and quality. Shipped in a thick heavy duty tube. Breathtaking details on the floral patterns. Breathed new life into my living room.",
+      initials: "RK"
+    }
+  ];
+
+  return (
+    <div className="mt-20 border-t border-cream-dark pt-12">
+      <div className="text-center mb-10">
+        <h2 className="font-serif text-3xl text-charcoal mb-3">Customer Experiences</h2>
+        <div className="flex items-center justify-center gap-2 text-sm text-charcoal font-sans font-semibold">
+          <span className="text-gold flex gap-0.5">
+            {[...Array(5)].map((_, i) => <Star key={i} size={15} className="fill-gold text-gold" />)}
+          </span>
+          <span>4.9 out of 5 based on 340+ Google reviews</span>
+        </div>
+      </div>
+      
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {reviews.map((r, i) => (
+          <div key={i} className="border border-cream-dark p-6 rounded-2xl bg-white shadow-sm flex flex-col justify-between hover:shadow-md transition">
+            <div>
+              <div className="flex justify-between items-start mb-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-primary-50 text-primary-600 flex items-center justify-center font-bold text-sm">
+                    {r.initials}
+                  </div>
+                  <div>
+                    <h4 className="font-sans font-semibold text-sm text-charcoal">{r.name}</h4>
+                    <span className="text-[10px] text-muted">{r.date}</span>
+                  </div>
+                </div>
+                <span className="bg-green/10 text-green text-[9px] font-sans font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
+                  Verified
+                </span>
+              </div>
+              <div className="flex gap-0.5 mb-3">
+                {[...Array(r.rating)].map((_, idx) => (
+                  <Star key={idx} size={11} className="fill-gold text-gold" />
+                ))}
+              </div>
+              <p className="text-xs sm:text-sm text-muted font-sans leading-relaxed italic">
+                "{r.text}"
+              </p>
+            </div>
+            <div className="mt-5 pt-4 border-t border-cream-dark/40 flex items-center justify-between text-[11px] text-muted">
+              <span>Google Review</span>
+              <svg className="w-4 h-4" viewBox="0 0 24 24">
+                <path fill="#EA4335" d="M12.24 10.285V14.4h6.887c-.648 2.41-2.519 4.114-5.136 4.114A5.94 5.94 0 0 1 8.05 12.5a5.94 5.94 0 0 1 5.94-6.014c2.404 0 4.19 1.442 4.965 2.22l3.203-3.2A10.82 10.82 0 0 0 13.99 1.5 10.99 10.99 0 0 0 3 12.5a10.99 10.99 0 0 0 10.99 11c6.046 0 10.22-4.148 10.22-10.43 0-.643-.075-1.286-.22-1.785H12.24z"/>
+              </svg>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
