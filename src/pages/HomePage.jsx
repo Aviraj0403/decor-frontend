@@ -88,6 +88,47 @@ export default function HomePage() {
     staleTime: 5 * 60 * 1000,
   });
 
+  const { data: mainCategories = [] } = useQuery({
+    queryKey: ['main-categories'],
+    queryFn: async () => {
+      const res = await categoryAPI.getMainCategories();
+      return res.data?.categories || res.data || [];
+    },
+    staleTime: 10 * 60 * 1000,
+  });
+
+  const EMOJI_MAP = {
+    'wallpapers': '🖼️',
+    'cushion-covers': '🛋️',
+    'curtains': '🪟',
+    'table-linen': '🍽️',
+    'wall-art': '🎨',
+    'decor': '🎨',
+    'fabric-home': '🛋️'
+  };
+
+  const COLOR_MAP = {
+    'wallpapers': '#2D545E',
+    'cushion-covers': '#C99665',
+    'curtains': '#C99665',
+    'table-linen': '#2D545E',
+    'wall-art': '#C99665',
+    'decor': '#C99665',
+    'fabric-home': '#2D545E'
+  };
+
+  const displayCategories = mainCategories.length > 0
+    ? [
+        ...mainCategories.map(cat => ({
+          label: cat.name,
+          href: `/collections/${cat.slug}`,
+          emoji: EMOJI_MAP[cat.slug] || '✨',
+          color: COLOR_MAP[cat.slug] || '#103438'
+        })),
+        { label: 'All Collections', href: '/collections/all', emoji: '✨', color: '#103438' }
+      ]
+    : CATEGORIES;
+
   const slide = HERO_SLIDES[heroIdx];
 
   return (
@@ -175,7 +216,7 @@ export default function HomePage() {
             <h2 className="section-title">Shop by Category</h2>
           </div>
           <div className="grid grid-cols-3 md:grid-cols-6 gap-4">
-            {CATEGORIES.map((cat) => (
+            {displayCategories.map((cat) => (
               <Link
                 key={cat.label}
                 to={cat.href}

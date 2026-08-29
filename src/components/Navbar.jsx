@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ShoppingBag, Search, Heart, Menu, X, Phone, ChevronDown } from 'lucide-react';
 import { useCartStore, useAuthStore } from '../store';
+import { categoryAPI } from '../api/services';
 
 const NAV_LINKS = [
   {
@@ -45,6 +46,7 @@ export default function Navbar() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [scrolled, setScrolled] = useState(false);
+  const [navLinks, setNavLinks] = useState(NAV_LINKS);
   const { toggleCart, items } = useCartStore();
   const { user, logout } = useAuthStore();
   const navigate = useNavigate();
@@ -55,6 +57,34 @@ export default function Navbar() {
     const handler = () => setScrolled(window.scrollY > 10);
     window.addEventListener('scroll', handler);
     return () => window.removeEventListener('scroll', handler);
+  }, []);
+
+  useEffect(() => {
+    const fetchMenu = async () => {
+      try {
+        const { data } = await categoryAPI.getMenuCategories();
+        if (data && data.success && data.categories) {
+          const dynamicLinks = data.categories.map(cat => ({
+            label: cat.name,
+            href: `/collections/${cat.slug}`,
+            children: cat.subcategories && cat.subcategories.length > 0
+              ? cat.subcategories.map(sub => ({
+                  label: sub.name,
+                  href: `/collections/${sub.slug}`
+                }))
+              : null
+          }));
+          setNavLinks([
+            ...dynamicLinks,
+            { label: 'Collections', href: '/collections/all' },
+            { label: 'About', href: '/about' }
+          ]);
+        }
+      } catch (err) {
+        console.error("Failed to load menu categories:", err);
+      }
+    };
+    fetchMenu();
   }, []);
 
   const handleSearch = (e) => {
@@ -95,7 +125,7 @@ export default function Navbar() {
 
             {/* Desktop Nav */}
             <div className="hidden lg:flex items-center gap-1">
-              {NAV_LINKS.map((link) => (
+              {navLinks.map((link) => (
                 <div key={link.label} className="nav-dropdown">
                   <Link
                     to={link.href}
@@ -188,7 +218,7 @@ export default function Navbar() {
         {mobileOpen && (
           <div className="lg:hidden bg-white border-t border-cream-dark">
             <div className="px-4 py-4 space-y-1">
-              {NAV_LINKS.map((link) => (
+              {navLinks.map((link) => (
                 <div key={link.label}>
                   <Link
                     to={link.href}

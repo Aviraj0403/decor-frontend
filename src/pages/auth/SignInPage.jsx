@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import OtpInput from "../../components/OtpInput";
 import { useAuth } from "../../context/AuthContext";
 import authWallpaper from "../../image/category-customised-wallpapers.webp";
+import Axios from "../../utils/Axios";
 
 const logo = "/logo.png";
 
@@ -24,6 +25,7 @@ const SignInPage = () => {
   const [otpSent, setOtpSent] = useState(false);
   const [timer, setTimer] = useState(30);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [otpEnabled, setOtpEnabled] = useState(true);
 
   const { login, googleLogin, sendPhoneOTP, verifyPhoneOTP } = useAuth();
   const navigate = useNavigate();
@@ -135,6 +137,20 @@ const SignInPage = () => {
     const interval = setInterval(() => setTimer((value) => value - 1), 1000);
     return () => clearInterval(interval);
   }, [otpSent, timer]);
+
+  useEffect(() => {
+    const fetchOtpStatus = async () => {
+      try {
+        const { data } = await Axios.get("/auth/otp-status");
+        if (data && data.success) {
+          setOtpEnabled(data.otpEnabled);
+        }
+      } catch (err) {
+        console.error("Failed to fetch OTP status:", err);
+      }
+    };
+    fetchOtpStatus();
+  }, []);
 
   return (
     <main className="min-h-screen bg-[#D7D7D7] px-4 py-8 text-[#103438] sm:px-6 lg:px-10">
@@ -281,7 +297,7 @@ const SignInPage = () => {
                           disabled={isSubmitting || mobile.length !== 10}
                           className="flex h-12 w-full items-center justify-center gap-2 rounded-md bg-[#2D545E] text-sm font-bold uppercase tracking-[0.12em] text-white transition hover:bg-[#103438] disabled:opacity-60"
                         >
-                          {isSubmitting ? "Processing..." : "Send OTP"}
+                          {isSubmitting ? "Processing..." : (otpEnabled ? "Send OTP" : "Login")}
                           {!isSubmitting && <ArrowRight size={17} />}
                         </button>
                       </>

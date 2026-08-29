@@ -17,6 +17,7 @@ export const categoryAPI = {
   getAll: () => apiClient.get('/category'),
   getMainCategories: () => apiClient.get('/category', { params: { type: 'Main' } }),
   getBySlug: (slug) => apiClient.get(`/category/${slug}`),
+  getMenuCategories: () => apiClient.get('/category/getMenuCategories'),
 };
 
 // ── Orders ───────────────────────────────────────────────────
