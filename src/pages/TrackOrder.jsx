@@ -272,7 +272,7 @@ const TrackOrder = () => {
                 </div>
                 <h3 className="text-2xl font-black text-brand-text tracking-tight">Where is my Order ID?</h3>
                 <p className="text-gray-500 font-medium leading-relaxed">
-                  Every order at GK-Store is assigned a unique tracking signature. You can find this hex-code in your confirmation email or order dashboard.
+                  Every order at Ayraj is assigned a unique tracking signature. You can find this hex-code in your confirmation email or order dashboard.
                 </p>
               </div>
               <div className="space-y-4">

@@ -418,7 +418,7 @@ export default function ProductPage() {
           <span className="text-charcoal font-medium">{product.name}</span>
         </nav>
 
-        <div className="grid lg:grid-cols-12 gap-12 lg:gap-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
           
           {/* LEFT COLUMN: Gallery with Vertical Thumbnails */}
           <div className="lg:col-span-7 flex flex-col-reverse md:flex-row gap-4">
@@ -860,7 +860,7 @@ export default function ProductPage() {
             </div>
 
             {/* Core Trust Badges */}
-            <div className="grid grid-cols-3 gap-3 border-t border-cream-dark pt-6">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-3 border-t border-cream-dark pt-6">
               {[
                 { icon: Truck, title: 'FREE SHIPPING', text: 'On orders above ₹999' },
                 { icon: RotateCcw, title: '7 DAY RETURNS', text: 'Hassle-free exchanges' },
@@ -880,15 +880,15 @@ export default function ProductPage() {
       </div>
 
       {/* STICKY BOTTOM BAR (Displays when buy buttons scrolled out of view) */}
-      <div className={`fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-cream-dark shadow-md py-3.5 px-4 transition-transform duration-500 ${
+      <div className={`fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-cream-dark shadow-md py-2.5 sm:py-3.5 px-4 transition-transform duration-500 ${
         showStickyBar ? 'translate-y-0' : 'translate-y-full'
       }`}>
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
-          <div className="flex items-center gap-3.5">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-2 sm:gap-4">
+          <div className="flex items-center gap-2.5 sm:gap-3.5">
             <img
               src={imgs[0] || 'https://via.placeholder.com/50x50'}
               alt={product.name}
-              className="w-10 h-12 object-cover bg-cream-dark border border-cream-dark"
+              className="w-8 h-10 sm:w-10 sm:h-12 object-cover bg-cream-dark border border-cream-dark"
             />
             <div className="hidden sm:block">
               <h4 className="font-serif text-sm text-charcoal leading-tight line-clamp-1">{product.name}</h4>
@@ -898,14 +898,14 @@ export default function ProductPage() {
             </div>
           </div>
           
-          <div className="flex items-center gap-4">
-            <span className="font-serif text-lg text-charcoal">{formatPrice(finalPrice)}</span>
+          <div className="flex items-center gap-2 sm:gap-4">
+            <span className="font-serif text-sm sm:text-lg text-charcoal whitespace-nowrap">{formatPrice(finalPrice)}</span>
             <button
               onClick={() => {
                 // Scroll back to variants
                 window.scrollTo({ top: buyButtonRef.current.offsetTop - 150, behavior: 'smooth' });
               }}
-              className="btn-primary bg-charcoal hover:bg-black text-[11px] tracking-widest font-semibold px-6 py-3 uppercase"
+              className="btn-primary bg-charcoal hover:bg-black text-[9px] sm:text-[11px] tracking-widest font-semibold px-3 sm:px-6 py-2 sm:py-3 uppercase whitespace-nowrap"
             >
               SELECT OPTIONS
             </button>
