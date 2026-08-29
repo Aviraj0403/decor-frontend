@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams, Link, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { ArrowRight, ChevronLeft, ChevronRight, ShoppingBag, Eye, ArrowLeft } from 'lucide-react';
+import { ArrowRight, ChevronLeft, ChevronRight, ShoppingBag, Eye, ArrowLeft, Tag } from 'lucide-react';
 import { lookbookAPI } from '../api/services';
 import { useCartActions } from '../hooks/useCartActions';
 import { toast } from 'sonner';
@@ -101,12 +101,13 @@ export default function DesignInspiration() {
     }
 
     const slides = lookbook.slides || [];
-    const currentSlide = slides[activeSlide];
+    const currentSlide = slides[activeSlide] || {};
     const allTaggedProducts = slides.reduce((acc, slide) => {
       if (slide.taggedProducts) {
-        slide.taggedProducts.forEach(prod => {
-          if (!acc.some(p => p._id === prod._id)) {
-            acc.push(prod);
+        slide.taggedProducts.forEach(tp => {
+          const product = tp.product || tp;
+          if (product && !acc.some(p => p._id === product._id)) {
+            acc.push(product);
           }
         });
       }
@@ -135,25 +136,73 @@ export default function DesignInspiration() {
             {/* Slide Show Container */}
             <div className="lg:col-span-8 space-y-6">
               {slides.length > 0 && (
-                <div className="relative overflow-hidden bg-cream border border-cream-dark shadow-sm group">
-                  <img
-                    src={currentSlide.image}
-                    alt=""
-                    className="w-full h-auto object-cover aspect-video"
-                  />
+                <div className="relative overflow-visible bg-cream border border-cream-dark shadow-sm group select-none">
+                  <div className="relative overflow-hidden w-full h-auto aspect-video">
+                    <img
+                      src={currentSlide.image}
+                      alt=""
+                      className="w-full h-full object-cover"
+                    />
+
+                    {/* Render Interactive Shoppable Hotspots */}
+                    {currentSlide.taggedProducts && currentSlide.taggedProducts.map((tp) => {
+                      const product = tp.product || tp;
+                      if (!product || !product._id) return null;
+                      const x = tp.x || 50;
+                      const y = tp.y || 50;
+
+                      return (
+                        <div
+                          key={product._id}
+                          className="absolute -translate-x-1/2 -translate-y-1/2 group/hotspot cursor-pointer z-10"
+                          style={{ left: `${x}%`, top: `${y}%` }}
+                        >
+                          {/* Pulsing ring */}
+                          <div className="absolute inset-0 w-6 h-6 bg-amber-500 rounded-full animate-ping opacity-75 pointer-events-none" />
+                          {/* Centered dot marker */}
+                          <div className="w-6 h-6 bg-amber-500 hover:bg-amber-600 text-white rounded-full flex items-center justify-center shadow-lg border border-white transition-all select-none">
+                            <Tag size={10} className="stroke-[2.5]" />
+                          </div>
+
+                          {/* Shoppable Popover Card */}
+                          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 w-44 bg-white/95 backdrop-blur-sm border border-cream-dark p-2.5 rounded-lg shadow-xl opacity-0 scale-95 pointer-events-none group-hover/hotspot:opacity-100 group-hover/hotspot:scale-100 group-hover/hotspot:pointer-events-auto transition-all duration-200 z-30 text-center">
+                            <img
+                              src={product.pimages?.[0] || 'https://via.placeholder.com/100x120'}
+                              alt=""
+                              className="w-12 h-14 object-cover mx-auto rounded border"
+                            />
+                            <h5 className="font-serif text-[11px] text-charcoal font-semibold mt-1.5 line-clamp-1">
+                              <Link to={`/product/${product.slug}`} className="hover:text-amber-600 transition-colors">{product.name}</Link>
+                            </h5>
+                            <p className="text-[10px] text-muted font-sans mt-0.5">₹{(product.variants?.[0]?.price || 0).toLocaleString('en-IN')}</p>
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleAddTaggedProduct(product);
+                              }}
+                              disabled={addingId === product._id}
+                              className="mt-2 w-full py-1 bg-[#103438] hover:bg-[#0c2629] text-white text-[9px] font-sans font-bold uppercase tracking-wider rounded transition"
+                            >
+                              {addingId === product._id ? 'Adding...' : 'Add to Bag'}
+                            </button>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
                   
                   {/* Slide controls */}
                   {slides.length > 1 && (
                     <>
                       <button
                         onClick={() => setActiveSlide(prev => (prev - 1 + slides.length) % slides.length)}
-                        className="absolute left-4 top-1/2 -translate-y-1/2 w-9 h-9 bg-black/60 hover:bg-black text-white flex items-center justify-center rounded-full transition opacity-0 group-hover:opacity-100"
+                        className="absolute left-4 top-1/2 -translate-y-1/2 w-9 h-9 bg-black/60 hover:bg-black text-white flex items-center justify-center rounded-full transition opacity-0 group-hover:opacity-100 z-20"
                       >
                         <ChevronLeft size={18} />
                       </button>
                       <button
                         onClick={() => setActiveSlide(prev => (prev + 1) % slides.length)}
-                        className="absolute right-4 top-1/2 -translate-y-1/2 w-9 h-9 bg-black/60 hover:bg-black text-white flex items-center justify-center rounded-full transition opacity-0 group-hover:opacity-100"
+                        className="absolute right-4 top-1/2 -translate-y-1/2 w-9 h-9 bg-black/60 hover:bg-black text-white flex items-center justify-center rounded-full transition opacity-0 group-hover:opacity-100 z-20"
                       >
                         <ChevronRight size={18} />
                       </button>
@@ -207,7 +256,7 @@ export default function DesignInspiration() {
                           
                           <div className="flex-1 min-w-0">
                             <Link to={`/product/${product.slug}`} className="block">
-                              <h4 className="font-serif text-sm text-charcoal hover:text-gold transition-colors leading-snug line-clamp-1">
+                              <h4 className="font-serif text-sm text-charcoal hover:text-gold transition-colors leading-snug line-clamp-1 font-medium">
                                 {product.name}
                               </h4>
                             </Link>
@@ -277,7 +326,7 @@ export default function DesignInspiration() {
 
                 <div className="p-6 flex-1 flex flex-col justify-between">
                   <div>
-                    <h3 className="font-serif text-xl text-charcoal group-hover:text-gold transition-colors leading-snug">
+                    <h3 className="font-serif text-xl text-[#103438] group-hover:text-gold transition-colors leading-snug">
                       {book.title}
                     </h3>
                     <p className="mt-2.5 text-muted text-xs sm:text-sm leading-relaxed line-clamp-2">
