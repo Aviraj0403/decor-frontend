@@ -113,8 +113,8 @@ export default function ProductCard({ product, onProductClick }) {
         </div>
         <div className="flex items-center">
           <FaStar className="text-yellow-400 text-xs" />
-          <span className="ml-1 text-gray-600 text-xs">
-            {product.rating}
+          <span className="ml-1 text-zinc-600 text-xs">
+            {Number(product.rating || 0).toFixed(1)}
           </span>
         </div>
       </div>
