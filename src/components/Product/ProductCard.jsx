@@ -92,7 +92,7 @@ export default function ProductCard({ product, onProductClick }) {
         <img
           src={product.pimage}
           alt={product.name}
-          className="h-full object-contain transition-transform duration-500 ease-out group-hover:scale-110"
+          className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
         />
       </div>
 

@@ -89,7 +89,7 @@ export default function BestSellPC({ product, onProductClick }) {
         <img
           src={product.pimage}
           alt={product.name}
-          className="h-full object-contain transition-transform duration-300 group-hover:scale-105 relative z-10"
+          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 relative z-10"
         />
       </div>
 

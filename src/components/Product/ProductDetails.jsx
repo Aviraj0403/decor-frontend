@@ -396,7 +396,7 @@ export default function ProductDetails() {
                 <img
                   src={mainImage}
                   alt="Product"
-                  className="max-h-[22rem] w-auto max-w-full object-contain transition-transform duration-300 hover:scale-105"
+                  className={`max-h-[22rem] ${product.productType === 'Wallpaper' ? 'w-full h-full object-cover' : 'w-auto max-w-full object-contain'} transition-transform duration-300 hover:scale-105`}
                 />
                 {product.productType === 'Wallpaper' && (
                   <div className="absolute inset-0 bg-black/40 flex items-center justify-center p-3 pointer-events-none">
