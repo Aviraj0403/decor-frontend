@@ -398,33 +398,7 @@ export default function ProductDetails() {
                   alt="Product"
                   className={`max-h-[22rem] ${product.productType === 'Wallpaper' ? 'w-full h-full object-cover' : 'w-auto max-w-full object-contain'} transition-transform duration-300 hover:scale-105`}
                 />
-                {product.productType === 'Wallpaper' && (
-                  <div className="absolute inset-0 bg-black/40 flex items-center justify-center p-3 pointer-events-none">
-                    <div
-                      className="border-2 border-dashed border-white bg-transparent relative flex items-center justify-center shadow-2xl transition-all duration-300 rounded"
-                      style={{
-                        aspectRatio: `${wallpaperWidth} / ${wallpaperHeight}`,
-                        maxWidth: '95%',
-                        maxHeight: '95%',
-                        width: wallpaperWidth >= wallpaperHeight ? '95%' : `${(wallpaperWidth / wallpaperHeight) * 95}%`,
-                        height: wallpaperHeight >= wallpaperWidth ? '95%' : `${(wallpaperHeight / wallpaperWidth) * 95}%`
-                      }}
-                    >
-                      {/* Corner crop marks */}
-                      <div className="absolute -top-1 -left-1 w-2.5 h-2.5 border-t-2 border-l-2 border-white"></div>
-                      <div className="absolute -top-1 -right-1 w-2.5 h-2.5 border-t-2 border-r-2 border-white"></div>
-                      <div className="absolute -bottom-1 -left-1 w-2.5 h-2.5 border-b-2 border-l-2 border-white"></div>
-                      <div className="absolute -bottom-1 -right-1 w-2.5 h-2.5 border-b-2 border-r-2 border-white"></div>
-                      
-                      <span className="absolute top-1.5 left-1.5 bg-primary-600/90 text-white text-[8px] px-1.5 py-0.5 rounded font-sans uppercase tracking-widest font-semibold">
-                        Print Preview Area
-                      </span>
-                      <span className="absolute bottom-1.5 right-1.5 bg-primary-600/90 text-white text-[9px] px-1.5 py-0.5 rounded font-sans font-medium">
-                        {wallpaperWidth} × {wallpaperHeight} ft
-                      </span>
-                    </div>
-                  </div>
-                )}
+
               </div>
             </div>
           </div>
