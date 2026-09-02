@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { ShoppingBag, Heart, Share2, Star, Truck, RotateCcw, Shield, Plus, Minus, Check } from 'lucide-react';
+import { ShoppingBag, Heart, Share2, Star, Plus, Minus, Check, ChevronDown, MessageCircle, Phone, Globe2, Leaf } from 'lucide-react';
 import { productAPI } from '../api/services';
-import { checkPincodeServiceability } from '../services/shippingApi';
 import { useWishlistStore } from '../store';
 import { useCartActions } from '../hooks/useCartActions';
 import { toast } from 'sonner';
@@ -139,9 +138,9 @@ export default function ProductPage() {
   const [selectedVariant, setSelectedVariant] = useState(null);
   const [selectedColor, setSelectedColor] = useState(null);
   const [qty, setQty] = useState(1);
-  const [pincode, setPincode] = useState('');
-  const [pincodeResult, setPincodeResult] = useState(null);
-  const [activeTab, setActiveTab] = useState('story');
+  const [activeTab, setActiveTab] = useState('description');
+  const [measureOpen, setMeasureOpen] = useState(false);
+  const [installHelpOpen, setInstallHelpOpen] = useState(false);
   
   // Wallpaper custom sizing states (in cm)
   const [wallpaperWidth, setWallpaperWidth] = useState(300);
@@ -388,28 +387,11 @@ export default function ProductPage() {
     }
   };
 
-  const checkPincode = async () => {
-    if (!pincode || pincode.length !== 6) {
-      return toast.error('Please enter a valid 6-digit PIN code');
-    }
-    try {
-      const res = await checkPincodeServiceability(pincode);
-      if (res.data?.success) {
-        setPincodeResult({ ok: true, message: `Delivering to ${res.data?.city || 'your area'} in 3-5 days.` });
-      } else {
-        setPincodeResult({ ok: false, message: 'Delivery currently unavailable for this location.' });
-      }
-    } catch (err) {
-      // Fallback for demo/pincode check
-      setPincodeResult({ ok: true, message: 'Standard shipping available. Est. delivery 4-6 days.' });
-    }
-  };
-
   const tabsContent = {
-    story: product.story || product.description,
+    description: product.description || product.story,
     shipping: product.shipping || 'We offer free delivery across India for all orders above ₹999. Standard shipping takes 4 to 6 business days. Express shipping options are available at checkout.',
-    returns: product.returns || 'We want you to love your purchase. If you are not completely satisfied, you can return or exchange any item within 7 days of delivery. Custom products are final sale.',
-    care: product.care || product.additionalInfo?.usageInstructions || 'Dry clean recommended for embroidered covers. Gentle hand wash in cold water using a mild detergent. Dry inside-out in shade. Warm iron on reverse.'
+    material: product.material || product.additionalInfo?.material || selectedMaterial?.materialName || 'Premium quality material with a refined finish.',
+    quality: product.care || product.returns || product.additionalInfo?.usageInstructions || 'Replacements provided in the rare event of transit damage.'
   };
 
   return (
@@ -417,7 +399,7 @@ export default function ProductPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
         
         {/* Breadcrumb */}
-        <nav className="text-xs tracking-wider uppercase text-muted mb-8 flex items-center gap-2 font-sans">
+        <nav className="hidden sm:flex text-xs tracking-wider uppercase text-muted mb-8 items-center gap-2 font-sans">
           <Link to="/" className="hover:text-charcoal transition-colors">Home</Link>
           <span className="text-cream-dark">/</span>
           <Link to="/collections/all" className="hover:text-charcoal transition-colors">Collections</Link>
@@ -428,17 +410,17 @@ export default function ProductPage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
           
           {/* LEFT COLUMN: Gallery with Vertical Thumbnails */}
-          <div className="lg:col-span-7 flex flex-col-reverse md:flex-row gap-4">
+          <div className="lg:col-span-7 self-start flex flex-col-reverse md:flex-row items-start gap-3 sm:gap-4">
             
-            {/* Vertical Thumbnails Stack (hidden/horizontal on mobile) */}
+            {/* Vertical Thumbnails Stack */}
             {imgs.length > 1 && (
-              <div className="flex md:flex-col gap-2.5 overflow-x-auto md:overflow-y-auto md:w-20 w-full shrink-0">
+              <div className="flex flex-row md:flex-col gap-3 w-full md:w-24 shrink-0 overflow-x-auto md:overflow-x-visible md:overflow-y-auto md:max-h-[32rem]">
                 {imgs.map((img, i) => (
                   <button
                     key={i}
                     onClick={() => setSelectedImg(i)}
-                    className={`md:w-20 md:h-24 w-16 h-20 border overflow-hidden shrink-0 transition-all duration-300 ${
-                      i === selectedImg ? 'border-charcoal scale-102 shadow-sm' : 'border-cream-dark opacity-75 hover:opacity-100'
+                    className={`w-16 sm:w-20 md:w-full aspect-square border bg-white overflow-hidden shrink-0 transition-all duration-300 ${
+                      i === selectedImg ? 'border-charcoal shadow-sm' : 'border-cream-dark opacity-75 hover:opacity-100'
                     }`}
                   >
                     <img src={img} alt="" className="w-full h-full object-cover" />
@@ -448,12 +430,11 @@ export default function ProductPage() {
             )}
             
             {/* Main Preview Image */}
-            <div className="flex-1 bg-cream-dark overflow-hidden relative group">
+            <div className="min-w-0 w-full flex-1 bg-cream-dark overflow-hidden relative group">
               <img
                 src={imgs[selectedImg] || 'https://via.placeholder.com/600x750/F5F0E8/2D5016?text=Ayraj'}
                 alt={product.name}
-                className="w-full h-auto object-cover transition-transform duration-700 ease-out group-hover:scale-103"
-                style={{ aspectRatio: '4/5' }}
+                className="block w-full h-auto transition-transform duration-700 ease-out group-hover:scale-103"
               />
               {product.productType === 'Wallpaper' && (
                 <div className="absolute inset-0 bg-black/40 flex items-center justify-center p-4">
@@ -723,7 +704,7 @@ export default function ProductPage() {
             {crossSellProducts.length > 0 && (
               <div className="bg-[#FAF8F5] border border-cream-dark p-5 space-y-4">
                 <h3 className="font-serif text-lg text-charcoal">Complete the Look</h3>
-                <div className="space-y-4">
+                <div className="grid grid-cols-3 gap-3">
                   {crossSellProducts.map((item) => {
                     const isChecked = selectedCrossSells.some(i => i._id === item._id);
                     const itemPrice = item.variants?.[0]?.price || 0;
@@ -731,21 +712,21 @@ export default function ProductPage() {
                     const itemFinal = itemDisc > 0 ? itemPrice - (itemPrice * itemDisc / 100) : itemPrice;
                     
                     return (
-                      <div key={item._id} className="flex items-center justify-between gap-4 border-b border-cream-dark/50 pb-3 last:border-b-0 last:pb-0">
-                        <Link to={`/products/${item.slug}`} className="flex items-center gap-3.5 flex-1 group">
+                      <div key={item._id} className="relative min-w-0">
+                        <Link to={`/products/${item.slug}`} className="block group">
                           <img
                             src={item.pimages?.[0] || 'https://via.placeholder.com/60x80'}
                             alt={item.name}
-                            className="w-12 h-15 object-cover bg-cream-dark border border-cream-dark"
+                            className="w-full aspect-square object-cover bg-cream-dark border border-cream-dark"
                           />
-                          <div>
-                            <h4 className="font-serif text-sm text-charcoal group-hover:text-gold transition-colors leading-snug line-clamp-1">
+                          <div className="pt-2 pr-6">
+                            <h4 className="font-serif text-xs text-charcoal group-hover:text-gold transition-colors leading-snug line-clamp-2 min-h-8">
                               {item.name}
                             </h4>
-                            <p className="font-serif text-xs text-muted mt-0.5">
+                            <p className="font-serif text-xs text-muted mt-1">
                               {formatPrice(itemFinal)}
                               {itemDisc > 0 && (
-                                <span className="text-[10px] text-green font-sans font-semibold uppercase tracking-wider ml-1.5">
+                                <span className="block text-[10px] text-green font-sans font-semibold uppercase tracking-wider mt-0.5">
                                   {itemDisc}% off
                                 </span>
                               )}
@@ -754,10 +735,12 @@ export default function ProductPage() {
                         </Link>
                         <button
                           onClick={() => toggleCrossSell(item)}
-                          className={`w-5 h-5 rounded-full border flex items-center justify-center transition-all duration-300 ${
+                          type="button"
+                          aria-pressed={isChecked}
+                          className={`absolute right-0 bottom-9 w-6 h-6 rounded-full border-2 shadow-sm flex items-center justify-center transition-all duration-300 ${
                             isChecked
-                              ? 'bg-charcoal border-charcoal text-white'
-                              : 'border-cream-dark hover:border-charcoal text-transparent'
+                              ? 'bg-charcoal border-charcoal text-white ring-2 ring-charcoal/15'
+                              : 'bg-white border-charcoal/45 hover:border-charcoal hover:ring-2 hover:ring-charcoal/10 text-transparent'
                           }`}
                         >
                           <Check size={12} className="stroke-[3px]" />
@@ -773,7 +756,7 @@ export default function ProductPage() {
             <div ref={buyButtonRef} className="space-y-3.5">
               <button
                 onClick={handleAddToCart}
-                className="w-full btn-outline border-charcoal hover:bg-charcoal hover:text-white transition-all duration-300 py-4 flex items-center justify-center gap-2"
+                className="w-full border border-charcoal bg-charcoal text-white hover:bg-white hover:text-charcoal transition-all duration-300 py-4 flex items-center justify-center gap-2 text-xs font-sans font-semibold tracking-widest uppercase"
               >
                 <ShoppingBag size={15} />
                 {selectedCrossSells.length > 0
@@ -802,94 +785,138 @@ export default function ProductPage() {
               )}
             </div>
 
-            {/* Wishlist & Share */}
-            <div className="flex items-center gap-5 text-xs uppercase tracking-widest font-sans text-muted">
-              <button
-                onClick={() => { toggle(product); toast.success(wishlisted ? 'Removed from wishlist' : 'Added to wishlist'); }}
-                className="flex items-center gap-2 hover:text-charcoal transition-colors font-semibold"
-              >
-                <Heart size={14} className={wishlisted ? 'text-red-500 fill-red-500 stroke-red-500' : 'text-muted'} />
-                {wishlisted ? 'WISHLISTED' : 'ADD TO WISHLIST'}
-              </button>
-              <button
-                onClick={() => { navigator.clipboard.writeText(window.location.href); toast.success('Link copied to clipboard!'); }}
-                className="flex items-center gap-2 hover:text-charcoal transition-colors font-semibold"
-              >
-                <Share2 size={14} />
-                SHARE PRODUCT
-              </button>
-            </div>
-
-            {/* Delivery/Pincode check */}
-            <div className="border border-cream-dark p-4 bg-white">
-              <p className="text-xs font-sans font-semibold text-charcoal uppercase tracking-widest mb-3.5 flex items-center gap-2">
-                <Truck size={14} /> CHECK DELIVERY TIMES
-              </p>
-              <div className="flex gap-2.5">
-                <input
-                  type="text"
-                  maxLength={6}
-                  placeholder="Enter 6-digit PIN code"
-                  value={pincode}
-                  onChange={(e) => setPincode(e.target.value.replace(/\D/g, ''))}
-                  className="flex-1 border border-cream-dark px-3 py-2 text-sm font-sans tracking-wide focus:outline-none focus:border-charcoal placeholder-muted/65"
-                />
+            {/* Purchase Support */}
+            <div className="space-y-1.5">
+              <div className="border border-cream-dark rounded-lg bg-white overflow-hidden">
                 <button
-                  onClick={checkPincode}
-                  className="btn-outline py-2 px-5 text-xs border-charcoal hover:bg-charcoal hover:text-white"
+                  type="button"
+                  onClick={() => setMeasureOpen(!measureOpen)}
+                  className="w-full px-4 py-3.5 flex items-center justify-between gap-3 text-left font-sans text-sm text-charcoal"
                 >
-                  CHECK
+                  <span>How to measure your wall</span>
+                  <ChevronDown
+                    size={17}
+                    className={`shrink-0 transition-transform duration-300 ${measureOpen ? 'rotate-180' : ''}`}
+                  />
                 </button>
+                {measureOpen && (
+                  <div className="px-4 pb-4 text-xs font-sans text-muted leading-relaxed border-t border-cream-dark/50">
+                    Measure the full width and height at the widest points. Add 5-10 cm extra on both sides for trimming and clean installation.
+                  </div>
+                )}
               </div>
-              {pincodeResult && (
-                <p className={`mt-3 text-xs font-sans tracking-wider ${pincodeResult.ok ? 'text-green' : 'text-red-500'}`}>
-                  {pincodeResult.message}
-                </p>
-              )}
-            </div>
 
-            {/* Product detail tabs (horizontal tab list) */}
-            <div className="border-t border-cream-dark pt-6 space-y-4">
-              <div className="flex border-b border-cream-dark overflow-x-auto gap-5 pb-2">
-                {[
-                  { id: 'story', label: 'THE STORY' },
-                  { id: 'care', label: 'CARE & MAINTENANCE' },
-                  { id: 'shipping', label: 'SHIPPING' },
-                  { id: 'returns', label: 'RETURNS' }
-                ].map((t) => (
-                  <button
-                    key={t.id}
-                    onClick={() => setActiveTab(t.id)}
-                    className={`pb-2 text-[11px] font-sans font-semibold uppercase tracking-widest border-b-2 whitespace-nowrap transition-all duration-300 ${
-                      activeTab === t.id
-                        ? 'border-charcoal text-charcoal'
-                        : 'border-transparent text-muted hover:text-charcoal'
-                    }`}
-                  >
-                    {t.label}
-                  </button>
-                ))}
+              <div className="border border-cream-dark rounded-lg bg-white overflow-hidden">
+                <button
+                  type="button"
+                  onClick={() => setInstallHelpOpen(!installHelpOpen)}
+                  className="w-full px-4 py-3.5 flex items-center justify-between gap-3 text-left font-sans text-sm text-charcoal"
+                >
+                  <span>Measurement & installation help</span>
+                  <ChevronDown
+                    size={17}
+                    className={`shrink-0 transition-transform duration-300 ${installHelpOpen ? 'rotate-180' : ''}`}
+                  />
+                </button>
+                {installHelpOpen && (
+                  <div className="px-4 pb-4 space-y-3 border-t border-cream-dark/50">
+                    <p className="pt-3 text-xs font-sans text-muted leading-relaxed">
+                      In all major cities we can help you get professional measurement and installation handled through trusted partners. Elsewhere, any experienced local installer can fit our wallpapers - our team guides them on call whenever needed.
+                    </p>
+                    <div className="flex flex-wrap gap-2.5">
+                      <a
+                        href={`https://wa.me/919999999999?text=Hi,%20I%20need%20measurement%20and%20installation%20help%20for%20"${product.name}".`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center justify-center gap-2 rounded-full border border-cream-dark px-4 py-2 text-xs font-sans text-charcoal hover:border-charcoal transition-colors"
+                      >
+                        <MessageCircle size={14} className="text-green-600" />
+                        WhatsApp us
+                      </a>
+                      <a
+                        href="tel:+919999999999"
+                        className="inline-flex items-center justify-center gap-2 rounded-full border border-cream-dark px-4 py-2 text-xs font-sans text-charcoal hover:border-charcoal transition-colors"
+                      >
+                        <Phone size={14} className="text-[#8E2F22]" />
+                        Call us
+                      </a>
+                      <button
+                        type="button"
+                        onClick={() => { toggle(product); toast.success(wishlisted ? 'Removed from wishlist' : 'Added to wishlist'); }}
+                        className="inline-flex items-center justify-center gap-2 rounded-full border border-cream-dark px-4 py-2 text-xs font-sans text-charcoal hover:border-charcoal transition-colors"
+                      >
+                        <Heart size={14} className={wishlisted ? 'text-red-500 fill-red-500 stroke-red-500' : 'text-muted'} />
+                        {wishlisted ? 'Wishlisted' : 'Wishlist'}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => { navigator.clipboard.writeText(window.location.href); toast.success('Link copied to clipboard!'); }}
+                        className="inline-flex items-center justify-center gap-2 rounded-full border border-cream-dark px-4 py-2 text-xs font-sans text-charcoal hover:border-charcoal transition-colors"
+                      >
+                        <Share2 size={14} />
+                        Share
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
-              <div className="text-sm font-sans text-muted leading-relaxed transition-all duration-300 min-h-24 whitespace-pre-line">
-                {tabsContent[activeTab]}
-              </div>
-            </div>
 
-            {/* Core Trust Badges */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-3 border-t border-cream-dark pt-6">
-              {[
-                { icon: Truck, title: 'FREE SHIPPING', text: 'On orders above ₹999' },
-                { icon: RotateCcw, title: '7 DAY RETURNS', text: 'Hassle-free exchanges' },
-                { icon: Shield, title: 'SECURE CHECKOUT', text: '100% encrypted pay' },
-              ].map(({ icon: Icon, title, text }) => (
-                <div key={title} className="flex flex-col items-center gap-1.5 text-center">
-                  <Icon size={18} className="text-charcoal" />
-                  <p className="text-[10px] font-sans font-semibold tracking-wider text-charcoal mt-1 uppercase">{title}</p>
-                  <p className="text-[9px] font-sans text-muted tracking-wide leading-snug">{text}</p>
+              <div className="border border-cream-dark rounded bg-white overflow-hidden">
+                <div className="px-4 py-4 text-center border-b border-cream-dark/60">
+                  <h3 className="font-serif text-lg font-semibold text-charcoal">Shipping in 2-5 working days</h3>
+                  <p className="mt-1 text-xs font-sans text-muted">Made to order - printed only after you approve your digital preview.</p>
                 </div>
-              ))}
+                <div className="grid grid-cols-3 divide-x divide-cream-dark/70">
+                  <div className="px-2 py-4 text-center">
+                    <div className="flex items-center justify-center gap-0.5 text-gold mb-1">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} size={12} className="fill-gold text-gold" />
+                      ))}
+                    </div>
+                    <p className="text-[10px] font-sans font-bold tracking-wider text-charcoal uppercase">4.95/5 Rating</p>
+                    <p className="mt-1 text-[10px] font-sans text-muted">17,000+ Happy Homes</p>
+                  </div>
+                  <div className="px-2 py-4 text-center">
+                    <Globe2 size={22} className="mx-auto mb-2 text-gold" />
+                    <p className="text-[10px] font-sans font-bold tracking-wider text-charcoal uppercase">Global Delivery</p>
+                    <p className="mt-1 text-[10px] font-sans text-muted">Express Shipping</p>
+                  </div>
+                  <div className="px-2 py-4 text-center">
+                    <Leaf size={22} className="mx-auto mb-2 text-gold" />
+                    <p className="text-[10px] font-sans font-bold tracking-wider text-charcoal uppercase">Carbon Neutral</p>
+                    <p className="mt-1 text-[10px] font-sans text-muted">Eco-certified production</p>
+                  </div>
+                </div>
+              </div>
             </div>
 
+          </div>
+        </div>
+
+        {/* Product detail tabs */}
+        <div className="mt-14 border-t border-cream-dark pt-7 space-y-5">
+          <div className="flex border-b border-cream-dark overflow-x-auto gap-6 sm:gap-10 pb-0">
+            {[
+              { id: 'description', label: '1. Description' },
+              { id: 'material', label: '2. Material' },
+              { id: 'shipping', label: '3. Shipping' },
+              { id: 'quality', label: '4. Quality & Installation' }
+            ].map((t) => (
+              <button
+                key={t.id}
+                onClick={() => setActiveTab(t.id)}
+                className={`pb-3 text-sm sm:text-base font-sans font-semibold uppercase tracking-widest border-b-2 whitespace-nowrap transition-all duration-300 ${
+                  activeTab === t.id
+                    ? 'border-charcoal text-charcoal'
+                    : 'border-transparent text-muted hover:text-charcoal'
+                }`}
+              >
+                {t.label}
+              </button>
+            ))}
+          </div>
+          <div className="text-sm sm:text-base font-sans text-muted leading-relaxed transition-all duration-300 min-h-20 whitespace-pre-line">
+            {tabsContent[activeTab]}
           </div>
         </div>
 
@@ -934,7 +961,7 @@ export default function ProductPage() {
                 // Scroll back to variants
                 window.scrollTo({ top: buyButtonRef.current.offsetTop - 150, behavior: 'smooth' });
               }}
-              className="btn-primary bg-charcoal hover:bg-black text-[9px] sm:text-[11px] tracking-widest font-semibold px-3 sm:px-6 py-2 sm:py-3 uppercase whitespace-nowrap"
+              className="btn-primary bg-charcoal hover:bg-black !text-white text-[9px] sm:text-[11px] tracking-widest font-semibold px-3 sm:px-6 py-2 sm:py-3 uppercase whitespace-nowrap"
             >
               SELECT OPTIONS
             </button>
