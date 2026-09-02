@@ -928,7 +928,7 @@ export default function ProductPage() {
 
         {/* Related Products Carousel */}
         {product.category?.slug && (
-          <div className="mt-20 border-t border-cream-dark pt-12">
+          <div className="mt-16">
             <RelatedProduct categorySlug={product.category.slug} />
           </div>
         )}

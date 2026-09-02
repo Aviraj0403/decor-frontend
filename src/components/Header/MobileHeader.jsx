@@ -97,44 +97,44 @@ export default function MobileHeader({ isHomePage = false }) {
   return (
     <div className="w-full bg-brand-bg md:hidden">
       <header className={`fixed inset-x-0 top-0 z-[90] border-b transition-all duration-300 ${headerBgClass}`}>
-        <div className="grid h-[64px] grid-cols-[48px_1fr_88px] items-center gap-1 px-[15px]">
+        <div className="grid h-[70px] grid-cols-[54px_1fr_100px] items-center gap-1 px-[15px]">
           <button
             type="button"
             onClick={() => setIsMenuOpen(true)}
-            className={`grid h-11 w-11 place-items-center transition active:scale-95 ${headerIconClass}`}
+            className={`grid h-12 w-12 place-items-center transition active:scale-95 ${headerIconClass}`}
             aria-label="Open menu"
           >
-            <Menu size={27} strokeWidth={1.55} />
+            <Menu size={31} strokeWidth={1.55} />
           </button>
 
           <Link
             to="/"
-            className="mx-auto flex h-[42px] w-[128px] min-w-0 items-center justify-center"
+            className="mx-auto flex h-[48px] w-[150px] min-w-0 items-center justify-center"
             aria-label="Life n Colors home"
           >
             <img
               src={logo}
               alt="Life n Colors"
-              className="h-[32px] w-auto object-contain"
+              className="h-[39px] w-auto object-contain"
             />
           </Link>
 
-          <div className="flex items-center justify-end gap-2">
+          <div className="flex items-center justify-end gap-2.5">
             <button
               type="button"
               onClick={() => navigate("/search")}
-              className={`grid h-10 w-10 place-items-center transition active:scale-95 ${headerIconClass}`}
+              className={`grid h-11 w-11 place-items-center transition active:scale-95 ${headerIconClass}`}
               aria-label="Search products"
             >
-              <Search size={26} strokeWidth={1.55} />
+              <Search size={29} strokeWidth={1.55} />
             </button>
 
             <Link
               to="/cart"
-              className={`relative grid h-10 w-10 place-items-center transition active:scale-95 ${headerIconClass}`}
+              className={`relative grid h-11 w-11 place-items-center transition active:scale-95 ${headerIconClass}`}
               aria-label="Open cart"
             >
-              <ShoppingBag size={26} strokeWidth={1.55} />
+              <ShoppingBag size={29} strokeWidth={1.55} />
               <span
                 className={`absolute bottom-0 left-0 grid h-[17px] min-w-[17px] place-items-center rounded-full px-1 text-[9px] font-bold leading-none ${
                   transparentHome
@@ -149,7 +149,7 @@ export default function MobileHeader({ isHomePage = false }) {
         </div>
       </header>
 
-      {!isHomePage && <div className="h-[64px]" />}
+      {!isHomePage && <div className="h-[70px]" />}
 
       <nav className="fixed inset-x-0 bottom-0 z-[80] border-t border-secondary-200/80 bg-brand-bg/95 px-2 pb-[max(8px,env(safe-area-inset-bottom))] pt-2 shadow-[0_-8px_24px_rgba(139,30,30,0.11)] backdrop-blur-xl">
         <div className="mx-auto grid max-w-md grid-cols-5 items-end">
