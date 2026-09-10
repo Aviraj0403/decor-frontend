@@ -210,15 +210,9 @@ function CollectionProductCard({ product }) {
   const navigate = useNavigate();
   const title = product.title || product.name || '';
   const image = product.image || product.pimages?.[0] || '';
-  const price = product.price || product.variants?.[0]?.price || '0';
-
-  const isWallpaper = 
-    product?.productType?.toLowerCase() === 'wallpaper' || 
-    product?.wallpaperMaterials?.length > 0 ||
-    product?.category?.name?.toLowerCase().includes('wallpaper') ||
-    product?.category?.slug?.toLowerCase().includes('wallpaper') ||
-    product?.slug?.toLowerCase().includes('wallpaper') ||
-    title?.toLowerCase().includes('wallpaper');
+  
+  const rawPrice = product.price || product.variants?.[0]?.price || '0';
+  const price = typeof rawPrice === 'number' ? rawPrice.toLocaleString('en-IN') : String(rawPrice).replace(/^\u20b9/, '');
 
   return (
     <article className="group min-w-0">
@@ -247,7 +241,7 @@ function CollectionProductCard({ product }) {
       </button>
       <p className="mt-1 font-sans text-[10px] leading-4 text-[#2D545E] sm:text-[11px]">
         Starts from {"\u20b9"}
-        {price}{isWallpaper ? ' / sq. ft.' : ''}
+        {price} / sq. ft.
       </p>
     </article>
   );
