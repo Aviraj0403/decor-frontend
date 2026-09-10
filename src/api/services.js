@@ -11,7 +11,6 @@ export const productAPI = {
   getBestSellers: () => apiClient.get('/products', { params: { isBestSeller: true, limit: 8 } }),
   search: (q) => apiClient.get('/products', { params: { search: q } }),
 };
-
 // ── Categories ───────────────────────────────────────────────
 export const categoryAPI = {
   getAll: () => apiClient.get('/category'),

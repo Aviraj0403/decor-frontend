@@ -142,9 +142,10 @@ export default function ProductPage() {
   const [measureOpen, setMeasureOpen] = useState(false);
   const [installHelpOpen, setInstallHelpOpen] = useState(false);
   
-  // Wallpaper custom sizing states (in cm)
-  const [wallpaperWidth, setWallpaperWidth] = useState(300);
-  const [wallpaperHeight, setWallpaperHeight] = useState(240);
+  // Wallpaper custom sizing states
+  const [dimensionUnit, setDimensionUnit] = useState('cm'); // 'cm' | 'inch' | 'ft'
+  const [wallpaperWidthInput, setWallpaperWidthInput] = useState(300);
+  const [wallpaperHeightInput, setWallpaperHeightInput] = useState(240);
   const [selectedMaterial, setSelectedMaterial] = useState(null);
   
   // Cross-sell selected items state
@@ -239,12 +240,23 @@ export default function ProductPage() {
         { materialName: 'Luxury Leatherette', pricePerSqFt: 220 }
       ];
 
+  // Convert width and height inputs to cm and feet for calculations
+  let widthInCm = wallpaperWidthInput;
+  let heightInCm = wallpaperHeightInput;
+  if (dimensionUnit === 'inch') {
+    widthInCm = wallpaperWidthInput * 2.54;
+    heightInCm = wallpaperHeightInput * 2.54;
+  } else if (dimensionUnit === 'ft') {
+    widthInCm = wallpaperWidthInput * 30.48;
+    heightInCm = wallpaperHeightInput * 30.48;
+  }
+
   let price = selectedVariant?.price || product.variants?.[0]?.price || 0;
   let wallAreaSqMt = 0;
   let wallAreaSqFt = 0;
   let billingAreaSqFt = 0;
   if (product.productType === 'Wallpaper') {
-    wallAreaSqMt = (wallpaperWidth / 100) * (wallpaperHeight / 100);
+    wallAreaSqMt = (widthInCm / 100) * (heightInCm / 100);
     wallAreaSqFt = wallAreaSqMt * 10.7639;
     const areaWithBuffer = wallAreaSqFt * 1.10;
     billingAreaSqFt = Math.ceil(areaWithBuffer);
@@ -266,11 +278,37 @@ export default function ProductPage() {
   }, 0);
   const combinedPrice = (finalPrice * qty) + crossSellsPrice;
 
+  // Helper for unit switching
+  const handleUnitChange = (newUnit) => {
+    if (newUnit === dimensionUnit) return;
+    
+    let currentWidthCm = widthInCm;
+    let currentHeightCm = heightInCm;
+
+    let newW = currentWidthCm;
+    let newH = currentHeightCm;
+
+    if (newUnit === 'inch') {
+      newW = Math.round((currentWidthCm / 2.54) * 10) / 10;
+      newH = Math.round((currentHeightCm / 2.54) * 10) / 10;
+    } else if (newUnit === 'ft') {
+      newW = Math.round((currentWidthCm / 30.48) * 10) / 10;
+      newH = Math.round((currentHeightCm / 30.48) * 10) / 10;
+    } else {
+      newW = Math.round(currentWidthCm);
+      newH = Math.round(currentHeightCm);
+    }
+
+    setDimensionUnit(newUnit);
+    setWallpaperWidthInput(newW);
+    setWallpaperHeightInput(newH);
+  };
+
   const handleAddToCart = async () => {
     if (product.productType !== 'Wallpaper' && !selectedVariant) return toast.error('Please select a variant');
     
     const cartSize = product.productType === 'Wallpaper'
-      ? `${wallpaperWidth} W x ${wallpaperHeight} H cm (Material: ${selectedMaterial?.materialName || 'Standard'})`
+      ? `${wallpaperWidthInput} W x ${wallpaperHeightInput} H ${dimensionUnit} [${billingAreaSqFt} sq.ft.] (Material: ${selectedMaterial?.materialName || 'Standard'})`
       : selectedVariant.size;
 
     const cartPrice = product.productType === 'Wallpaper'
@@ -328,7 +366,7 @@ export default function ProductPage() {
     if (product.productType !== 'Wallpaper' && !selectedVariant) return toast.error('Please select a variant');
     
     const cartSize = product.productType === 'Wallpaper'
-      ? `${wallpaperWidth} W x ${wallpaperHeight} H cm (Material: ${selectedMaterial?.materialName || 'Standard'})`
+      ? `${wallpaperWidthInput} W x ${wallpaperHeightInput} H ${dimensionUnit} [${billingAreaSqFt} sq.ft.] (Material: ${selectedMaterial?.materialName || 'Standard'})`
       : selectedVariant.size;
 
     const cartPrice = product.productType === 'Wallpaper'
@@ -476,29 +514,38 @@ export default function ProductPage() {
               )}
             </div>
 
-            {/* Sizes */}
+            {/* Sizes / Ready-made curtain variants */}
             {product.productType !== 'Wallpaper' && product.variants?.length > 0 && (
               <div className="space-y-3.5">
-                <p className="text-xs font-sans font-semibold text-charcoal uppercase tracking-widest">
-                  Select Size: <span className="font-light normal-case text-muted ml-1">{selectedVariant?.size}</span>
-                </p>
-                <div className="flex flex-wrap gap-2.5">
+                <div className="flex items-center justify-between">
+                  <p className="text-xs font-sans font-semibold text-charcoal uppercase tracking-widest">
+                    Select Size: <span className="font-light normal-case text-muted ml-1">{selectedVariant?.size}</span>
+                  </p>
+                </div>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
                   {product.variants.map((v, i) => {
                     const active = selectedVariant?.size === v.size;
+                    const vDisc = product.discount || 0;
+                    const vFinalPrice = vDisc > 0 ? v.price - (v.price * vDisc / 100) : v.price;
+
                     return (
                       <button
                         key={i}
+                        type="button"
                         onClick={() => {
                           setSelectedVariant(v);
-                          setSelectedColor(v.color?.[0] || null);
+                          if (v.color?.[0]) setSelectedColor(v.color[0]);
                         }}
-                        className={`px-5 py-2.5 border text-xs font-sans tracking-widest uppercase transition-all duration-300 ${
+                        className={`p-3 border rounded transition-all duration-300 text-left flex flex-col justify-between ${
                           active
                             ? 'border-charcoal bg-charcoal text-white font-medium shadow-sm'
                             : 'border-cream-dark text-charcoal bg-white hover:border-charcoal'
                         }`}
                       >
-                        {v.size}
+                        <span className="text-xs font-semibold tracking-wide">{v.size}</span>
+                        <span className={`text-[11px] mt-1 font-serif ${active ? 'text-cream-light/90' : 'text-muted'}`}>
+                          {formatPrice(vFinalPrice)}
+                        </span>
                       </button>
                     );
                   })}
@@ -509,35 +556,62 @@ export default function ProductPage() {
             {/* Custom Dimensions & Material for Wallpaper */}
             {product.productType === 'Wallpaper' && (
               <div className="space-y-6 border border-cream-dark p-5 bg-cream-light/35 rounded">
-                <p className="text-xs font-sans font-semibold text-charcoal uppercase tracking-widest">
-                  Custom Dimensions & Material
-                </p>
+                <div className="flex items-center justify-between">
+                  <p className="text-xs font-sans font-semibold text-charcoal uppercase tracking-widest">
+                    Custom Dimensions & Material
+                  </p>
+
+                  {/* Unit Selector Toggle */}
+                  <div className="inline-flex rounded border border-cream-dark p-0.5 bg-white text-xs font-sans">
+                    <button
+                      type="button"
+                      onClick={() => handleUnitChange('cm')}
+                      className={`px-2.5 py-1 rounded-sm transition ${dimensionUnit === 'cm' ? 'bg-charcoal text-white font-semibold' : 'text-muted hover:text-charcoal'}`}
+                    >
+                      CM
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleUnitChange('inch')}
+                      className={`px-2.5 py-1 rounded-sm transition ${dimensionUnit === 'inch' ? 'bg-charcoal text-white font-semibold' : 'text-muted hover:text-charcoal'}`}
+                    >
+                      Inches
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleUnitChange('ft')}
+                      className={`px-2.5 py-1 rounded-sm transition ${dimensionUnit === 'ft' ? 'bg-charcoal text-white font-semibold' : 'text-muted hover:text-charcoal'}`}
+                    >
+                      Feet
+                    </button>
+                  </div>
+                </div>
 
                 {/* Width & Height inputs */}
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label className="block text-[10px] font-sans font-semibold text-muted uppercase tracking-wider mb-1.5">
-                      Width (cm)
+                      Width ({dimensionUnit})
                     </label>
                     <input
                       type="number"
-                      min="50"
-                      step="1"
-                      value={wallpaperWidth}
-                      onChange={(e) => setWallpaperWidth(parseFloat(e.target.value) || 0)}
+                      min="1"
+                      step={dimensionUnit === 'cm' ? '1' : '0.1'}
+                      value={wallpaperWidthInput}
+                      onChange={(e) => setWallpaperWidthInput(parseFloat(e.target.value) || 0)}
                       className="w-full px-3.5 py-2.5 border border-cream-dark bg-white font-sans text-sm text-charcoal focus:outline-none focus:border-charcoal transition"
                     />
                   </div>
                   <div>
                     <label className="block text-[10px] font-sans font-semibold text-muted uppercase tracking-wider mb-1.5">
-                      Height (cm)
+                      Height ({dimensionUnit})
                     </label>
                     <input
                       type="number"
-                      min="50"
-                      step="1"
-                      value={wallpaperHeight}
-                      onChange={(e) => setWallpaperHeight(parseFloat(e.target.value) || 0)}
+                      min="1"
+                      step={dimensionUnit === 'cm' ? '1' : '0.1'}
+                      value={wallpaperHeightInput}
+                      onChange={(e) => setWallpaperHeightInput(parseFloat(e.target.value) || 0)}
                       className="w-full px-3.5 py-2.5 border border-cream-dark bg-white font-sans text-sm text-charcoal focus:outline-none focus:border-charcoal transition"
                     />
                   </div>
@@ -550,17 +624,25 @@ export default function ProductPage() {
                   </span>
                   <div className="flex flex-wrap gap-2">
                     {[
-                      { label: "300 × 240 cm", w: 300, h: 240 },
-                      { label: "350 × 250 cm", w: 350, h: 250 },
-                      { label: "400 × 275 cm", w: 400, h: 275 },
-                      { label: "450 × 300 cm", w: 450, h: 300 }
+                      { label: "10 × 8 ft", cmW: 304.8, cmH: 243.84 },
+                      { label: "12 × 9 ft", cmW: 365.76, cmH: 274.32 },
+                      { label: "14 × 10 ft", cmW: 426.72, cmH: 304.8 },
+                      { label: "15 × 10 ft", cmW: 457.2, cmH: 304.8 }
                     ].map((preset) => (
                       <button
                         type="button"
                         key={preset.label}
                         onClick={() => {
-                          setWallpaperWidth(preset.w);
-                          setWallpaperHeight(preset.h);
+                          if (dimensionUnit === 'inch') {
+                            setWallpaperWidthInput(Math.round((preset.cmW / 2.54) * 10) / 10);
+                            setWallpaperHeightInput(Math.round((preset.cmH / 2.54) * 10) / 10);
+                          } else if (dimensionUnit === 'ft') {
+                            setWallpaperWidthInput(Math.round((preset.cmW / 30.48) * 10) / 10);
+                            setWallpaperHeightInput(Math.round((preset.cmH / 30.48) * 10) / 10);
+                          } else {
+                            setWallpaperWidthInput(Math.round(preset.cmW));
+                            setWallpaperHeightInput(Math.round(preset.cmH));
+                          }
                         }}
                         className="px-2.5 py-1 text-[11px] font-sans border border-cream-dark hover:border-charcoal bg-white transition rounded"
                       >
@@ -610,7 +692,7 @@ export default function ProductPage() {
                     <span className="font-bold">{billingAreaSqFt} sq. ft.</span>
                   </div>
                   <p className="text-[10px] text-muted italic mt-1 leading-normal">
-                    * Enter your wall dimensions in cm. A 10% material buffer is automatically added to ensure perfect installation and trimming.
+                    * Enter dimensions in your preferred unit ({dimensionUnit.toUpperCase()}). A 10% material buffer is automatically included for precision trim & edge seamless alignment.
                   </p>
                 </div>
               </div>
@@ -745,7 +827,7 @@ export default function ProductPage() {
               </button>
               {product.productType === 'Wallpaper' && (
                 <a
-                  href={`https://wa.me/919999999999?text=Hi,%20I'm%20interested%20in%20customizing%20the%20wallpaper%20"${product.name}"%20with%20dimensions%20${wallpaperWidth}x${wallpaperHeight}%20ft.`}
+                  href={`https://wa.me/919999999999?text=Hi,%20I'm%20interested%20in%20customizing%20the%20wallpaper%20"${product.name}"%20with%20dimensions%20${wallpaperWidthInput}x${wallpaperHeightInput}%20${dimensionUnit}.`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full flex items-center justify-center gap-2 border-2 border-green-600 text-green-600 hover:bg-green-600 hover:text-white py-4 text-xs font-sans tracking-widest uppercase transition-all duration-300 font-semibold rounded"
