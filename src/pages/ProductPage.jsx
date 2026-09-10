@@ -599,8 +599,11 @@ export default function ProductPage() {
                       type="number"
                       min="1"
                       step={dimensionUnit === 'cm' ? '1' : '0.1'}
-                      value={wallpaperWidthInput}
-                      onChange={(e) => setWallpaperWidthInput(parseFloat(e.target.value) || 0)}
+                      value={wallpaperWidthInput === 0 ? '' : wallpaperWidthInput}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        setWallpaperWidthInput(val === '' ? 0 : parseFloat(val));
+                      }}
                       className="w-full px-3.5 py-2.5 border border-cream-dark bg-white font-sans text-sm text-charcoal focus:outline-none focus:border-charcoal transition"
                     />
                   </div>
@@ -612,8 +615,11 @@ export default function ProductPage() {
                       type="number"
                       min="1"
                       step={dimensionUnit === 'cm' ? '1' : '0.1'}
-                      value={wallpaperHeightInput}
-                      onChange={(e) => setWallpaperHeightInput(parseFloat(e.target.value) || 0)}
+                      value={wallpaperHeightInput === 0 ? '' : wallpaperHeightInput}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        setWallpaperHeightInput(val === '' ? 0 : parseFloat(val));
+                      }}
                       className="w-full px-3.5 py-2.5 border border-cream-dark bg-white font-sans text-sm text-charcoal focus:outline-none focus:border-charcoal transition"
                     />
                   </div>
