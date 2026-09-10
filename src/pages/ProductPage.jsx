@@ -171,16 +171,13 @@ export default function ProductPage() {
       setSelectedVariant(firstVariant);
       setSelectedColor(firstVariant?.color?.[0] || null);
 
-      if (data.product.productType === 'Wallpaper') {
-        const materialsList = data.product.wallpaperMaterials?.length > 0
-          ? data.product.wallpaperMaterials
-          : [
-              { materialName: 'Premium Non-Woven (Matte)', pricePerSqFt: 120 },
-              { materialName: 'Canvas Peel & Stick', pricePerSqFt: 160 },
-              { materialName: 'Classic Textured (Paper)', pricePerSqFt: 100 },
-              { materialName: 'Luxury Leatherette', pricePerSqFt: 220 }
-            ];
-        setSelectedMaterial(materialsList[0]);
+      if (data.product.wallpaperMaterials?.length > 0) {
+        setSelectedMaterial(data.product.wallpaperMaterials[0]);
+      } else if (firstVariant?.price) {
+        setSelectedMaterial({
+          materialName: firstVariant.size || 'Standard Material',
+          pricePerSqFt: firstVariant.price
+        });
       }
     }
   }, [data]);
@@ -233,12 +230,12 @@ export default function ProductPage() {
 
   const materialsList = product?.wallpaperMaterials?.length > 0
     ? product.wallpaperMaterials
-    : [
-        { materialName: 'Premium Non-Woven (Matte)', pricePerSqFt: 120 },
-        { materialName: 'Canvas Peel & Stick', pricePerSqFt: 160 },
-        { materialName: 'Classic Textured (Paper)', pricePerSqFt: 100 },
-        { materialName: 'Luxury Leatherette', pricePerSqFt: 220 }
-      ];
+    : product?.variants?.length > 0
+      ? product.variants.map((v) => ({
+          materialName: v.size || 'Standard Material',
+          pricePerSqFt: v.price
+        }))
+      : [];
 
   // Convert width and height inputs to cm and feet for calculations
   let widthInCm = wallpaperWidthInput;
@@ -251,16 +248,25 @@ export default function ProductPage() {
     heightInCm = wallpaperHeightInput * 30.48;
   }
 
+  // Check if product requires custom sizing calculation (wallpapers, custom length curtains, fabrics, etc.)
+  const isCustomDimensionProduct = 
+    product?.isCustomizable ||
+    product?.hasCustomDimensions ||
+    product?.productType?.toLowerCase() === 'wallpaper' || 
+    product?.category?.name?.toLowerCase().includes('wallpaper') ||
+    product?.category?.slug?.toLowerCase().includes('wallpaper') ||
+    slug?.toLowerCase().includes('wallpaper');
+
   let price = selectedVariant?.price || product.variants?.[0]?.price || 0;
   let wallAreaSqMt = 0;
   let wallAreaSqFt = 0;
   let billingAreaSqFt = 0;
-  if (product.productType === 'Wallpaper') {
+  if (isCustomDimensionProduct) {
     wallAreaSqMt = (widthInCm / 100) * (heightInCm / 100);
     wallAreaSqFt = wallAreaSqMt * 10.7639;
     const areaWithBuffer = wallAreaSqFt * 1.10;
     billingAreaSqFt = Math.ceil(areaWithBuffer);
-    const materialPricePerSqFt = selectedMaterial?.pricePerSqFt || 120;
+    const materialPricePerSqFt = selectedMaterial?.pricePerSqFt || (selectedVariant?.price || 120);
     price = billingAreaSqFt * materialPricePerSqFt;
   }
 
@@ -363,13 +369,13 @@ export default function ProductPage() {
   };
 
   const handleBuyNow = async () => {
-    if (product.productType !== 'Wallpaper' && !selectedVariant) return toast.error('Please select a variant');
+    if (!isWallpaperProduct && !selectedVariant) return toast.error('Please select a variant');
     
-    const cartSize = product.productType === 'Wallpaper'
+    const cartSize = isWallpaperProduct
       ? `${wallpaperWidthInput} W x ${wallpaperHeightInput} H ${dimensionUnit} [${billingAreaSqFt} sq.ft.] (Material: ${selectedMaterial?.materialName || 'Standard'})`
       : selectedVariant.size;
 
-    const cartPrice = product.productType === 'Wallpaper'
+    const cartPrice = isWallpaperProduct
       ? price
       : selectedVariant.price;
     
@@ -514,8 +520,8 @@ export default function ProductPage() {
               )}
             </div>
 
-            {/* Sizes / Ready-made curtain variants */}
-            {product.productType !== 'Wallpaper' && product.variants?.length > 0 && (
+            {/* Sizes / Ready-made product variants */}
+            {!isCustomDimensionProduct && product.variants?.length > 0 && (
               <div className="space-y-3.5">
                 <div className="flex items-center justify-between">
                   <p className="text-xs font-sans font-semibold text-charcoal uppercase tracking-widest">
@@ -553,8 +559,8 @@ export default function ProductPage() {
               </div>
             )}
 
-            {/* Custom Dimensions & Material for Wallpaper */}
-            {product.productType === 'Wallpaper' && (
+            {/* Custom Dimensions & Material Options */}
+            {isCustomDimensionProduct && (
               <div className="space-y-6 border border-cream-dark p-5 bg-cream-light/35 rounded">
                 <div className="flex items-center justify-between">
                   <p className="text-xs font-sans font-semibold text-charcoal uppercase tracking-widest">
@@ -620,7 +626,7 @@ export default function ProductPage() {
                 {/* Common Size Presets */}
                 <div className="space-y-1.5">
                   <span className="block text-[10px] font-sans font-semibold text-muted uppercase tracking-wider">
-                    Common Wall Sizes (Presets)
+                    Common Sizing Presets
                   </span>
                   <div className="flex flex-wrap gap-2">
                     {[
@@ -653,33 +659,35 @@ export default function ProductPage() {
                 </div>
 
                 {/* Material Choices */}
-                <div className="space-y-2">
-                  <label className="block text-[10px] font-sans font-semibold text-muted uppercase tracking-wider">
-                    Select Material
-                  </label>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                    {materialsList.map((mat) => {
-                      const isSelected = selectedMaterial?.materialName === mat.materialName;
-                      return (
-                        <button
-                          type="button"
-                          key={mat.materialName}
-                          onClick={() => setSelectedMaterial(mat)}
-                          className={`p-3 text-left border rounded transition-all flex flex-col justify-between ${
-                            isSelected
-                              ? 'border-charcoal bg-charcoal text-white shadow-sm'
-                              : 'border-cream-dark bg-white text-charcoal hover:border-charcoal'
-                          }`}
-                        >
-                          <span className="text-xs font-semibold tracking-wide">{mat.materialName}</span>
-                          <span className={`text-[10px] mt-1 ${isSelected ? 'text-cream-light/85' : 'text-muted'}`}>
-                            ₹{mat.pricePerSqFt} / sq. ft.
-                          </span>
-                        </button>
-                      );
-                    })}
+                {materialsList.length > 0 && (
+                  <div className="space-y-2">
+                    <label className="block text-[10px] font-sans font-semibold text-muted uppercase tracking-wider">
+                      Select Material
+                    </label>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                      {materialsList.map((mat) => {
+                        const isSelected = selectedMaterial?.materialName === mat.materialName;
+                        return (
+                          <button
+                            type="button"
+                            key={mat.materialName}
+                            onClick={() => setSelectedMaterial(mat)}
+                            className={`p-3 text-left border rounded transition-all flex flex-col justify-between ${
+                              isSelected
+                                ? 'border-charcoal bg-charcoal text-white shadow-sm'
+                                : 'border-cream-dark bg-white text-charcoal hover:border-charcoal'
+                            }`}
+                          >
+                            <span className="text-xs font-semibold tracking-wide">{mat.materialName}</span>
+                            <span className={`text-[10px] mt-1 ${isSelected ? 'text-cream-light/85' : 'text-muted'}`}>
+                              ₹{mat.pricePerSqFt} / sq. ft.
+                            </span>
+                          </button>
+                        );
+                      })}
+                    </div>
                   </div>
-                </div>
+                )}
 
                 {/* Live calculation stats */}
                 <div className="pt-4 border-t border-cream-dark/60 space-y-2 text-xs font-sans text-charcoal">
@@ -825,7 +833,7 @@ export default function ProductPage() {
               >
                 BUY IT NOW
               </button>
-              {product.productType === 'Wallpaper' && (
+              {isWallpaperProduct && (
                 <a
                   href={`https://wa.me/919999999999?text=Hi,%20I'm%20interested%20in%20customizing%20the%20wallpaper%20"${product.name}"%20with%20dimensions%20${wallpaperWidthInput}x${wallpaperHeightInput}%20${dimensionUnit}.`}
                   target="_blank"
