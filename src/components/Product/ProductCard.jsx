@@ -106,6 +106,11 @@ export default function ProductCard({ product, onProductClick }) {
         <div className="flex items-center gap-1">
           <p className="text-primary-500 font-medium text-sm">
             ₹{activeVariant?.price}
+            {(product?.wallpaperMaterials?.length > 0 ||
+              product?.productType === "Wallpaper" ||
+              product?.name?.toLowerCase().includes("wallpaper") ||
+              product?.category?.name?.toLowerCase().includes("wallpaper") ||
+              product?.categorySlug?.toLowerCase().includes("wallpaper")) && " / sq. ft."}
           </p>
           <p className="text-gray-400 line-through text-xs">
             ₹{activeVariant?.realPrice?.toFixed(2)}

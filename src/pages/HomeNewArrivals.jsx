@@ -185,6 +185,11 @@ export default function HomeNewArrivals() {
                     <div className="mt-2 flex items-center gap-2">
                       <span className="text-xs font-bold text-brand-text sm:text-[13px]">
                         ₹{formatPrice(variant.price)}
+                        {(product?.wallpaperMaterials?.length > 0 ||
+                          product?.productType === "Wallpaper" ||
+                          product?.name?.toLowerCase().includes("wallpaper") ||
+                          product?.category?.name?.toLowerCase().includes("wallpaper") ||
+                          product?.categorySlug?.toLowerCase().includes("wallpaper")) && " / sq. ft."}
                       </span>
                       {variant.realPrice && Number(variant.realPrice) > Number(variant.price) && (
                         <span className="text-[9px] text-brand-text/40 line-through sm:text-[10px]">
