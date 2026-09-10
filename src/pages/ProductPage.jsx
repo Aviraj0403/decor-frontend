@@ -512,11 +512,16 @@ export default function ProductPage() {
             </div>
 
             {/* Price display */}
-            <div className="flex items-baseline gap-4">
-              <span className="font-serif text-3xl text-charcoal">{formatPrice(finalDisplayPrice)}</span>
+            <div className="flex items-baseline gap-3">
+              <span className="font-serif text-3xl text-charcoal">{formatPrice(finalPrice)}</span>
+              {isCustomDimensionProduct && (
+                <span className="text-xs font-sans font-medium text-charcoal/80 bg-cream-light/60 px-2 py-1 border border-cream-dark rounded">
+                  ₹{selectedMaterial?.pricePerSqFt || 199} / sq. ft. ++
+                </span>
+              )}
               {disc > 0 && (
                 <>
-                  <span className="text-base text-muted line-through font-serif">{formatPrice(displayPrice)}</span>
+                  <span className="text-base text-muted line-through font-serif">{formatPrice(price)}</span>
                   <span className="text-xs font-sans font-semibold text-green bg-green/5 border border-green/10 px-2.5 py-1 tracking-wider uppercase">
                     Save {disc}%
                   </span>
