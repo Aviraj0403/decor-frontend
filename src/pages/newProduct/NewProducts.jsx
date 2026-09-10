@@ -62,6 +62,13 @@ function ProductTile({ product, onProductClick }) {
   const image = getProductImage(product);
   const price = getProductPrice(product);
 
+  const isWallpaper = 
+    product?.productType?.toLowerCase() === 'wallpaper' || 
+    product?.wallpaperMaterials?.length > 0 ||
+    product?.category?.name?.toLowerCase().includes('wallpaper') ||
+    product?.category?.slug?.toLowerCase().includes('wallpaper') ||
+    product?.slug?.toLowerCase().includes('wallpaper');
+
   return (
     <article className="group min-w-0">
       <button
@@ -94,8 +101,7 @@ function ProductTile({ product, onProductClick }) {
         </h3>
       </button>
       <p className="mt-1 font-sans text-[10px] leading-4 text-[#2D545E] sm:text-[11px]">
-        Starts from {"\u20b9"}
-        {price}
+        Starts from ₹{price}{isWallpaper ? ' / sq. ft.' : ''}
       </p>
     </article>
   );

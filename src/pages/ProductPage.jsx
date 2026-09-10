@@ -513,10 +513,15 @@ export default function ProductPage() {
 
             {/* Price display */}
             <div className="flex items-baseline gap-3">
-              <span className="font-serif text-3xl text-charcoal">{formatPrice(finalPrice)}</span>
+              <span className="font-serif text-3xl text-charcoal">
+                {isCustomDimensionProduct && selectedMaterial?.pricePerSqFt
+                  ? formatPrice(selectedMaterial.pricePerSqFt)
+                  : formatPrice(finalPrice)
+                }
+              </span>
               {isCustomDimensionProduct && selectedMaterial?.pricePerSqFt && (
                 <span className="text-xs font-sans font-medium text-charcoal/80 bg-cream-light/60 px-2 py-1 border border-cream-dark rounded">
-                  ₹{selectedMaterial.pricePerSqFt} / sq. ft. ++
+                  / sq. ft. ++
                 </span>
               )}
               {disc > 0 && (
