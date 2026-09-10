@@ -309,17 +309,16 @@ export default function ProductPage() {
     setWallpaperWidthInput(newW);
     setWallpaperHeightInput(newH);
   };
-
   const handleAddToCart = async () => {
-    if (product.productType !== 'Wallpaper' && !selectedVariant) return toast.error('Please select a variant');
+    if (!isCustomDimensionProduct && !selectedVariant) return toast.error('Please select a variant');
     
-    const cartSize = product.productType === 'Wallpaper'
+    const cartSize = isCustomDimensionProduct
       ? `${wallpaperWidthInput} W x ${wallpaperHeightInput} H ${dimensionUnit} [${billingAreaSqFt} sq.ft.] (Material: ${selectedMaterial?.materialName || 'Standard'})`
-      : selectedVariant.size;
+      : selectedVariant?.size || 'Standard';
 
-    const cartPrice = product.productType === 'Wallpaper'
+    const cartPrice = isCustomDimensionProduct
       ? price
-      : selectedVariant.price;
+      : (selectedVariant?.price || price);
     
     // Add main product
     const response = await addToCart(
@@ -369,15 +368,15 @@ export default function ProductPage() {
   };
 
   const handleBuyNow = async () => {
-    if (!isWallpaperProduct && !selectedVariant) return toast.error('Please select a variant');
+    if (!isCustomDimensionProduct && !selectedVariant) return toast.error('Please select a variant');
     
-    const cartSize = isWallpaperProduct
+    const cartSize = isCustomDimensionProduct
       ? `${wallpaperWidthInput} W x ${wallpaperHeightInput} H ${dimensionUnit} [${billingAreaSqFt} sq.ft.] (Material: ${selectedMaterial?.materialName || 'Standard'})`
-      : selectedVariant.size;
+      : selectedVariant?.size || 'Standard';
 
-    const cartPrice = isWallpaperProduct
+    const cartPrice = isCustomDimensionProduct
       ? price
-      : selectedVariant.price;
+      : (selectedVariant?.price || price);
     
     // Add main product
     const response = await addToCart(
@@ -675,7 +674,7 @@ export default function ProductPage() {
                             className={`p-3 text-left border rounded transition-all flex flex-col justify-between ${
                               isSelected
                                 ? 'border-charcoal bg-charcoal text-white shadow-sm'
-                                : 'border-cream-dark bg-white text-charcoal hover:border-charcoal'
+                                : 'border-cream-dark text-charcoal bg-white hover:border-charcoal'
                             }`}
                           >
                             <span className="text-xs font-semibold tracking-wide">{mat.materialName}</span>
@@ -778,7 +777,7 @@ export default function ProductPage() {
                       <div key={item._id} className="relative min-w-0">
                         <Link to={`/products/${item.slug}`} className="block group">
                           <img
-                            src={item.pimages?.[0] || 'https://via.placeholder.com/60x80'}
+                            src={item.pimages?.[0] || 'https://via.placeholder.com/600x80'}
                             alt={item.name}
                             className="w-full aspect-square object-cover bg-cream-dark border border-cream-dark"
                           />
@@ -833,9 +832,9 @@ export default function ProductPage() {
               >
                 BUY IT NOW
               </button>
-              {isWallpaperProduct && (
+              {isCustomDimensionProduct && (
                 <a
-                  href={`https://wa.me/919999999999?text=Hi,%20I'm%20interested%20in%20customizing%20the%20wallpaper%20"${product.name}"%20with%20dimensions%20${wallpaperWidthInput}x${wallpaperHeightInput}%20${dimensionUnit}.`}
+                  href={`https://wa.me/919999999999?text=Hi,%20I'm%20interested%20in%20customizing%20the%20product%20"${product.name}"%20with%20dimensions%20${wallpaperWidthInput}x${wallpaperHeightInput}%20${dimensionUnit}.`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full flex items-center justify-center gap-2 border-2 border-green-600 text-green-600 hover:bg-green-600 hover:text-white py-4 text-xs font-sans tracking-widest uppercase transition-all duration-300 font-semibold rounded"
