@@ -256,7 +256,8 @@ export default function ProductPage() {
     product?.category?.slug?.toLowerCase().includes('wallpaper') ||
     slug?.toLowerCase().includes('wallpaper');
 
-  let price = selectedVariant?.price || product.variants?.[0]?.price || 0;
+  let basePrice = selectedVariant?.price || product.variants?.[0]?.price || 0;
+  let customCalculatedPrice = basePrice;
   let wallAreaSqMt = 0;
   let wallAreaSqFt = 0;
   let billingAreaSqFt = 0;
@@ -266,11 +267,16 @@ export default function ProductPage() {
     const areaWithBuffer = wallAreaSqFt * 1.10;
     billingAreaSqFt = Math.ceil(areaWithBuffer);
     const materialPricePerSqFt = selectedMaterial?.pricePerSqFt || 120;
-    price = billingAreaSqFt * materialPricePerSqFt;
+    customCalculatedPrice = billingAreaSqFt * materialPricePerSqFt;
   }
+
+  // Display base price at top for standard items and wallpapers, custom total applied for checkout/cart
+  const price = isCustomDimensionProduct ? customCalculatedPrice : basePrice;
+  const displayPrice = isCustomDimensionProduct ? (basePrice || customCalculatedPrice) : basePrice;
 
   const disc = product.discount || 0;
   const finalPrice = disc > 0 ? price - (price * disc / 100) : price;
+  const finalDisplayPrice = disc > 0 ? displayPrice - (displayPrice * disc / 100) : displayPrice;
   const wishlisted = has(product._id);
   const imgs = product.pimages || [];
 
@@ -507,10 +513,10 @@ export default function ProductPage() {
 
             {/* Price display */}
             <div className="flex items-baseline gap-4">
-              <span className="font-serif text-3xl text-charcoal">{formatPrice(finalPrice)}</span>
+              <span className="font-serif text-3xl text-charcoal">{formatPrice(finalDisplayPrice)}</span>
               {disc > 0 && (
                 <>
-                  <span className="text-base text-muted line-through font-serif">{formatPrice(price)}</span>
+                  <span className="text-base text-muted line-through font-serif">{formatPrice(displayPrice)}</span>
                   <span className="text-xs font-sans font-semibold text-green bg-green/5 border border-green/10 px-2.5 py-1 tracking-wider uppercase">
                     Save {disc}%
                   </span>
@@ -688,6 +694,10 @@ export default function ProductPage() {
                   <div className="flex justify-between text-green font-medium">
                     <span>Total Billing Area (includes 10% wastage):</span>
                     <span className="font-bold">{billingAreaSqFt} sq. ft.</span>
+                  </div>
+                  <div className="flex justify-between items-center text-charcoal font-serif text-base pt-1 font-semibold border-t border-cream-dark/40">
+                    <span>Estimated Wall Total:</span>
+                    <span className="text-lg text-charcoal">{formatPrice(finalPrice)}</span>
                   </div>
                   <p className="text-[10px] text-muted italic mt-1 leading-normal">
                     * Enter dimensions in your preferred unit ({dimensionUnit.toUpperCase()}). A 10% material buffer is automatically included for precision trim & edge seamless alignment.
