@@ -436,33 +436,6 @@ export default function ProductPage() {
                 alt={product.name}
                 className="block w-full h-auto transition-transform duration-700 ease-out group-hover:scale-103"
               />
-              {product.productType === 'Wallpaper' && (
-                <div className="absolute inset-0 bg-black/40 flex items-center justify-center p-4">
-                  <div
-                    className="border-2 border-dashed border-white bg-transparent relative flex items-center justify-center shadow-2xl transition-all duration-300 rounded"
-                    style={{
-                      aspectRatio: `${wallpaperWidth} / ${wallpaperHeight}`,
-                      maxWidth: '95%',
-                      maxHeight: '95%',
-                      width: wallpaperWidth >= wallpaperHeight ? '95%' : `${(wallpaperWidth / wallpaperHeight) * 95}%`,
-                      height: wallpaperHeight >= wallpaperWidth ? '95%' : `${(wallpaperHeight / wallpaperWidth) * 95}%`
-                    }}
-                  >
-                    {/* Corner crop marks */}
-                    <div className="absolute -top-1 -left-1 w-3 h-3 border-t-2 border-l-2 border-white"></div>
-                    <div className="absolute -top-1 -right-1 w-3 h-3 border-t-2 border-r-2 border-white"></div>
-                    <div className="absolute -bottom-1 -left-1 w-3 h-3 border-b-2 border-l-2 border-white"></div>
-                    <div className="absolute -bottom-1 -right-1 w-3 h-3 border-b-2 border-r-2 border-white"></div>
-                    
-                    <span className="absolute top-2 left-2 bg-charcoal/90 text-white text-[9px] px-2 py-0.5 rounded font-sans uppercase tracking-widest font-semibold">
-                      Print Preview Area
-                    </span>
-                    <span className="absolute bottom-2 right-2 bg-charcoal/90 text-white text-[10px] px-2 py-0.5 rounded font-sans font-medium">
-                      {wallpaperWidth} × {wallpaperHeight} ft
-                    </span>
-                  </div>
-                </div>
-              )}
               {disc > 0 && (
                 <div className="absolute top-4 left-4 bg-charcoal text-white text-[10px] font-sans font-semibold px-3 py-1.5 uppercase tracking-widest">
                   {disc}% OFF
