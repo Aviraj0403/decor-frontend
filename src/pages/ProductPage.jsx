@@ -248,8 +248,13 @@ export default function ProductPage() {
     heightInCm = wallpaperHeightInput * 30.48;
   }
 
-  // Universal custom dimension enabling across all products
-  const isCustomDimensionProduct = true;
+  // Only enable custom area-based billing for products that have custom wallpaper materials or wallpaper type
+  const isCustomDimensionProduct = 
+    (product?.wallpaperMaterials && product.wallpaperMaterials.length > 0) ||
+    product?.productType?.toLowerCase() === 'wallpaper' || 
+    product?.category?.name?.toLowerCase().includes('wallpaper') ||
+    product?.category?.slug?.toLowerCase().includes('wallpaper') ||
+    slug?.toLowerCase().includes('wallpaper');
 
   let price = selectedVariant?.price || product.variants?.[0]?.price || 0;
   let wallAreaSqMt = 0;
@@ -260,7 +265,7 @@ export default function ProductPage() {
     wallAreaSqFt = wallAreaSqMt * 10.7639;
     const areaWithBuffer = wallAreaSqFt * 1.10;
     billingAreaSqFt = Math.ceil(areaWithBuffer);
-    const materialPricePerSqFt = selectedMaterial?.pricePerSqFt || (selectedVariant?.price ? Math.round(selectedVariant.price / 100) : 120);
+    const materialPricePerSqFt = selectedMaterial?.pricePerSqFt || 120;
     price = billingAreaSqFt * materialPricePerSqFt;
   }
 
