@@ -105,16 +105,7 @@ export default function ProductCard({ product, onProductClick }) {
       <div className="flex justify-between items-center mb-3 px-1 text-sm">
         <div className="flex items-center gap-1">
           <p className="text-primary-500 font-medium text-sm">
-            ₹{activeVariant?.price}
-            {(product?.wallpaperMaterials?.length > 0 ||
-              product?.productType === "Wallpaper" ||
-              product?.category?.name?.toLowerCase().includes("wallpaper") ||
-              product?.categorySlug?.toLowerCase().includes("wallpaper") ||
-              (product?.name?.toLowerCase().includes("wallpaper") &&
-                !product?.name?.toLowerCase().includes("curtain") &&
-                !product?.name?.toLowerCase().includes("hamper") &&
-                !product?.name?.toLowerCase().includes("poster") &&
-                !product?.name?.toLowerCase().includes("art"))) && " / sq. ft."}
+            ₹{activeVariant?.price} / sq. ft.
           </p>
           <p className="text-gray-400 line-through text-xs">
             ₹{activeVariant?.realPrice?.toFixed(2)}

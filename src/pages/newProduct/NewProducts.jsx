@@ -103,7 +103,7 @@ function ProductTile({ product, onProductClick }) {
         </h3>
       </button>
       <p className="mt-1 font-sans text-[10px] leading-4 text-[#2D545E] sm:text-[11px]">
-        Starts from ₹{price}{isWallpaper ? ' / sq. ft.' : ''}
+        Starts from ₹{price} / sq. ft.
       </p>
     </article>
   );
