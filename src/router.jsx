@@ -69,7 +69,7 @@ const router = createBrowserRouter([
             <CheckoutPage />
           </RequireAuth>
       ) },
-      { path: "/new-product", element: <NewProductsPage /> },
+      { path: "/new-product", element: <NewProducts /> },
       { path: "/product/:slug", element: <ProductPage /> },
       { path: "/products/:slug", element: <ProductPage /> },
        { path: "/about-us", element: <AboutUs /> },
