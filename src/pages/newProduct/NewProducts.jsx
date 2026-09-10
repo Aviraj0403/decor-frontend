@@ -216,7 +216,7 @@ const NewProducts = () => {
       <div className="mx-auto max-w-[1680px] px-4 pb-16 pt-4 sm:px-6 lg:px-9">
         <div className="grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-7 md:grid-cols-3 xl:grid-cols-4">
           {visibleProducts.map((product) => (
-            <ProductCard
+            <ProductTile
               key={product._id || product.slug}
               product={product}
               onProductClick={handleProductClick}
