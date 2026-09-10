@@ -521,17 +521,12 @@ export default function ProductPage() {
             {/* Sizes / Ready-made product variants */}
             {!isCustomDimensionProduct && product.variants?.length > 0 && (
               <div className="space-y-3.5">
-                <div className="flex items-center justify-between">
-                  <p className="text-xs font-sans font-semibold text-charcoal uppercase tracking-widest">
-                    Select Size: <span className="font-light normal-case text-muted ml-1">{selectedVariant?.size}</span>
-                  </p>
-                </div>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+                <p className="text-xs font-sans font-semibold text-charcoal uppercase tracking-widest">
+                  Select Size: <span className="font-light normal-case text-muted ml-1">{selectedVariant?.size}</span>
+                </p>
+                <div className="flex flex-wrap gap-2.5">
                   {product.variants.map((v, i) => {
                     const active = selectedVariant?.size === v.size;
-                    const vDisc = product.discount || 0;
-                    const vFinalPrice = vDisc > 0 ? v.price - (v.price * vDisc / 100) : v.price;
-
                     return (
                       <button
                         key={i}
@@ -540,16 +535,13 @@ export default function ProductPage() {
                           setSelectedVariant(v);
                           if (v.color?.[0]) setSelectedColor(v.color[0]);
                         }}
-                        className={`p-3 border rounded transition-all duration-300 text-left flex flex-col justify-between ${
+                        className={`px-5 py-3 border text-xs font-sans tracking-widest uppercase transition-all duration-300 ${
                           active
-                            ? 'border-charcoal bg-charcoal text-white font-medium shadow-sm'
+                            ? 'border-charcoal bg-charcoal text-white font-semibold shadow-sm'
                             : 'border-cream-dark text-charcoal bg-white hover:border-charcoal'
                         }`}
                       >
-                        <span className="text-xs font-semibold tracking-wide">{v.size}</span>
-                        <span className={`text-[11px] mt-1 font-serif ${active ? 'text-cream-light/90' : 'text-muted'}`}>
-                          {formatPrice(vFinalPrice)}
-                        </span>
+                        {v.size}
                       </button>
                     );
                   })}
