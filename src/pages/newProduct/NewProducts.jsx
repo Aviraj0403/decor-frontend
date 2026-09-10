@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getMiniProducts } from "../../services/productApi";
+import ProductCard from "../../components/Product/ProductCard";
 
 const filters = [
   "All",
@@ -63,11 +64,12 @@ function ProductTile({ product, onProductClick }) {
   const price = getProductPrice(product);
 
   const isWallpaper = 
-    product?.productType?.toLowerCase() === 'wallpaper' || 
     product?.wallpaperMaterials?.length > 0 ||
+    product?.productType === 'Wallpaper' || 
     product?.category?.name?.toLowerCase().includes('wallpaper') ||
     product?.category?.slug?.toLowerCase().includes('wallpaper') ||
-    product?.slug?.toLowerCase().includes('wallpaper');
+    (product?.slug?.toLowerCase().includes('wallpaper') && !product?.slug?.toLowerCase().includes('curtain') && !product?.slug?.toLowerCase().includes('hamper') && !product?.slug?.toLowerCase().includes('poster') && !product?.slug?.toLowerCase().includes('art')) ||
+    (product?.name?.toLowerCase().includes('wallpaper') && !product?.name?.toLowerCase().includes('curtain') && !product?.name?.toLowerCase().includes('hamper') && !product?.name?.toLowerCase().includes('poster') && !product?.name?.toLowerCase().includes('art'));
 
   return (
     <article className="group min-w-0">
@@ -214,7 +216,7 @@ const NewProducts = () => {
       <div className="mx-auto max-w-[1680px] px-4 pb-16 pt-4 sm:px-6 lg:px-9">
         <div className="grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-7 md:grid-cols-3 xl:grid-cols-4">
           {visibleProducts.map((product) => (
-            <ProductTile
+            <ProductCard
               key={product._id || product.slug}
               product={product}
               onProductClick={handleProductClick}

@@ -108,9 +108,13 @@ export default function ProductCard({ product, onProductClick }) {
             ₹{activeVariant?.price}
             {(product?.wallpaperMaterials?.length > 0 ||
               product?.productType === "Wallpaper" ||
-              product?.name?.toLowerCase().includes("wallpaper") ||
               product?.category?.name?.toLowerCase().includes("wallpaper") ||
-              product?.categorySlug?.toLowerCase().includes("wallpaper")) && " / sq. ft."}
+              product?.categorySlug?.toLowerCase().includes("wallpaper") ||
+              (product?.name?.toLowerCase().includes("wallpaper") &&
+                !product?.name?.toLowerCase().includes("curtain") &&
+                !product?.name?.toLowerCase().includes("hamper") &&
+                !product?.name?.toLowerCase().includes("poster") &&
+                !product?.name?.toLowerCase().includes("art"))) && " / sq. ft."}
           </p>
           <p className="text-gray-400 line-through text-xs">
             ₹{activeVariant?.realPrice?.toFixed(2)}
