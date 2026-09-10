@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { productAPI } from "../../api/services";
+import { getMiniProducts } from "../../services/productApi";
 
 const filters = [
   "All",
@@ -14,197 +15,7 @@ const filters = [
   "Abstract",
 ];
 
-export const bestSellingProducts = [
-  {
-    title: "the syntax of spring customised wallpaper",
-    slug: "the-syntax-of-spring-customised-wallpaper",
-    price: "7,500",
-    tag: "Indian",
-    image:
-      "https://lifencolors.in/cdn/shop/files/the-syntax-of-spring-heritage-wallpaper-dining-room.webp?v=1783085459&width=640",
-  },
-  {
-    title: "malabar kerela wallpaper, customised",
-    slug: "malabar-kerela-themed-wallpaper",
-    price: "7,500",
-    tag: "Tropical",
-    image:
-      "https://lifencolors.in/cdn/shop/files/malabar-kerala-backwaters-mural-living-room.webp?v=1776238197&width=640",
-  },
-  {
-    title: "mint blossom vintage chinoiserie wallpaper, light blue",
-    slug: "mint-blossom-light-blue-chinoiserie-wallpaper",
-    price: "7,500",
-    tag: "Chinoiserie",
-    image:
-      "https://lifencolors.in/cdn/shop/files/mint-blossom-vintage-chinoiserie-light-blue-wallpaper-full.webp?v=1776685729&width=640",
-  },
-  {
-    title: "kusum indian theme wallpaper",
-    slug: "kusum-indian-floral-jharokha-and-stripes-design-wallpaper",
-    price: "7,500",
-    tag: "Indian",
-    image:
-      "https://lifencolors.in/cdn/shop/files/kusum-mughal-floral-striped-wallpaper-living-room.webp?v=1773911217&width=640",
-  },
-  {
-    title: "petals of persia customised wallpaper",
-    slug: "petals-of-persia-customised-wallpaper",
-    price: "7,500",
-    tag: "Indian",
-    image:
-      "https://lifencolors.in/cdn/shop/files/petals-of-persia-heritage-wallpaper-dining-room.webp?v=1783063394&width=640",
-  },
-  {
-    title: "munnar wallpaper: vintage indian tea garden mural",
-    slug: "munnar-wallpaper-vintage-indian-tea-garden-mural",
-    price: "7,500",
-    tag: "Indian",
-    image:
-      "https://lifencolors.in/cdn/shop/files/munnar-scenic-hill-station-mural-living-room..webp?v=1781845899&width=640",
-  },
-  {
-    title: "tropical vintage nature wallpaper",
-    slug: "tropical-jungle-themed-wallpaper-customised-vintage-style",
-    price: "6,300",
-    tag: "Tropical",
-    image:
-      "https://lifencolors.in/cdn/shop/files/Tropical_Jungle_Themed_Wallpaper_Customised_Vintage_Style.webp?v=1753692071&width=640",
-  },
-  {
-    title: "whispering moors wallpaper, muted vintage",
-    slug: "whispering-moors-wallpaper-for-walls-customised",
-    price: "7,500",
-    tag: "European",
-    image:
-      "https://lifencolors.in/cdn/shop/files/whispering-moors-wallpaper-room.webp?v=1773986270&width=640",
-  },
-  {
-    title: "anant vriksha - tree of life kalamkari wallpaper, beige",
-    slug: "anant-vriksha-tree-of-life-kalamkari-mural-customise",
-    price: "7,500",
-    tag: "Indian",
-    image:
-      "https://lifencolors.in/cdn/shop/files/anant-vriksha-wallpaper-beige-study-room..webp?v=1770030291&width=640",
-  },
-  {
-    title: "jade blossom chinoiserie wallpaper, dusty pink",
-    slug: "jade-blossom-chinoiserie-wallpaper-dusty-pink",
-    price: "7,500",
-    tag: "Chinoiserie",
-    image:
-      "https://lifencolors.in/cdn/shop/files/Jade_Blossom_Chinoiserie_Wallpaper_Dusty_Pink.webp?v=1755949627&width=640",
-  },
-  {
-    title: "rang rali, indian wallpaper",
-    slug: "rang-rali-indian-wallpaper-inspired-by-fabrics-of-india",
-    price: "7,500",
-    tag: "Indian",
-    image:
-      "https://lifencolors.in/cdn/shop/files/Rang-Rali-Indian-Wallpaper-Living-Room.webp?v=1778154551&width=640",
-  },
-  {
-    title: "kovalam, tropical green wallpaper",
-    slug: "kovalam-tropical-wallpaper",
-    price: "7,500",
-    tag: "Tropical",
-    image:
-      "https://lifencolors.in/cdn/shop/files/kovalam-wallpaper-design-bedroom-0111.webp?v=1776242109&width=640",
-  },
-  {
-    title: "twilight haven vintage european wallpaper",
-    slug: "twilight-haven-vintage-european-style-wallpaper-smoky-olive-color",
-    price: "7,500",
-    tag: "European",
-    image:
-      "https://lifencolors.in/cdn/shop/files/Twilight_Haven_Vintage_European_Style_Wallpaper_in_smoky_olive.webp?v=1753621608&width=640",
-  },
-  {
-    title: "pastel paradise abstract wallpaper, pink",
-    slug: "pastel-paradise-abstract-pattern-wallpaper-for-room-pink",
-    price: "6,300",
-    tag: "Abstract",
-    image:
-      "https://lifencolors.in/cdn/shop/files/pastel-paradise-wallpaper.webp?v=1753691252&width=640",
-  },
-  {
-    title: "plum blossom chinoiserie wallpaper, cream",
-    slug: "plum-blossom-chinoiserie-cream-color-wallpaper-for-rooms",
-    price: "6,300",
-    tag: "Chinoiserie",
-    image:
-      "https://lifencolors.in/cdn/shop/files/plum-blossom-beige-chinoiserie-wallpaper-bedroom.webp?v=1785324918&width=640",
-  },
-  {
-    title: "vintage forest theme wallpaper",
-    slug: "vintage-sepia-forest-wallpaper",
-    price: "6,300",
-    tag: "Tropical",
-    image:
-      "https://lifencolors.in/cdn/shop/files/vintage-forest-mural-modern-sofa-backdrop.webp?v=1776943979&width=640",
-  },
-  {
-    title: "gopuram vatika wallpaper, south indian style",
-    slug: "gopuram-vatika-wallpaper-in-indian-style-customised",
-    price: "7,500",
-    tag: "Indian",
-    image:
-      "https://lifencolors.in/cdn/shop/files/Gopuram_Vatika_Wallpaper.webp?v=1753621308&width=640",
-  },
-  {
-    title: "rosa chinoiserie, pink wallpaper",
-    slug: "rosa-chinoiserie-pink-color-room-wallpaper",
-    price: "7,500",
-    tag: "Chinoiserie",
-    image: "https://lifencolors.in/cdn/shop/files/rosa-chinoiserie-pink-wallpaper.jpg?v=1769834365&width=640",
-  },
-  {
-    title: "geet madhubani art wallpaper",
-    slug: "geet-madhubanis-wallpaper-clay-beige",
-    price: "7,500",
-    tag: "Indian",
-    image:
-      "https://lifencolors.in/cdn/shop/files/geet-madhubani-mural-clay-beige-living-room.webp?v=1774006458&width=640",
-  },
-  {
-    title: "bagiya, blue chinoiserie wallpaper",
-    slug: "bagiya-peacock-chinoiserie-wallpaper",
-    price: "7,500",
-    tag: "Chinoiserie",
-    image: "https://lifencolors.in/cdn/shop/files/bagiya_bedroom_wallpaper.webp?v=1753624399&width=640",
-  },
-  {
-    title: "pakhi, peacock chinoiserie wallpaper",
-    slug: "pakhi-chinoiserie-design-wallpaper-customised",
-    price: "7,500",
-    tag: "Chinoiserie",
-    image:
-      "https://lifencolors.in/cdn/shop/files/pakhi-chinoiserie-peacock-mural-ochre-gold-living-room.webp?v=1773911608&width=640",
-  },
-  {
-    title: "aalishan indian carpet design wallpaper",
-    slug: "aalishan-exquisite-indian-carpet-design-wallpaper",
-    price: "7,500",
-    tag: "Indian",
-    image: "https://lifencolors.in/cdn/shop/files/aalishan-wallpaper-bedrooms.webp?v=1776143522&width=640",
-  },
-  {
-    title: "worth it abstract wallpaper, feather pink",
-    slug: "worth-it-premium-abstract-pattern-wallpaper-design-for-walls-pink",
-    price: "6,300",
-    tag: "Abstract",
-    image:
-      "https://lifencolors.in/cdn/shop/products/worth-it-abstract-wallpaper-feather-pink-hallway.jpg?v=1757144321&width=640",
-  },
-  {
-    title: "sayonee, nature theme wallpaper green",
-    slug: "sayonee-wallpaper-for-walls",
-    price: "7,500",
-    tag: "Tropical",
-    image:
-      "https://lifencolors.in/cdn/shop/files/sayonee-haveli-tropical-garden-mural-dining.webp?v=1777633238&width=640",
-  },
-];
+export const bestSellingProducts = [];
 
 function CollectionProductCard({ product }) {
   const navigate = useNavigate();
@@ -273,26 +84,16 @@ export function WallpaperCollectionPage({ title, description, products: initialP
   const { pathname } = useLocation();
   const slug = pathname.split("/").filter(Boolean).at(-1);
 
-  const { data: apiProducts } = useQuery({
+  const { data: apiData } = useQuery({
     queryKey: ['collection-page', slug],
     queryFn: async () => {
-      const params = { limit: 40 };
-      if (slug === 'best-selling-wallpapers') {
-        params.isBestSeller = true;
-        params.category = 'wallpapers';
-      } else if (slug === 'latest-wallpaper-collection') {
-        params.sort = '-createdAt';
-        params.category = 'wallpapers';
-      } else {
-        params.category = slug;
-      }
-      const res = await productAPI.getAll(params);
-      return res.data?.data?.products || res.data?.products || res.data || [];
+      const res = await getMiniProducts(1, 100, "", "", "", "", "", "");
+      return res?.products || [];
     },
     staleTime: 5 * 60 * 1000,
   });
 
-  const products = apiProducts?.length > 0 ? apiProducts : initialProducts;
+  const products = apiData?.length > 0 ? apiData : initialProducts;
   const [selectedFilter, setSelectedFilter] = React.useState("All");
 
   const visibleProducts =
