@@ -82,13 +82,17 @@ function HelpTile() {
 
 export function WallpaperCollectionPage({ title, description, products: initialProducts = [], showFilters = true }) {
   const { pathname } = useLocation();
-  const slug = pathname.split("/").filter(Boolean).at(-1);
+  const slug = pathname.split("/").filter(Boolean).at(-1) || 'wallpapers';
 
   const { data: apiData } = useQuery({
     queryKey: ['collection-page', slug],
     queryFn: async () => {
-      const res = await getMiniProducts(1, 100, "", "", "", "", "", "");
-      return res?.products || [];
+      const res = await getProductsByCategorySlug(slug, 1, 100);
+      if (res?.success && res?.products) {
+        return res.products;
+      }
+      const miniRes = await getMiniProducts(1, 100);
+      return miniRes?.products || [];
     },
     staleTime: 5 * 60 * 1000,
   });
