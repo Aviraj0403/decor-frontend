@@ -7,30 +7,23 @@ export default function ProductCard({ product, onProductClick }) {
   const navigate = useNavigate();
   const { cartItems, addToCart, updateQuantity, removeFromCart } = useCartActions();
 
-  const activeVariant = product?.variants;
+  const activeVariant = Array.isArray(product?.variants) ? product.variants[0] : product?.variants;
   const size = activeVariant?.size;
-  // const color = activeVariant?.color; // Add color to activeVariant
   const color = Array.isArray(activeVariant?.color)
     ? activeVariant.color[0]
     : activeVariant?.color;
-  console.log("Active Variant Color:", product);
   const [quantity, setQuantity] = useState(0);
   const [showPopup, setShowPopup] = useState(false);
 
   useEffect(() => {
     const item = cartItems.find(
-      (i) => i.id === product._id && i.size === size && i.color === color // Including color in cart matching
+      (i) => i.id === product._id && i.size === size && i.color === color
     );
     setQuantity(item?.quantity || 0);
   }, [cartItems, size, color, product._id]);
-  console.log("cartItems:", cartItems);
-  console.log("ProductCard Color:", color);
-  // const discount = activeVariant?.realPrice
-  //   ? Math.round(
-  //       ((activeVariant.realPrice - activeVariant.price) / activeVariant.realPrice) * 100
-  //     )
-  //   : 0;
+
   const discount = product?.discount || 0;
+  const productImage = product?.pimage || (Array.isArray(product?.pimages) ? product.pimages[0] : product?.pimages) || product?.image || '';
 
   const handleProductClick = () => {
     if (onProductClick) onProductClick(product.slug);
@@ -38,7 +31,7 @@ export default function ProductCard({ product, onProductClick }) {
   };
 
   const handleAddToCart = async () => {
-    const result = await addToCart(product, size, color, 1); // Passing color with addToCart
+    const result = await addToCart(product, size, color, 1);
     if (result.success) {
       setShowPopup(true);
       setTimeout(() => setShowPopup(false), 10000);
@@ -46,7 +39,7 @@ export default function ProductCard({ product, onProductClick }) {
   };
 
   const handleBuyNow = async () => {
-    const result = await addToCart(product, size, color, 1); // Passing color with addToCart
+    const result = await addToCart(product, size, color, 1);
     if (result.success) {
       navigate("/cart");
     }
@@ -54,16 +47,16 @@ export default function ProductCard({ product, onProductClick }) {
 
   const handleIncrement = async () => {
     const newQty = quantity + 1;
-    await updateQuantity(product._id, size, color, newQty); // Passing color in updateQuantity
+    await updateQuantity(product._id, size, color, newQty);
   };
 
   const handleDecrement = async () => {
     if (quantity <= 1) {
-      await removeFromCart(product._id, size, color); // Passing color in removeFromCart
+      await removeFromCart(product._id, size, color);
       return;
     }
     const newQty = quantity - 1;
-    await updateQuantity(product._id, size, color, newQty); // Passing color in updateQuantity
+    await updateQuantity(product._id, size, color, newQty);
   };
 
   return (
@@ -90,7 +83,7 @@ export default function ProductCard({ product, onProductClick }) {
         onClick={handleProductClick}
       >
         <img
-          src={product.pimage}
+          src={productImage}
           alt={product.name}
           className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
         />

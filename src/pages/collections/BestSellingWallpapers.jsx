@@ -80,24 +80,26 @@ function HelpTile() {
   );
 }
 
-export function WallpaperCollectionPage({ title, description, products: initialProducts = [], showFilters = true }) {
+export function WallpaperCollectionPage({ title: customTitle, description: customDescription, products: initialProducts = [], showFilters = true }) {
   const { pathname } = useLocation();
   const slug = pathname.split("/").filter(Boolean).at(-1) || 'wallpapers';
 
-  const { data: apiData } = useQuery({
+  const { data: resData } = useQuery({
     queryKey: ['collection-page', slug],
     queryFn: async () => {
       const res = await getProductsByCategorySlug(slug, 1, 100);
-      if (res?.success && res?.products) {
-        return res.products;
+      if (res?.success) {
+        return res;
       }
       const miniRes = await getMiniProducts(1, 100);
-      return miniRes?.products || [];
+      return { products: miniRes?.products || [], categoryName: '', categoryDescription: '' };
     },
     staleTime: 5 * 60 * 1000,
   });
 
-  const products = apiData?.length > 0 ? apiData : initialProducts;
+  const products = resData?.products?.length > 0 ? resData.products : initialProducts;
+  const title = customTitle || resData?.categoryName || slug.replace(/-/g, ' ').toUpperCase();
+  const description = customDescription || resData?.categoryDescription || '';
   const [selectedFilter, setSelectedFilter] = React.useState("All");
 
   const visibleProducts =

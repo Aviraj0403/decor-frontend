@@ -16,11 +16,11 @@ import {
 } from "../../services/categoryApi";
 
 const POPULAR_SEARCHES = [
-  "Rudraksha Mala",
-  "Brass Diya",
-  "Puja Thali",
-  "Crystal Bracelet",
-  "Vastu Essentials",
+  "Wallpapers",
+  "Curtains",
+  "Cushion Covers",
+  "Chinoiserie",
+  "Wall Art",
 ];
 
 const readRecentSearches = () => {

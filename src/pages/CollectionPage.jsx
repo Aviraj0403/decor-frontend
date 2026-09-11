@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { SlidersHorizontal, ChevronDown, X } from 'lucide-react';
-import { productAPI } from '../api/services';
-import ProductCard from '../components/ProductCard';
+import { getProductsByCategorySlug } from '../services/productApi';
+import { getMenuCategories } from '../services/categoryApi';
+import ProductCard from '../components/Product/ProductCard';
 
 const SORT_OPTIONS = [
   { label: 'Newest First', value: '-createdAt' },
@@ -12,48 +13,59 @@ const SORT_OPTIONS = [
   { label: 'Best Rated', value: '-rating' },
 ];
 
-const COLLECTION_TITLES = {
-  all: 'All Products',
-  'new-arrivals': 'New Arrivals',
-  'best-selling': 'Best Sellers',
-  wallpapers: 'Wallpapers',
-  'cushion-covers': 'Cushion Covers',
-  curtains: 'Curtains',
-  'table-linen': 'Table Linen',
-  'wall-art': 'Wall Art',
-  'fabric-home': 'Fabric & Home',
-};
-
 export default function CollectionPage() {
   const { slug } = useParams();
+  const navigate = useNavigate();
   const [sort, setSort] = useState('-createdAt');
-  const [priceRange, setPriceRange] = useState([0, 10000]);
+  const [priceRange, setPriceRange] = useState([0, 100000]);
   const [showFilters, setShowFilters] = useState(false);
+  const [selectedCategories, setSelectedCategories] = useState([]);
 
-  const title = COLLECTION_TITLES[slug] || slug?.split('-').map(w => w[0].toUpperCase() + w.slice(1)).join(' ') || 'Collection';
-
-  const { data, isLoading } = useQuery({
+  // Fetch Category Products dynamically from Backend
+  const { data: collectionData, isLoading } = useQuery({
     queryKey: ['collection', slug, sort],
     queryFn: async () => {
-      const params = { sort, limit: 24 };
-      if (slug === 'new-arrivals') params.sort = '-createdAt';
-      else if (slug === 'best-selling') params.isBestSeller = true;
-      else if (slug !== 'all') params.category = slug;
-      const res = await productAPI.getAll(params);
-      return res.data?.data?.products || res.data?.products || res.data || [];
+      const res = await getProductsByCategorySlug(slug || 'all', 1, 100);
+      return res || { products: [], categoryName: '', categoryDescription: '' };
     },
   });
 
-  const products = data || [];
+  // Fetch Categories for Filter Sidebar dynamically
+  const { data: menuCategories = [] } = useQuery({
+    queryKey: ['menuCategoriesFilter'],
+    queryFn: getMenuCategories,
+  });
+
+  const rawProducts = collectionData?.products || [];
+  const categoryName = collectionData?.categoryName || slug?.replace(/-/g, ' ').toUpperCase() || 'Collection';
+  const categoryDescription = collectionData?.categoryDescription || '';
+
+  // Filter products by selected price range and category checkboxes
+  const products = rawProducts.filter((product) => {
+    const price = product?.variants?.price || product?.price || 0;
+    if (price < priceRange[0] || price > priceRange[1]) return false;
+    return true;
+  });
+
+  const handleCategoryToggle = (catSlug) => {
+    navigate(`/collections/${catSlug}`);
+  };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 min-h-screen">
       {/* Header */}
       <div className="mb-8 border-b border-cream-dark pb-6">
         <p className="section-tag mb-2">Our Collection</p>
         <div className="flex items-end justify-between">
           <div>
-            <h1 className="section-title">{title}</h1>
+            <h1 className="section-title text-2xl md:text-3xl font-serif text-[#103438] font-bold">
+              {categoryName}
+            </h1>
+            {categoryDescription && (
+              <p className="text-sm text-[#103438]/70 mt-1 font-light max-w-2xl">
+                {categoryDescription}
+              </p>
+            )}
             {!isLoading && (
               <p className="text-muted text-sm mt-1">{products.length} products</p>
             )}
@@ -85,7 +97,7 @@ export default function CollectionPage() {
       <div className="flex gap-8">
         {/* Filters sidebar */}
         {showFilters && (
-          <aside className="w-56 shrink-0 space-y-6">
+          <aside className="w-64 shrink-0 space-y-6 bg-white p-4 border border-gray-100 rounded-lg">
             <div className="flex items-center justify-between">
               <h3 className="font-medium text-sm text-charcoal uppercase tracking-wider">Filters</h3>
               <button onClick={() => setShowFilters(false)} className="text-muted hover:text-charcoal">
@@ -95,7 +107,7 @@ export default function CollectionPage() {
 
             {/* Price filter */}
             <div>
-              <h4 className="text-xs font-semibold text-charcoal uppercase tracking-wider mb-3">Price Range</h4>
+              <h4 className="text-xs font-semibold text-charcoal uppercase tracking-wider mb-3">Price Range (₹)</h4>
               <div className="flex gap-2 items-center">
                 <input
                   type="number"
@@ -115,14 +127,35 @@ export default function CollectionPage() {
               </div>
             </div>
 
-            {/* Type filter */}
+            {/* Dynamic Category Filter */}
             <div>
-              <h4 className="text-xs font-semibold text-charcoal uppercase tracking-wider mb-3">Product Type</h4>
-              {['Wallpaper', 'Cushion Cover', 'Curtain', 'Table Linen', 'Wall Art'].map((type) => (
-                <label key={type} className="flex items-center gap-2 mb-2 cursor-pointer">
-                  <input type="checkbox" className="accent-green w-3.5 h-3.5" />
-                  <span className="text-sm text-charcoal">{type}</span>
-                </label>
+              <h4 className="text-xs font-semibold text-charcoal uppercase tracking-wider mb-3">Categories</h4>
+              {menuCategories.map((cat) => (
+                <div key={cat._id || cat.slug} className="mb-2">
+                  <button
+                    onClick={() => handleCategoryToggle(cat.slug)}
+                    className={`text-left text-sm font-medium hover:text-primary-600 transition ${
+                      slug === cat.slug ? "text-primary-600 font-bold" : "text-charcoal"
+                    }`}
+                  >
+                    {cat.name}
+                  </button>
+                  {cat.subcategories && cat.subcategories.length > 0 && (
+                    <div className="ml-3 mt-1 space-y-1">
+                      {cat.subcategories.map((sub) => (
+                        <button
+                          key={sub._id || sub.slug}
+                          onClick={() => handleCategoryToggle(sub.slug)}
+                          className={`block text-xs text-left hover:text-primary-600 transition ${
+                            slug === sub.slug ? "text-primary-600 font-bold" : "text-gray-500"
+                          }`}
+                        >
+                          • {sub.name}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
               ))}
             </div>
           </aside>
@@ -133,7 +166,7 @@ export default function CollectionPage() {
           {isLoading ? (
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {Array.from({ length: 8 }).map((_, i) => (
-                <div key={i} className="bg-cream-dark animate-pulse" style={{ aspectRatio: '3/4' }} />
+                <div key={i} className="bg-gray-100 animate-pulse rounded-lg" style={{ aspectRatio: '3/4' }} />
               ))}
             </div>
           ) : products.length === 0 ? (
@@ -143,7 +176,9 @@ export default function CollectionPage() {
             </div>
           ) : (
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-              {products.map((p) => <ProductCard key={p._id} product={p} />)}
+              {products.map((p) => (
+                <ProductCard key={p._id || p.id || p.slug} product={p} />
+              ))}
             </div>
           )}
         </div>

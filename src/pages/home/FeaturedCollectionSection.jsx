@@ -1,68 +1,19 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { getProductsByCategorySlug } from "../../services/productApi";
 
 const tabs = [
-  { id: "bestsellers", label: "Bestsellers", viewAll: "/collections/best-selling-wallpapers" },
-  { id: "new-arrivals", label: "New Arrivals", viewAll: "/new-products" },
+  { id: "bestsellers", label: "Bestsellers", viewAll: "/collections/best-selling-wallpapers", categorySlug: "best-sellers" },
+  { id: "new-arrivals", label: "New Arrivals", viewAll: "/collections/new-arrivals", categorySlug: "new-arrivals" },
 ];
-
-const collectionProducts = {
-  bestsellers: [
-    {
-      name: "The Syntax Of Spring Customised Wallpaper",
-      image:
-        "https://lifencolors.in/cdn/shop/files/the-syntax-of-spring-heritage-wallpaper-dining-room.webp?v=1783085459&width=900",
-      slug: "the-syntax-of-spring-customised-wallpaper",
-    },
-    {
-      name: "Malabar Kerela Wallpaper, Customised",
-      image:
-        "https://lifencolors.in/cdn/shop/files/malabar-kerala-backwaters-mural-living-room.webp?v=1776238197&width=900",
-      slug: "malabar-kerela-themed-wallpaper",
-    },
-    {
-      name: "Mint Blossom Vintage Chinoiserie Wallpaper, Light Blue",
-      image:
-        "https://lifencolors.in/cdn/shop/files/mint-blossom-vintage-chinoiserie-light-blue-wallpaper-full.webp?v=1776685729&width=900",
-      slug: "mint-blossom-light-blue-chinoiserie-wallpaper",
-    },
-    {
-      name: "Kusum Indian Theme Wallpaper",
-      image:
-        "https://lifencolors.in/cdn/shop/files/kusum-mughal-floral-striped-wallpaper-living-room.webp?v=1773911217&width=900",
-      slug: "kusum-indian-floral-jharokha-and-stripes-design-wallpaper",
-    },
-  ],
-  "new-arrivals": [
-    {
-      name: "The Rose Heritage, English Floral Wallpaper",
-      image: "https://lifencolors.in/cdn/shop/files/1gtycopy.webp?v=1782126178&width=900",
-      slug: "the-rose-heritage-english-floral-wallpaper",
-    },
-    {
-      name: "Enchanted Grove Customised Wallpaper",
-      image:
-        "https://lifencolors.in/cdn/shop/files/enchanted-grove-customised-wallpaper-closeup-curlew-bird-detail.webp?v=1787120422&width=900",
-      slug: "enchanted-grove-customised-wallpaper",
-    },
-    {
-      name: "Alhambra's Whisper Customised Wallpaper",
-      image:
-        "https://lifencolors.in/cdn/shop/files/alhambras-whisper-neutral-scenic-wallpaper-living-room..webp?v=1783405613&width=900",
-      slug: "alhambra-s-whisper-customised-wallpaper",
-    },
-    {
-      name: "Petals Of Persia Customised Wallpaper",
-      image:
-        "https://lifencolors.in/cdn/shop/files/petals-of-persia-heritage-wallpaper-dining-room.webp?v=1783063394&width=900",
-      slug: "petals-of-persia-customised-wallpaper",
-    },
-  ],
-};
 
 function ProductCard({ product }) {
   const navigate = useNavigate();
-  const href = product?.slug ? `/product/${product.slug}` : "/new-products";
+  const slug = product?.slug || '';
+  const href = slug ? `/product/${slug}` : "/collections/all";
+  const name = product?.name || 'Handcrafted Decor';
+  const image = product?.pimage || product?.pimages?.[0] || product?.image || '';
+  const price = product?.variants?.price || product?.price || 0;
 
   return (
     <article className="group min-w-0">
@@ -70,33 +21,63 @@ function ProductCard({ product }) {
         type="button"
         onClick={() => navigate(href)}
         className="block aspect-[1/1] w-full overflow-hidden bg-[#D7D7D7]"
-        aria-label={product?.name || "View product"}
+        aria-label={name}
       >
-        <img
-          src={product.image}
-          alt={product?.name || "Featured product"}
-          className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
-          loading="lazy"
-        />
+        {image ? (
+          <img
+            src={image}
+            alt={name}
+            className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
+            loading="lazy"
+          />
+        ) : (
+          <div className="h-full w-full flex items-center justify-center bg-gray-200 text-gray-400">
+            No Image
+          </div>
+        )}
       </button>
 
       <button type="button" onClick={() => navigate(href)} className="mt-3 block w-full text-left">
         <h3 className="font-sans text-[13px] font-normal leading-5 text-[#103438] transition group-hover:text-primary-700 sm:text-[15px]">
-          {product?.name}
+          {name}
         </h3>
       </button>
 
-      <p className="mt-1 font-sans text-[11px] leading-4 text-[#2D545E] sm:text-xs">
-        Starts from {"\u20b9"}7,500
-      </p>
+      {price > 0 && (
+        <p className="mt-1 font-sans text-[11px] leading-4 text-[#2D545E] sm:text-xs">
+          Starts from {"\u20b9"}{typeof price === 'number' ? price.toLocaleString('en-IN') : price}
+        </p>
+      )}
     </article>
   );
 }
 
 export default function FeaturedCollectionSection() {
-  const [activeTab, setActiveTab] = React.useState("bestsellers");
+  const [activeTab, setActiveTab] = useState("bestsellers");
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
+
   const activeConfig = tabs.find((tab) => tab.id === activeTab) || tabs[0];
-  const products = collectionProducts[activeTab] || [];
+
+  useEffect(() => {
+    async function fetchTabProducts() {
+      setLoading(true);
+      try {
+        const res = await getProductsByCategorySlug(activeConfig.categorySlug, 1, 8);
+        if (res && res.success && res.products) {
+          setProducts(res.products);
+        } else {
+          setProducts([]);
+        }
+      } catch (err) {
+        console.error("Error fetching featured collection products:", err);
+        setProducts([]);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchTabProducts();
+  }, [activeTab, activeConfig.categorySlug]);
 
   return (
     <section className="bg-white px-4 pb-12 pt-7 sm:px-6 sm:pb-16 sm:pt-10 lg:px-9">
@@ -126,11 +107,21 @@ export default function FeaturedCollectionSection() {
           })}
         </div>
 
-        <div className="mt-9 grid grid-cols-2 gap-x-4 gap-y-8 sm:mt-10 sm:gap-x-7 lg:grid-cols-4 lg:gap-x-8 xl:gap-x-10">
-          {products.map((product) => (
-            <ProductCard key={product.slug} product={product} />
-          ))}
-        </div>
+        {loading ? (
+          <div className="flex justify-center items-center py-16">
+            <div className="w-10 h-10 border-4 border-[#2D545E] border-t-transparent rounded-full animate-spin"></div>
+          </div>
+        ) : products.length === 0 ? (
+          <div className="text-center py-12 text-gray-500 text-sm">
+            No products found in this section.
+          </div>
+        ) : (
+          <div className="mt-9 grid grid-cols-2 gap-x-4 gap-y-8 sm:mt-10 sm:gap-x-7 lg:grid-cols-4 lg:gap-x-8 xl:gap-x-10">
+            {products.map((product) => (
+              <ProductCard key={product._id || product.slug} product={product} />
+            ))}
+          </div>
+        )}
 
         <div className="mt-10 text-center sm:mt-11">
           <Link

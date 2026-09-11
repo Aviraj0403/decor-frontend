@@ -7,14 +7,11 @@ const footerColumns = [
   {
     title: "Life n Colors",
     links: [
-      { label: "Our Story", href: "/pages/our-story" },
-      { label: "Sustainability", href: "/pages/sustainability" },
-      { label: "Blogs", href: "/blogs/blog" },
-      {
-        label: "Gurgaon Studio",
-        href: "/pages/gurgaon-home-decor-wallpaper-store",
-      },
-      { label: "How it works?", href: "/pages/how-it-works" },
+      { label: "About Us", href: "/about-us" },
+      { label: "Contact Us", href: "/contact-us" },
+      { label: "Design Inspiration", href: "/design-inspiration" },
+      { label: "Gifting", href: "/gifting" },
+      { label: "FAQ", href: "/faq" },
     ],
   },
   {
@@ -27,21 +24,17 @@ const footerColumns = [
         external: true,
       },
       { label: "contact@lifencolors.in", href: "mailto:contact@lifencolors.in", external: true },
-      { label: "Trade Program", href: "/pages/designers-outreach-program" },
-      { label: "Contact Us", href: "/pages/contact" },
+      { label: "Contact Us", href: "/contact-us" },
     ],
   },
   {
-    title: "Help",
+    title: "Help & Policies",
     links: [
-      { label: "FAQ", href: "/pages/frequently-asked-questions" },
-      { label: "Privacy Policy", href: "/pages/privacy-policy" },
-      { label: "Terms & Conditions", href: "/pages/terms-conditions" },
-      { label: "Return Policy", href: "/pages/return-policy" },
-      {
-        label: "Installation Guidelines",
-        href: "/pages/wallpaper-installation-guidelines",
-      },
+      { label: "FAQ", href: "/faq" },
+      { label: "Privacy Policy", href: "/privacy-policy" },
+      { label: "Terms & Conditions", href: "/terms-conditions" },
+      { label: "Return Policy", href: "/return-refund" },
+      { label: "Shipping Policy", href: "/shipping-policy" },
     ],
   },
 ];
