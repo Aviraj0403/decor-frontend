@@ -132,21 +132,6 @@ export default function CollectionPage() {
                   >
                     {cat.name}
                   </button>
-                  {cat.subcategories && cat.subcategories.length > 0 && (
-                    <div className="ml-3 mt-1 space-y-1">
-                      {cat.subcategories.map((sub) => (
-                        <button
-                          key={sub._id || sub.slug}
-                          onClick={() => handleCategoryToggle(sub.slug)}
-                          className={`block text-[11px] text-left hover:text-primary-600 transition ${
-                            slug === sub.slug ? "text-primary-600 font-bold" : "text-gray-500"
-                          }`}
-                        >
-                          • {sub.name}
-                        </button>
-                      ))}
-                    </div>
-                  )}
                 </div>
               ))}
             </div>

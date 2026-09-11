@@ -33,25 +33,13 @@ export default function CategorySlider() {
         if (data && data.length > 0) {
           const list = [];
           data.forEach((mainCat) => {
-            // Include Main category if needed
+            // Include Main category only
             list.push({
               title: mainCat.name,
               slug: mainCat.slug,
               image: mainCat.image?.[0] || fallbackImageMap[mainCat.slug] || wallpaperImage,
               to: `/collections/${mainCat.slug}`
             });
-
-            // Include subcategories dynamically
-            if (mainCat.subcategories && mainCat.subcategories.length > 0) {
-              mainCat.subcategories.forEach((sub) => {
-                list.push({
-                  title: sub.name,
-                  slug: sub.slug,
-                  image: sub.image?.[0] || fallbackImageMap[sub.slug] || fallbackImageMap[mainCat.slug] || wallpaperImage,
-                  to: `/collections/${sub.slug}`
-                });
-              });
-            }
           });
           setCategories(list);
         }
