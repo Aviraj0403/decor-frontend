@@ -3,6 +3,11 @@ import { Link } from "react-router-dom";
 import { getProductsByCategorySlug } from "../../services/productApi";
 import CollectionProductCard from "../../components/Product/CollectionProductCard";
 
+const tabs = [
+  { id: "bestsellers", label: "Bestsellers", viewAll: "/collections/best-selling-wallpapers", categorySlug: "best-sellers" },
+  { id: "new-arrivals", label: "New Arrivals", viewAll: "/collections/new-arrivals", categorySlug: "new-arrivals" },
+];
+
 export default function FeaturedCollectionSection() {
   const [activeTab, setActiveTab] = useState("bestsellers");
   const [products, setProducts] = useState([]);

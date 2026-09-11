@@ -1,8 +1,8 @@
 import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { productAPI } from "../../api/services";
-import { getMiniProducts } from "../../services/productApi";
+import { getMiniProducts, getProductsByCategorySlug } from "../../services/productApi";
+import CollectionProductCard from "../../components/Product/CollectionProductCard";
 
 const filters = [
   "All",
@@ -16,47 +16,6 @@ const filters = [
 ];
 
 export const bestSellingProducts = [];
-
-function CollectionProductCard({ product }) {
-  const navigate = useNavigate();
-  const title = product.title || product.name || '';
-  const image = product.image || product.pimages?.[0] || '';
-  
-  const rawPrice = product.price || product.variants?.[0]?.price || '0';
-  const price = typeof rawPrice === 'number' ? rawPrice.toLocaleString('en-IN') : String(rawPrice).replace(/^\u20b9/, '');
-
-  return (
-    <article className="group min-w-0">
-      <button
-        type="button"
-        onClick={() => navigate(`/product/${product.slug}`)}
-        className="block aspect-[0.86/1] w-full overflow-hidden bg-[#D7D7D7]"
-        aria-label={title}
-      >
-        <img
-          src={image}
-          alt={title}
-          className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
-          loading="lazy"
-        />
-      </button>
-
-      <button
-        type="button"
-        onClick={() => navigate(`/product/${product.slug}`)}
-        className="mt-4 block w-full text-left"
-      >
-        <h3 className="font-sans text-[12px] font-normal leading-5 text-black transition group-hover:text-primary-700 sm:text-[13px]">
-          {title}
-        </h3>
-      </button>
-      <p className="mt-1 font-sans text-[10px] leading-4 text-[#2D545E] sm:text-[11px]">
-        Starts from {"\u20b9"}
-        {price} / sq. ft.
-      </p>
-    </article>
-  );
-}
 
 function HelpTile() {
   return (
