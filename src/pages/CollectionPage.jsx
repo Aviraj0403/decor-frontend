@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { SlidersHorizontal, ChevronDown, X } from 'lucide-react';
 import { getProductsByCategorySlug } from '../services/productApi';
 import { getMenuCategories } from '../services/categoryApi';
-import ProductCard from '../components/Product/ProductCard';
+import CollectionProductCard from '../components/Product/CollectionProductCard';
 
 const SORT_OPTIONS = [
   { label: 'Newest First', value: '-createdAt' },
@@ -19,9 +19,7 @@ export default function CollectionPage() {
   const [sort, setSort] = useState('-createdAt');
   const [priceRange, setPriceRange] = useState([0, 100000]);
   const [showFilters, setShowFilters] = useState(false);
-  const [selectedCategories, setSelectedCategories] = useState([]);
 
-  // Fetch Category Products dynamically from Backend
   const { data: collectionData, isLoading } = useQuery({
     queryKey: ['collection', slug, sort],
     queryFn: async () => {
@@ -30,7 +28,6 @@ export default function CollectionPage() {
     },
   });
 
-  // Fetch Categories for Filter Sidebar dynamically
   const { data: menuCategories = [] } = useQuery({
     queryKey: ['menuCategoriesFilter'],
     queryFn: getMenuCategories,
@@ -40,7 +37,6 @@ export default function CollectionPage() {
   const categoryName = collectionData?.categoryName || slug?.replace(/-/g, ' ').toUpperCase() || 'Collection';
   const categoryDescription = collectionData?.categoryDescription || '';
 
-  // Filter products by selected price range and category checkboxes
   const products = rawProducts.filter((product) => {
     const price = product?.variants?.price || product?.price || 0;
     if (price < priceRange[0] || price > priceRange[1]) return false;
@@ -52,31 +48,30 @@ export default function CollectionPage() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 min-h-screen">
+    <div className="max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-9 py-10 min-h-screen bg-white">
       {/* Header */}
-      <div className="mb-8 border-b border-cream-dark pb-6">
-        <p className="section-tag mb-2">Our Collection</p>
+      <div className="mb-8 border-b border-gray-200 pb-6">
+        <p className="font-sans text-[11px] uppercase tracking-[0.2em] text-[#C99665] mb-2">Our Collection</p>
         <div className="flex items-end justify-between">
           <div>
-            <h1 className="section-title text-2xl md:text-3xl font-serif text-[#103438] font-bold">
+            <h1 className="font-serif text-2xl md:text-4xl text-[#103438] font-bold">
               {categoryName}
             </h1>
             {categoryDescription && (
-              <p className="text-sm text-[#103438]/70 mt-1 font-light max-w-2xl">
+              <p className="text-sm text-[#103438]/70 mt-2 font-light max-w-2xl font-sans">
                 {categoryDescription}
               </p>
             )}
             {!isLoading && (
-              <p className="text-muted text-sm mt-1">{products.length} products</p>
+              <p className="text-muted text-xs mt-2 font-sans">{products.length} products</p>
             )}
           </div>
           <div className="flex items-center gap-3">
-            {/* Sort */}
             <div className="relative">
               <select
                 value={sort}
                 onChange={(e) => setSort(e.target.value)}
-                className="appearance-none bg-white border border-cream-dark pl-4 pr-8 py-2 text-sm text-charcoal focus:outline-none focus:border-green cursor-pointer"
+                className="appearance-none bg-white border border-gray-300 pl-4 pr-8 py-2 text-xs text-charcoal focus:outline-none focus:border-[#103438] cursor-pointer"
               >
                 {SORT_OPTIONS.map((o) => (
                   <option key={o.value} value={o.value}>{o.label}</option>
@@ -86,7 +81,7 @@ export default function CollectionPage() {
             </div>
             <button
               onClick={() => setShowFilters(!showFilters)}
-              className="flex items-center gap-2 btn-outline py-2 px-4 text-xs"
+              className="flex items-center gap-2 border border-[#103438] text-[#103438] py-2 px-4 text-xs font-semibold uppercase tracking-wider hover:bg-[#103438] hover:text-white transition"
             >
               <SlidersHorizontal size={14} /> Filters
             </button>
@@ -95,17 +90,15 @@ export default function CollectionPage() {
       </div>
 
       <div className="flex gap-8">
-        {/* Filters sidebar */}
         {showFilters && (
-          <aside className="w-64 shrink-0 space-y-6 bg-white p-4 border border-gray-100 rounded-lg">
+          <aside className="w-64 shrink-0 space-y-6 bg-white p-4 border border-gray-200 rounded-sm">
             <div className="flex items-center justify-between">
-              <h3 className="font-medium text-sm text-charcoal uppercase tracking-wider">Filters</h3>
+              <h3 className="font-medium text-xs text-charcoal uppercase tracking-wider">Filters</h3>
               <button onClick={() => setShowFilters(false)} className="text-muted hover:text-charcoal">
                 <X size={16} />
               </button>
             </div>
 
-            {/* Price filter */}
             <div>
               <h4 className="text-xs font-semibold text-charcoal uppercase tracking-wider mb-3">Price Range (₹)</h4>
               <div className="flex gap-2 items-center">
@@ -114,7 +107,7 @@ export default function CollectionPage() {
                   placeholder="Min"
                   value={priceRange[0]}
                   onChange={(e) => setPriceRange([+e.target.value, priceRange[1]])}
-                  className="w-full border border-cream-dark p-2 text-xs focus:outline-none focus:border-green"
+                  className="w-full border border-gray-300 p-2 text-xs focus:outline-none"
                 />
                 <span className="text-muted text-xs">–</span>
                 <input
@@ -122,19 +115,18 @@ export default function CollectionPage() {
                   placeholder="Max"
                   value={priceRange[1]}
                   onChange={(e) => setPriceRange([priceRange[0], +e.target.value])}
-                  className="w-full border border-cream-dark p-2 text-xs focus:outline-none focus:border-green"
+                  className="w-full border border-gray-300 p-2 text-xs focus:outline-none"
                 />
               </div>
             </div>
 
-            {/* Dynamic Category Filter */}
             <div>
               <h4 className="text-xs font-semibold text-charcoal uppercase tracking-wider mb-3">Categories</h4>
               {menuCategories.map((cat) => (
                 <div key={cat._id || cat.slug} className="mb-2">
                   <button
                     onClick={() => handleCategoryToggle(cat.slug)}
-                    className={`text-left text-sm font-medium hover:text-primary-600 transition ${
+                    className={`text-left text-xs font-medium hover:text-primary-600 transition ${
                       slug === cat.slug ? "text-primary-600 font-bold" : "text-charcoal"
                     }`}
                   >
@@ -146,7 +138,7 @@ export default function CollectionPage() {
                         <button
                           key={sub._id || sub.slug}
                           onClick={() => handleCategoryToggle(sub.slug)}
-                          className={`block text-xs text-left hover:text-primary-600 transition ${
+                          className={`block text-[11px] text-left hover:text-primary-600 transition ${
                             slug === sub.slug ? "text-primary-600 font-bold" : "text-gray-500"
                           }`}
                         >
@@ -161,23 +153,22 @@ export default function CollectionPage() {
           </aside>
         )}
 
-        {/* Products grid */}
         <div className="flex-1">
           {isLoading ? (
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {Array.from({ length: 8 }).map((_, i) => (
-                <div key={i} className="bg-gray-100 animate-pulse rounded-lg" style={{ aspectRatio: '3/4' }} />
+                <div key={i} className="bg-gray-100 animate-pulse" style={{ aspectRatio: '0.86/1' }} />
               ))}
             </div>
           ) : products.length === 0 ? (
             <div className="text-center py-24">
               <p className="font-serif text-2xl text-charcoal mb-2">No products found</p>
-              <p className="text-muted text-sm">Try adjusting your filters or check back later.</p>
+              <p className="text-muted text-sm font-sans">Try adjusting your filters or check back later.</p>
             </div>
           ) : (
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-10">
               {products.map((p) => (
-                <ProductCard key={p._id || p.id || p.slug} product={p} />
+                <CollectionProductCard key={p._id || p.id || p.slug} product={p} />
               ))}
             </div>
           )}

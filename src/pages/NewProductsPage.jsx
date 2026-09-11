@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { getProductsByCategorySlug } from "../services/productApi";
-import ProductCard from "../components/Product/ProductCard";
+import CollectionProductCard from "../components/Product/CollectionProductCard";
 
 export default function NewProductsPage() {
-  const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -31,7 +29,7 @@ export default function NewProductsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-brand-bg">
+      <div className="min-h-screen flex items-center justify-center bg-white">
         <div className="animate-pulse flex flex-col items-center gap-4">
           <div className="w-12 h-12 border-4 border-[#2D545E] border-t-transparent rounded-full animate-spin"></div>
           <p className="text-sm font-medium text-[#2D545E]">Loading new arrivals...</p>
@@ -42,15 +40,15 @@ export default function NewProductsPage() {
 
   if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-brand-bg text-red-500 font-medium">
+      <div className="min-h-screen flex items-center justify-center bg-white text-red-500 font-medium">
         {error}
       </div>
     );
   }
 
   return (
-    <section className="py-12 bg-brand-bg min-h-screen">
-      <div className="max-w-7xl mx-auto px-4">
+    <section className="py-12 bg-white min-h-screen">
+      <div className="max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-9">
         <h1 className="text-3xl md:text-4xl font-serif text-[#103438] font-bold mb-3 text-center tracking-wide">
           New Arrivals
         </h1>
@@ -63,9 +61,9 @@ export default function NewProductsPage() {
             No new arrival products found.
           </div>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-10">
             {products.map((product) => (
-              <ProductCard key={product._id || product.id} product={product} />
+              <CollectionProductCard key={product._id || product.slug} product={product} />
             ))}
           </div>
         )}

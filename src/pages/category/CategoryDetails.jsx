@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getProductsByCategorySlug } from "../../services/productApi"; // Import the new API function
-import ProductCard from "../../components/Product/ProductCard"; // Import ProductCard component
+import { getProductsByCategorySlug } from "../../services/productApi";
+import CollectionProductCard from "../../components/Product/CollectionProductCard";
 
 export default function CategoryDetails() {
   const { categorySlug } = useParams();
@@ -16,7 +16,6 @@ export default function CategoryDetails() {
   const [categoryDescription, setCategoryDescription] = useState("");
   const [categoryImages, setCategoryImages] = useState([]);
 
-  // Fetch products by category and set the category name
   const fetchProducts = async (page = 1) => {
     setLoading(true);
     setError(null);
@@ -63,13 +62,8 @@ export default function CategoryDetails() {
     );
   }
 
-  // Navigate to product detail page
-  const handleProductClick = (productId) => {
-    navigate(`/product/${productId}`);
-  };
-
   return (
-    <section className="bg-brand-bg min-h-screen pb-16">
+    <section className="bg-white min-h-screen pb-16">
       {/* 🖼 Category Banner Header */}
       {categoryImages.length > 0 ? (
         <div className="relative w-full h-[280px] md:h-[400px] overflow-hidden mb-12">
@@ -78,7 +72,6 @@ export default function CategoryDetails() {
             alt={categoryName}
             className="w-full h-full object-cover object-center"
           />
-          {/* Dark scrim overlay for high legibility */}
           <div className="absolute inset-0 bg-black/40 flex flex-col justify-center items-center text-center p-6">
             <h1 className="font-serif text-3xl md:text-5xl text-white tracking-widest uppercase font-semibold mb-4 drop-shadow-md">
               {categoryName}
@@ -91,7 +84,6 @@ export default function CategoryDetails() {
           </div>
         </div>
       ) : (
-        /* 🏷 Backup Header: Clean Tan-Beige box */
         <div className="bg-[#D7D7D7] border-b border-[#D7D7D7] py-14 px-6 text-center mb-12">
           <h1 className="font-serif text-3xl md:text-4xl text-[#103438] tracking-wider uppercase font-semibold mb-4">
             {categoryName || categorySlug}
@@ -104,31 +96,28 @@ export default function CategoryDetails() {
         </div>
       )}
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Product Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+      <div className="max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-9">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-10">
           {products.length === 0 ? (
             <div className="col-span-full py-12 text-center text-muted font-light">
               No products found in this collection.
             </div>
           ) : (
             products.map((product) => (
-              <ProductCard
-                key={product._id}
+              <CollectionProductCard
+                key={product._id || product.slug}
                 product={product}
-                onProductClick={handleProductClick}
               />
             ))
           )}
         </div>
 
-        {/* Pagination */}
         {pagination.totalPages > 1 && (
           <div className="mt-14 flex justify-center items-center gap-4">
             <button
               onClick={() => fetchProducts(currentPage - 1)}
               disabled={currentPage <= 1}
-              className="px-6 py-2.5 bg-white border border-[#D7D7D7] text-[#103438] rounded font-medium shadow-sm hover:bg-[#E2B385] disabled:opacity-50 transition-all"
+              className="px-6 py-2.5 bg-white border border-[#D7D7D7] text-[#103438] rounded font-medium shadow-sm hover:bg-[#E2B385] disabled:opacity-50 transition-all text-sm"
             >
               Previous
             </button>
@@ -138,7 +127,7 @@ export default function CategoryDetails() {
             <button
               onClick={() => fetchProducts(currentPage + 1)}
               disabled={currentPage >= pagination.totalPages}
-              className="px-6 py-2.5 bg-[#2D545E] text-white rounded font-medium shadow-sm hover:bg-[#103438] disabled:opacity-50 transition-all"
+              className="px-6 py-2.5 bg-white border border-[#D7D7D7] text-[#103438] rounded font-medium shadow-sm hover:bg-[#E2B385] disabled:opacity-50 transition-all text-sm"
             >
               Next
             </button>
