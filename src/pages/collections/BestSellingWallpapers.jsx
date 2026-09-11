@@ -15,8 +15,6 @@ const filters = [
   "Abstract",
 ];
 
-export const bestSellingProducts = [];
-
 function HelpTile() {
   return (
     <div className="col-span-full flex min-h-[210px] flex-col justify-center bg-[#103438] px-5 py-8 text-white sm:px-9 lg:min-h-[235px] lg:px-10">
@@ -158,11 +156,5 @@ export function WallpaperCollectionPage({ title: customTitle, description: custo
 }
 
 export default function BestSellingWallpapers() {
-  return (
-    <WallpaperCollectionPage
-      title="Best Selling Wallpaper Designs"
-      description="The wallpapers most homes across 28 countries keep coming back to - from the misty calm of Sukoon to the Mughal detail of Meena Bazar. The designs that earned their place on more walls than any others."
-      products={bestSellingProducts}
-    />
-  );
+  return <WallpaperCollectionPage />;
 }
