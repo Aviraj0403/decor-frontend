@@ -1,56 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { getProductsByCategorySlug } from "../../services/productApi";
-
-const tabs = [
-  { id: "bestsellers", label: "Bestsellers", viewAll: "/collections/best-selling-wallpapers", categorySlug: "best-sellers" },
-  { id: "new-arrivals", label: "New Arrivals", viewAll: "/collections/new-arrivals", categorySlug: "new-arrivals" },
-];
-
-function ProductCard({ product }) {
-  const navigate = useNavigate();
-  const slug = product?.slug || '';
-  const href = slug ? `/product/${slug}` : "/collections/all";
-  const name = product?.name || 'Handcrafted Decor';
-  const image = product?.pimage || product?.pimages?.[0] || product?.image || '';
-  const price = product?.variants?.price || product?.price || 0;
-
-  return (
-    <article className="group min-w-0">
-      <button
-        type="button"
-        onClick={() => navigate(href)}
-        className="block aspect-[1/1] w-full overflow-hidden bg-[#D7D7D7]"
-        aria-label={name}
-      >
-        {image ? (
-          <img
-            src={image}
-            alt={name}
-            className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
-            loading="lazy"
-          />
-        ) : (
-          <div className="h-full w-full flex items-center justify-center bg-gray-200 text-gray-400">
-            No Image
-          </div>
-        )}
-      </button>
-
-      <button type="button" onClick={() => navigate(href)} className="mt-3 block w-full text-left">
-        <h3 className="font-sans text-[13px] font-normal leading-5 text-[#103438] transition group-hover:text-primary-700 sm:text-[15px]">
-          {name}
-        </h3>
-      </button>
-
-      {price > 0 && (
-        <p className="mt-1 font-sans text-[11px] leading-4 text-[#2D545E] sm:text-xs">
-          Starts from {"\u20b9"}{typeof price === 'number' ? price.toLocaleString('en-IN') : price}
-        </p>
-      )}
-    </article>
-  );
-}
+import CollectionProductCard from "../../components/Product/CollectionProductCard";
 
 export default function FeaturedCollectionSection() {
   const [activeTab, setActiveTab] = useState("bestsellers");
@@ -118,7 +69,7 @@ export default function FeaturedCollectionSection() {
         ) : (
           <div className="mt-9 grid grid-cols-2 gap-x-4 gap-y-8 sm:mt-10 sm:gap-x-7 lg:grid-cols-4 lg:gap-x-8 xl:gap-x-10">
             {products.map((product) => (
-              <ProductCard key={product._id || product.slug} product={product} />
+              <CollectionProductCard key={product._id || product.slug} product={product} />
             ))}
           </div>
         )}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getProductsByCategoryAndSubCategorySlug } from "../../services/productApi"; // Assuming this is the correct API call
-import ProductCard from "../../components/Product/ProductCard";
+import CollectionProductCard from "../../components/Product/CollectionProductCard";
 
 export default function CategorySubCategoryDetails() {
   const { categorySlug, subCategorySlug } = useParams();
@@ -113,10 +113,9 @@ export default function CategorySubCategoryDetails() {
             </div>
           ) : (
             products.map((product) => (
-              <ProductCard
-                key={product._id}
+              <CollectionProductCard
+                key={product._id || product.slug}
                 product={product}
-                onProductClick={handleProductClick}
               />
             ))
           )}

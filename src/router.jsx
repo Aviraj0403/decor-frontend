@@ -124,6 +124,7 @@ const router = createBrowserRouter([
       // {path: "/auth", element: < Login/>},
       { path: "/auth", element: < AuthPage /> },
       { path: "/collections/:categorySlug", element: <CategoryDetails /> },
+      { path: "/wallpapers/:categorySlug", element: <CategoryDetails /> },
       { path: "/:categorySlug", element: <CategoryDetails /> },
       {
         path: "/:categorySlug/:subCategorySlug",
